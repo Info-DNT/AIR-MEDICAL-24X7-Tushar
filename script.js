@@ -57,7 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 2. STAT COUNTER LOGIC ---
     function animateStats(stats) {
         stats.forEach(stat => {
+            if (stat.dataset.animated) return;
+            stat.dataset.animated = 'true';
+
             const target = +stat.getAttribute('data-target');
+            if (isNaN(target) || target <= 0) return;
+
             const duration = 2000; // 2 seconds
             const startTime = performance.now();
 
@@ -65,17 +70,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 const progress = Math.min((timestamp - startTime) / duration, 1);
                 const current = Math.floor(progress * target);
 
-                stat.innerText = current;
+                stat.innerText = current.toLocaleString('en-US');
 
                 if (progress < 1) {
                     requestAnimationFrame(updateCount);
                 } else {
-                    stat.innerText = target;
+                    stat.innerText = target.toLocaleString('en-US');
                 }
             };
             requestAnimationFrame(updateCount);
         });
     }
+
+    // Trigger counters for any stat items visible on initial load
+    setTimeout(() => {
+        document.querySelectorAll('.stat-item').forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom >= 0) {
+                const stats = el.querySelectorAll('.stat-number');
+                if (stats.length > 0) animateStats(stats);
+            }
+        });
+    }, 150);
 
 
     // --- 3. NAVIGATION & UI EFFECTS ---
