@@ -10,6 +10,39 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-KG4BQ6SM');</script>
     <!-- End Google Tag Manager -->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16644189187"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-16644189187');
+    </script>
+
+    <!-- Event snippet for Website Visit conversion page -->
+    <script>
+      gtag('event', 'conversion', {'send_to': 'AW-16644189187/2h1uCN7Hy-gaEIPYyIA-'});
+    </script>
+
+    <!-- Event snippet for Phone Number Clicks conversion page -->
+    <script>
+      gtag('event', 'conversion', {'send_to': 'AW-16644189187/0lpMCLfy1-gaEIPYyIA-'});
+
+      function gtag_report_phone_conversion(url) {
+        var callback = function () {
+          if (typeof(url) != 'undefined') {
+            window.location = url;
+          }
+        };
+        gtag('event', 'conversion', {
+            'send_to': 'AW-16644189187/0lpMCLfy1-gaEIPYyIA-',
+            'event_callback': callback
+        });
+        return false;
+      }
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Air Ambulance Services UK | ICU Medical Evacuation 24X7</title>
@@ -197,7 +230,7 @@
 
             <div class="flex items-center animate-fade-in-down">
                 <!-- Mobile & Desktop Persistent Emergency Button -->
-                <a href="tel:+448002294751"
+                <a href="tel:+448002294751" onclick="return gtag_report_phone_conversion(this.href);"
                     class="flex items-center gap-1.5 md:gap-2 font-headline font-extrabold text-primary hover:text-secondary transition-all hover:scale-105 active:scale-95">
                     <span class="material-symbols-outlined text-[#ff1744] text-lg md:text-2xl"
                         style="font-variation-settings: 'FILL' 0, 'wght' 800;">call</span>
@@ -7403,17 +7436,17 @@
                 <h5 class="text-sm font-black uppercase tracking-[0.2em] mb-4 text-white w-full text-center">
                     Global Helpline Numbers</h5>
                 <div class="inline-flex flex-col gap-2.5 text-[13px] font-semibold">
-                    <a href="tel:+18335186535"
+                    <a href="tel:+18335186535" onclick="return gtag_report_phone_conversion(this.href);"
                         class="text-white hover:text-secondary transition-colors flex items-center gap-4">
                         <span class="w-16 inline-block text-white font-normal text-left">USA</span>
                         <span class="font-mono text-[13px] tracking-wide">+1 833-518-6535</span>
                     </a>
-                    <a href="tel:+18337257598"
+                    <a href="tel:+18337257598" onclick="return gtag_report_phone_conversion(this.href);"
                         class="text-white hover:text-secondary transition-colors flex items-center gap-4">
                         <span class="w-16 inline-block text-white font-normal text-left">Canada</span>
                         <span class="font-mono text-[13px] tracking-wide">+1 833-725-7598</span>
                     </a>
-                    <a href="tel:+2484632054"
+                    <a href="tel:+2484632054" onclick="return gtag_report_phone_conversion(this.href);"
                         class="text-white hover:text-secondary transition-colors flex items-center gap-4">
                         <span class="w-16 inline-block text-white font-normal text-left">Seychelles</span>
                         <span class="font-mono text-[13px] tracking-wide">+248 4 632 054</span>
@@ -7424,7 +7457,7 @@
             <!-- Column 3 (Right) -->
             <div class="scroll-reveal-up delay-200 text-center md:text-right">
                 <h5 class="text-sm md:text-base font-extrabold uppercase tracking-[0.2em] mb-4 text-white">24X7 UK Emergency Helpline</h5>
-                <a href="tel:+448002294751"
+                <a href="tel:+448002294751" onclick="return gtag_report_phone_conversion(this.href);"
                     class="font-headline text-3xl font-black text-white hover:text-secondary mb-4 block tracking-tighter">+44 800 229 4751</a>
                 <div class="flex justify-center md:justify-end items-center gap-6 mt-6">
                     <!-- Social Media Links -->
@@ -7614,7 +7647,7 @@
     <div
         class="fixed bottom-0 left-0 right-0 z-50 bg-[#001c37] border-t border-white/10 flex lg:hidden shadow-[0_-8px_30px_rgba(0,0,0,0.3)] h-16">
         <!-- Call Now Button -->
-        <a href="tel:+448002294751"
+        <a href="tel:+448002294751" onclick="return gtag_report_phone_conversion(this.href);"
             class="flex-1 flex items-center justify-center gap-2 text-white font-headline text-xs md:text-sm font-black uppercase tracking-widest hover:bg-secondary/15 transition-all duration-300">
             <span class="material-symbols-outlined text-lg md:text-xl">call</span>
             Call Now
