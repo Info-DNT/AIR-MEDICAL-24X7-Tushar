@@ -3,14 +3,45 @@
 <html lang="en">
 
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16646697649"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KG4BQ6SM');</script>
+    <!-- End Google Tag Manager -->
 
-        gtag('config', 'AW-16646697649');
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16644189187"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-16644189187');
+    </script>
+
+    <!-- Event snippet for Website Visit conversion page -->
+    <script>
+      gtag('event', 'conversion', {'send_to': 'AW-16644189187/2h1uCN7Hy-gaEIPYyIA-'});
+    </script>
+
+    <!-- Event snippet for Phone Number Clicks conversion page -->
+    <script>
+      gtag('event', 'conversion', {'send_to': 'AW-16644189187/0lpMCLfy1-gaEIPYyIA-'});
+
+      function gtag_report_phone_conversion(url) {
+        var callback = function () {
+          if (typeof(url) != 'undefined') {
+            window.location = url;
+          }
+        };
+        gtag('event', 'conversion', {
+            'send_to': 'AW-16644189187/0lpMCLfy1-gaEIPYyIA-',
+            'event_callback': callback
+        });
+        return false;
+      }
     </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,8 +57,8 @@
         rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" type="image/png" href="assets/air-medical-logo.png" />
+    <link rel="stylesheet" href="/ads/styles.css" />
+    <link rel="icon" type="image/png" href="/ads/assets/air-medical-logo.png" />
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -122,6 +153,10 @@
 </head>
 
 <body class="bg-background text-on-surface font-body selection:bg-secondary selection:text-white pb-16 lg:pb-0">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KG4BQ6SM"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 
     <!-- (Mobile Menu Overlay Removed) -->
 
@@ -131,14 +166,14 @@
         <div class="container mx-auto px-4 md:px-8 flex justify-between items-center h-16 md:h-20">
             <a href="https://airmedical24x7.com/"
                 class="flex items-center animate-fade-in-left cursor-pointer hover:opacity-80 transition-opacity">
-                <img src="assets/air-medical-logo.png"
+                <img src="/ads/assets/air-medical-logo.png"
                     alt="Air Medical India &ndash; Best Air Ambulance Service in India"
                     class="h-9 md:h-14 w-auto object-contain" />
             </a>
 
             <div class="flex items-center animate-fade-in-down">
                 <!-- Mobile & Desktop Persistent Emergency Button -->
-                <a href="tel:+971565542001"
+                <a href="tel:+971565542001" onclick="return gtag_report_phone_conversion(this.href);"
                     class="flex items-center gap-1.5 md:gap-2 font-headline font-extrabold text-primary hover:text-secondary transition-all hover:scale-105 active:scale-95">
                     <span class="material-symbols-outlined text-[#ff1744] text-lg md:text-2xl"
                         style="font-variation-settings: 'FILL' 0, 'wght' 800;">call</span>
@@ -154,7 +189,7 @@
         id="home">
 
         <!-- Background Image with Subtle Blur -->
-        <div class="absolute inset-0 bg-[url('assets/dubai_airport_air_ambulance_transfer.jpg')] bg-cover bg-center parallax-bg scale-110 hero-bg-blur"
+        <div class="absolute inset-0 bg-[url('/ads/assets/dubai_airport_air_ambulance_transfer.jpg')] bg-cover bg-center parallax-bg scale-110 hero-bg-blur"
             data-alt="Air Medical 24X7 medical team transferring a patient to an ICU air ambulance at Dubai International Airport UAE.">
         </div>
 
@@ -662,7 +697,7 @@
                     data-delay="100">
                     <div
                         class="w-[74px] h-[74px] rounded-lg bg-white shadow-sm flex items-center justify-center border border-primary/5 mb-4">
-                        <img src="assets/logo/ISO logo.jpg" alt="ISO 9001:2015 Certified"
+                        <img src="/ads/assets/logo/ISO logo.jpg" alt="ISO 9001:2015 Certified"
                             class="w-full h-full object-contain rounded-lg" />
                     </div>
                     <h3
@@ -679,7 +714,7 @@
                     data-delay="200">
                     <div
                         class="w-[74px] h-[74px] rounded-lg bg-white shadow-sm flex items-center justify-center border border-primary/5 mb-4">
-                        <img src="assets/logo/FAA Logo.png" alt="FAA-Approved Medical Equipment"
+                        <img src="/ads/assets/logo/FAA Logo.png" alt="FAA-Approved Medical Equipment"
                             class="w-full h-full object-contain rounded-lg" />
                     </div>
                     <h3
@@ -788,7 +823,7 @@
                             within 30 minutes.
                         </p>
                         <div class="pt-4">
-                            <a href="tel:+971565542001"
+                            <a href="tel:+971565542001" onclick="return gtag_report_phone_conversion(this.href);"
                                 class="inline-flex items-center gap-2 px-6 py-3.5 bg-secondary hover:bg-primary text-white font-headline text-xs font-black uppercase tracking-widest rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
                                 <span class="material-symbols-outlined text-sm">call</span>
                                 Call UAE Emergency Desk
@@ -802,7 +837,7 @@
                     <div
                         class="aspect-[16/10] bg-primary rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700 group max-w-xl mx-auto lg:mx-0">
                         <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            src="assets/dubai_airport_air_ambulance_transfer.jpg"
+                            src="/ads/assets/dubai_airport_air_ambulance_transfer.jpg"
                             alt="Air Medical 24X7 medical team transferring a patient to an ICU air ambulance at Dubai International Airport" />
                     </div>
                 </div>
@@ -6220,7 +6255,7 @@
                     <!-- Air Ambulance -->
                     <div
                         class="min-w-[85vw] md:min-w-[400px] snap-center group relative h-[500px] rounded-2xl overflow-hidden cursor-pointer shadow-xl">
-                        <img src="assets/ground_to_air_transfer.jpg"
+                        <img src="/ads/assets/ground_to_air_transfer.jpg"
                             class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                             alt="Air Ambulance">
                         <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent">
@@ -6239,7 +6274,7 @@
                     <!-- Airline Stretcher Services -->
                     <div
                         class="min-w-[85vw] md:min-w-[400px] snap-center group relative h-[500px] rounded-2xl overflow-hidden cursor-pointer shadow-xl">
-                        <img src="assets/commercial_airline_stretcher_service.jpg"
+                        <img src="/ads/assets/commercial_airline_stretcher_service.jpg"
                             class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                             alt="Airline Stretcher Services">
                         <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent">
@@ -6258,7 +6293,7 @@
                     <!-- Flight Medical Escort Services -->
                     <div
                         class="min-w-[85vw] md:min-w-[400px] snap-center group relative h-[500px] rounded-2xl overflow-hidden cursor-pointer shadow-xl">
-                        <img src="assets/flight medical escort.jfif"
+                        <img src="/ads/assets/flight medical escort.jfif"
                             class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                             alt="Flight Medical Escort Services">
                         <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent">
@@ -6277,7 +6312,7 @@
                     <!-- ECMO Transfer Services -->
                     <div
                         class="min-w-[85vw] md:min-w-[400px] snap-center group relative h-[500px] rounded-2xl overflow-hidden cursor-pointer shadow-xl">
-                        <img src="assets/medical_aircraft_interior_icu.jpg"
+                        <img src="/ads/assets/medical_aircraft_interior_icu.jpg"
                             class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                             alt="ECMO Transfer Services">
                         <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent">
@@ -6296,7 +6331,7 @@
                     <!-- Organ Transplant Assistance -->
                     <div
                         class="min-w-[85vw] md:min-w-[400px] snap-center group relative h-[500px] rounded-2xl overflow-hidden cursor-pointer shadow-xl">
-                        <img src="assets/organ_transfer.jfif"
+                        <img src="/ads/assets/organ_transfer.jfif"
                             class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                             alt="Organ Transplant Assistance">
                         <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent">
@@ -6315,7 +6350,7 @@
                     <!-- Medical Tourism -->
                     <div
                         class="min-w-[85vw] md:min-w-[400px] snap-center group relative h-[500px] rounded-2xl overflow-hidden cursor-pointer shadow-xl">
-                        <img src="assets/medical tourism.jpeg"
+                        <img src="/ads/assets/medical tourism.jpeg"
                             class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                             alt="Medical Tourism">
                         <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent">
@@ -6346,7 +6381,7 @@
                     <div
                         class="aspect-[16/10] bg-primary rounded-xl overflow-hidden shadow-xl hover:shadow-2xl rotate-1 hover:rotate-0 transition-all duration-700 group max-w-xl mx-auto lg:mx-0">
                         <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                            src="assets/patient_transfer_cabin.jpg" alt="Air Medical 24X7 UAE clinical team" />
+                            src="/ads/assets/patient_transfer_cabin.jpg" alt="Air Medical 24X7 UAE clinical team" />
                     </div>
                 </div>
 
@@ -6957,11 +6992,11 @@
                 <div class="flex justify-between items-center mb-4">
                     <a href="https://airmedical24x7.com/"
                         class="flex items-center gap-3 group cursor-pointer hover:opacity-80 transition-opacity">
-                        <img src="assets/air-medical-logo.png"
+                        <img src="/ads/assets/air-medical-logo.png"
                             alt="Air Medical India &ndash; Air Ambulance Service in India"
                             class="h-12 w-auto object-contain brightness-0 invert" />
                     </a>
-                    <a href="tel:+971565542001"
+                    <a href="tel:+971565542001" onclick="return gtag_report_phone_conversion(this.href);"
                         class="flex items-center gap-1.5 md:hidden font-headline font-extrabold text-white hover:text-secondary transition-all hover:scale-105 active:scale-95">
                         <span class="material-symbols-outlined text-[#ff1744] text-2xl font-bold"
                             style="font-variation-settings: 'FILL' 0, 'wght' 600;">call</span>
@@ -6981,30 +7016,40 @@
                 <h5 class="text-sm font-black uppercase tracking-[0.2em] mb-4 text-white w-full text-center">
                     Global Helpline Numbers</h5>
                 <div class="inline-flex flex-col gap-2.5 text-[13px] font-semibold">
-                    <a href="tel:0008000504740"
+                    <a href="tel:+18335186535" onclick="return gtag_report_phone_conversion(this.href);"
                         class="text-white hover:text-secondary transition-colors flex items-center gap-4">
-                        <span class="w-16 inline-block text-white font-normal text-left">India</span>
-                        <span class="font-mono text-[13px] tracking-wide">000-800-0504740</span>
-                    </a>
-                    <a href="tel:+18335186535"
-                        class="text-white hover:text-secondary transition-colors flex items-center gap-4">
-                        <span class="w-16 inline-block text-white font-normal text-left">USA</span>
+                        <span class="w-24 inline-block text-white font-normal text-left">USA</span>
                         <span class="font-mono text-[13px] tracking-wide">+1 833-518-6535</span>
                     </a>
-                    <a href="tel:+448002294751"
+                    <a href="tel:+448002294751" onclick="return gtag_report_phone_conversion(this.href);"
                         class="text-white hover:text-secondary transition-colors flex items-center gap-4">
-                        <span class="w-16 inline-block text-white font-normal text-left">UK</span>
+                        <span class="w-24 inline-block text-white font-normal text-left">UK</span>
                         <span class="font-mono text-[13px] tracking-wide">+44 800 229 4751</span>
                     </a>
-                    <a href="tel:+18337257598"
+                    <a href="tel:0008000504740" onclick="return gtag_report_phone_conversion(this.href);"
                         class="text-white hover:text-secondary transition-colors flex items-center gap-4">
-                        <span class="w-16 inline-block text-white font-normal text-left">Canada</span>
+                        <span class="w-24 inline-block text-white font-normal text-left">India</span>
+                        <span class="font-mono text-[13px] tracking-wide">000-800-0504740</span>
+                    </a>
+                    <a href="tel:+18337257598" onclick="return gtag_report_phone_conversion(this.href);"
+                        class="text-white hover:text-secondary transition-colors flex items-center gap-4">
+                        <span class="w-24 inline-block text-white font-normal text-left">Canada</span>
                         <span class="font-mono text-[13px] tracking-wide">+1 833-725-7598</span>
                     </a>
-                    <a href="tel:+2484632054"
+                    <a href="tel:+8412032123" onclick="return gtag_report_phone_conversion(this.href);"
                         class="text-white hover:text-secondary transition-colors flex items-center gap-4">
-                        <span class="w-16 inline-block text-white font-normal text-left">Seychelles</span>
+                        <span class="w-24 inline-block text-white font-normal text-left">Vietnam</span>
+                        <span class="font-mono text-[13px] tracking-wide">+84 1203 2123</span>
+                    </a>
+                    <a href="tel:+2484632054" onclick="return gtag_report_phone_conversion(this.href);"
+                        class="text-white hover:text-secondary transition-colors flex items-center gap-4">
+                        <span class="w-24 inline-block text-white font-normal text-left">Seychelles</span>
                         <span class="font-mono text-[13px] tracking-wide">+248 4 632 054</span>
+                    </a>
+                    <a href="tel:+27800010868" onclick="return gtag_report_phone_conversion(this.href);"
+                        class="text-white hover:text-secondary transition-colors flex items-center gap-4">
+                        <span class="w-24 inline-block text-white font-normal text-left">South Africa</span>
+                        <span class="font-mono text-[13px] tracking-wide">+27 80 001 0868</span>
                     </a>
                 </div>
             </div>
@@ -7013,7 +7058,7 @@
             <div class="scroll-reveal-up delay-200 text-center md:text-right">
                 <h5 class="text-sm md:text-base font-extrabold uppercase tracking-[0.2em] mb-4 text-white">24X7 UAE
                     Emergency Helpline</h5>
-                <a href="tel:+971565542001"
+                <a href="tel:+971565542001" onclick="return gtag_report_phone_conversion(this.href);"
                     class="font-headline text-3xl font-black text-white hover:text-secondary mb-4 block tracking-tighter">+971
                     56 554 2001</a>
                 <div class="flex justify-center md:justify-end items-center gap-6 mt-6">
@@ -7072,7 +7117,7 @@
             <div class="flex items-center justify-center w-full md:w-1/3 order-1 md:order-2">
                 <!-- Payment Methods -->
                 <div class="relative group px-4 md:px-0 flex justify-center w-full">
-                    <img src="assets/payment_methods_banner.png" alt="Accepted Payment Methods"
+                    <img src="/ads/assets/payment_methods_banner.png" alt="Accepted Payment Methods"
                         class="w-full max-w-[200px] md:max-w-[260px] lg:max-w-[280px] h-auto object-contain drop-shadow-[0_0_20px_rgba(255,255,255,0.25)] transition-all duration-500" />
                 </div>
                 <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse hidden md:block"></div>
@@ -7095,9 +7140,9 @@
 
     <!-- Supabase SDK & Configuration -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="supabase-config.js"></script>
+    <script src="/ads/supabase-config.js"></script>
 
-    <script src="script.js"></script>
+    <script src="/ads/script.js"></script>
 
 
     <script>
@@ -7170,7 +7215,7 @@
     <div
         class="fixed bottom-0 left-0 right-0 z-50 bg-[#001c37] border-t border-white/10 flex lg:hidden shadow-[0_-8px_30px_rgba(0,0,0,0.3)] h-16">
         <!-- Call Now Button -->
-        <a href="tel:+971565542001"
+        <a href="tel:+971565542001" onclick="return gtag_report_phone_conversion(this.href);"
             class="flex-1 flex items-center justify-center gap-2 text-white font-headline text-xs md:text-sm font-black uppercase tracking-widest hover:bg-secondary/15 transition-all duration-300">
             <span class="material-symbols-outlined text-lg md:text-xl">call</span>
             Call Now
