@@ -185,7 +185,7 @@
 
     <!-- Hero -->
     <header
-        class="relative min-h-screen flex items-center justify-center pt-24 pb-8 overflow-hidden bg-primary-container"
+        class="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-8 overflow-hidden bg-primary-container"
         id="home">
 
         <!-- Background Image with Subtle Blur -->
@@ -196,15 +196,17 @@
         <!-- Dark gradient overlay -->
         <div class="absolute inset-0 bg-primary/75"></div>
 
+<!-- Mobile Ticker Carousel (End-to-End) -->
+<div class="lg:hidden w-full overflow-hidden bg-[#b7102a] text-white py-2.5 z-20 relative mb-6">
+    <div class="flex whitespace-nowrap animate-marquee text-[12px] font-black uppercase tracking-wide">
+        <span class="px-4 flex items-center gap-2">✓ ISO Certified | ✓ 17,000+ Patients Assisted | ✓ 193+ Countries Served | ✓ 24/7 Emergency Response</span>
+        <span class="px-4 flex items-center gap-2">✓ ISO Certified | ✓ 17,000+ Patients Assisted | ✓ 193+ Countries Served | ✓ 24/7 Emergency Response</span>
+    </div>
+</div>
+
         <!-- Centered 2-Panel Form Card -->
         <div class="container mx-auto px-4 md:px-8 relative z-10 w-full">
-            <!-- Mobile Ticker Carousel -->
-            <div class="lg:hidden w-full max-w-4xl mx-auto overflow-hidden bg-[#b7102a] border border-white/10 text-white py-2.5 rounded-xl mb-4 relative -translate-y-3 transform shadow-lg shadow-red-950/20">
-                <div class="flex whitespace-nowrap animate-marquee text-[12px] font-black uppercase tracking-wide">
-                    <span class="px-4 flex items-center gap-2">✓ ISO Certified | ✓ 17,000+ Patients Assisted | ✓ 193+ Countries Served | ✓ 24/7 Emergency Response</span>
-                    <span class="px-4 flex items-center gap-2">✓ ISO Certified | ✓ 17,000+ Patients Assisted | ✓ 193+ Countries Served | ✓ 24/7 Emergency Response</span>
-                </div>
-            </div>
+
             <div
                 class="max-w-4xl mx-auto bg-surface-container-lowest rounded-2xl shadow-[0_40px_80px_rgba(0,53,95,0.40)] overflow-hidden border border-white/10">
                 <div class="grid grid-cols-1 lg:grid-cols-2">
