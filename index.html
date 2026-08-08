@@ -258,6 +258,11 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   <link rel="icon" href="img/airmedicallogo.png" type="image/png">
   <link rel="apple-touch-icon" href="img/airmedicallogo.png">
 
+  <!-- Preload hero image: it's a CSS background-image (see .hero-header in style.css),
+       so without this hint the browser can't start fetching it until style.css loads,
+       which delays Largest Contentful Paint. -->
+  <link rel="preload" as="image" href="img/home-page-header.jfif" fetchpriority="high">
+
   <!-- Google Web Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com/">
   <link
@@ -275,14 +280,6 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   </noscript>
 
   <!-- Libraries Stylesheet -->
-  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <noscript>
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-  </noscript>
-  <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
-  <noscript>
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
-  </noscript>
 
   <!-- Customized Bootstrap Stylesheet -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -347,7 +344,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
         <!-- Logo -->
         <a class="navbar-brand" href="./">
-          <img src="img/air-medical-logo.png" alt="Air Medical 24X7" class="logo-img" loading="eager">
+          <img src="img/air-medical-logo.png" alt="Air Medical 24X7" class="logo-img" loading="eager" width="707" height="353">
         </a>
 
 
@@ -371,6 +368,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Our Services</a>
               <div class="dropdown-menu m-0">
                 <a href="air-ambulance" class="dropdown-item">Air Ambulance</a>
+                <a href="air-ambulance-charters" class="dropdown-item">Air Ambulance Charters</a>
+                <a href="commercial-airlines-medical-transfer-services" class="dropdown-item">Commercial Airlines Medical Transfer</a>
                 <a href="commercial-flight-stretcher" class="dropdown-item">Airline Stretcher Services</a>
                 <a href="flight-medical-escort-services" class="dropdown-item">Flight Medical Escort Services</a>
                 <a href="ECMO-transfer" class="dropdown-item">ECMO Transfer Services</a>
@@ -556,7 +555,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           <div class="cert-card iso">
             <div class="cert-header">
               <div class="cert-icon-container">
-                <img src="img/ISO logo.jpg" alt="ISO" class="cert-icon-img" loading="eager">
+                <img src="img/ISO logo.jpg" alt="ISO" class="cert-icon-img" loading="eager" width="612" height="612">
               </div>
               <h4 class="cert-title">ISO 9001:2015 CERTIFIED</h4>
             </div>
@@ -569,7 +568,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           <div class="cert-card faa">
             <div class="cert-header">
               <div class="cert-icon-container">
-                <img src="img/faa-logo.png" alt="FAA" class="cert-icon-img" loading="eager">
+                <img src="img/faa-logo.png" alt="FAA" class="cert-icon-img" loading="eager" width="1024" height="1024">
               </div>
               <h4 class="cert-title">FAA-APPROVED MEDICAL EQUIPMENT</h4>
             </div>
@@ -590,7 +589,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
           <div class="position-relative h-100">
             <img class="position-absolute w-100 h-100 rounded" src="img/flight-medical.jpg"
-              alt="Flight Medics Air Medical 24X7 Global ICU Air Ambulance" style="object-fit: cover;" loading="lazy">
+              alt="Flight Medics Air Medical 24X7 Global ICU Air Ambulance" style="object-fit: cover;" loading="lazy" width="1080" height="1080">
           </div>
         </div>
         <div class="col-lg-7">
@@ -964,21 +963,21 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                   <div class="transport-options">
                     <label class="transport-card">
                       <input type="radio" name="transport" value="Air Ambulance">
-                      <img src="img/air-ambulance-charter.jpg" alt="Air Ambulance" loading="lazy">
+                      <img src="img/air-ambulance-charter.jpg" alt="Air Ambulance" loading="lazy" width="1080" height="1080">
                       <span>Air Ambulance</span>
                     </label>
 
                     <label class="transport-card">
                       <input type="radio" name="transport" value="Airline Stretcher Services">
                       <img src="img/commercial-airlines-medical-transfer-services.jpg" alt="Airline Stretcher Services"
-                        loading="lazy">
+                        loading="lazy" width="2000" height="1125">
                       <span>Airline Stretcher Services</span>
                     </label>
 
                     <label class="transport-card">
                       <input type="radio" name="transport" value="Flight Medical Escort Services">
                       <img src="img/flight-medical-escort-services.jpg" alt="Flight Medical Escort Services"
-                        loading="lazy">
+                        loading="lazy" width="2048" height="2048">
                       <span>Flight Medical Escort Services</span>
                     </label>
                   </div>
@@ -1844,6 +1843,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             Popular Links</h4>
           <div class="d-flex flex-column justify-content-start">
             <a class="text-light mb-2" href="air-ambulance"><i class="fa fa-angle-right me-2"></i>Air Ambulance</a>
+            <a class="text-light mb-2" href="air-ambulance-charters"><i class="fa fa-angle-right me-2"></i>Air Ambulance Charters</a>
+            <a class="text-light mb-2" href="commercial-airlines-medical-transfer-services"><i class="fa fa-angle-right me-2"></i>Commercial Airlines Medical Transfer</a>
             <a class="text-light mb-2" href="commercial-flight-stretcher"><i class="fa fa-angle-right me-2"></i>Airline
               Stretcher Services</a>
             <a class="text-light mb-2" href="flight-medical-escort-services"><i
@@ -1892,7 +1893,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           <div class="row mt-5">
             <div class="col-12">
               <div class="footer-world-map">
-                <img src="img/worldmap.png" alt="Worldwide air ambulance coverage of Air Medical 24X7" loading="lazy">
+                <img src="img/worldmap.png" alt="Worldwide air ambulance coverage of Air Medical 24X7" loading="lazy" width="1920" height="1229">
               </div>
             </div>
           </div>
@@ -1917,7 +1918,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         <!-- Payment Methods -->
         <div class="col-md-6 text-center text-md-end">
           <img src="img/visa-card.jpg" alt="We accept Visa, Mastercard, American Express, RuPay, UPI, Western Union"
-            class="footer-payment-img" loading="lazy">
+            class="footer-payment-img" loading="lazy" width="980" height="87">
         </div>
 
       </div>
@@ -1935,11 +1936,6 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" defer></script>
   <script src="lib/easing/easing.min.js" defer></script>
-  <script src="lib/waypoints/waypoints.min.js" defer></script>
-  <script src="lib/owlcarousel/owl.carousel.min.js" defer></script>
-  <script src="lib/tempusdominus/js/moment.min.js" defer></script>
-  <script src="lib/tempusdominus/js/moment-timezone.min.js" defer></script>
-  <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js" defer></script>
 
   <!-- Template Javascript -->
   <script src="js/main.js" defer></script>

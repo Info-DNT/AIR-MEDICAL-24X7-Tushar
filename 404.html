@@ -7,7 +7,7 @@
       var pathname = window.location.pathname;
       var search = window.location.search;
       var hash = window.location.hash;
-      
+
       var basePath = '';
       if (hostname.indexOf('.github.io') !== -1) {
         var segments = pathname.split('/');
@@ -15,18 +15,18 @@
           basePath = '/' + segments[1];
         }
       }
-      
+
       var relPath = pathname;
       if (basePath && relPath.startsWith(basePath)) {
         relPath = relPath.substring(basePath.length);
       }
-      
+
       // Handle legacy /about redirect
       if (relPath === '/about' || relPath === '/about.html' || relPath === '/about/') {
         window.location.replace(basePath + '/about-us.html' + search + hash);
         return;
       }
-      
+
       // Handle legacy singular redirects
       var cleanRelPath = relPath;
       if (cleanRelPath.endsWith('/') && cleanRelPath !== '/') {
@@ -48,7 +48,7 @@
         window.location.replace(basePath + '/services/flight-medical-escort-services.html' + search + hash);
         return;
       }
-      
+
       var lastSegment = cleanRelPath.substring(cleanRelPath.lastIndexOf('/') + 1);
       if (cleanRelPath !== '/' && cleanRelPath !== '' && !lastSegment.includes('.')) {
         var targetUrl;
@@ -106,43 +106,106 @@
     })();
   </script>
     <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>404 - Page Not Found | Air Medical 24X7</title>
+    <meta name="description" content="The page you're looking for doesn't exist or has moved. Find air ambulance, medical evacuation, and flight medical escort services from Air Medical 24X7.">
+    <meta name="robots" content="noindex, follow">
+
   <!-- Preconnect to CDNs -->
+  <link rel="preconnect" href="https://fonts.gstatic.com/">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://code.jquery.com" crossorigin>
-    <title>404 - Page Not Found | Air Medical 24X7</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="img/favicon.ico" sizes="any">
+  <link rel="icon" href="img/airmedicallogo.png" type="image/png">
+  <link rel="apple-touch-icon" href="img/airmedicallogo.png">
+
+  <!-- Google Web Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&amp;family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet">
+
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Libraries Stylesheet -->
+
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Template Stylesheet -->
+  <link href="css/style.css" rel="stylesheet">
+
     <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: #f1f8ff;
-            color: #1d2a4d;
+        .error-section {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
+            min-height: 60vh;
             text-align: center;
+            padding: 60px 20px;
         }
-        .container {
-            max-width: 500px;
+        .error-card {
+            max-width: 520px;
             padding: 40px;
             background: #fff;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
-        h1 {
+        .error-card h1 {
             color: #FB0F0C;
             margin-top: 0;
+            font-size: 2.2rem;
         }
-        a {
+        .error-card p {
+            color: #555;
+        }
+        .error-home-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 28px;
+            background: #1A346B;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .error-home-btn:hover {
+            background: #FB0F0C;
+            color: #fff;
+        }
+        .error-quick-links {
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 1px solid #eee;
+        }
+        .error-quick-links p {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #999;
+            margin-bottom: 12px;
+        }
+        .error-quick-links a {
+            display: inline-block;
+            margin: 0 8px 8px;
+            padding: 8px 16px;
+            border: 1.5px solid #1A346B;
+            border-radius: 30px;
             color: #1A346B;
             text-decoration: none;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
         }
-        a:hover {
-            text-decoration: underline;
+        .error-quick-links a:hover {
+            background: #1A346B;
+            color: #fff;
         }
     </style>
+
   <!-- Optimized Google Analytics and GTM Lazy Loader -->
   <script>
     (function() {
@@ -195,10 +258,321 @@
 
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KG4BQ6SM" height="0" width="0"
+      style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- Navbar Start -->
+  <div class="container-fluid sticky-top bg-white shadow-sm">
     <div class="container">
-        <h1>404 - Page Not Found</h1>
-        <p>The requested page does not exist or has been moved.</p>
-        <p><a href="./">Go to Homepage</a></p>
+      <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
+
+        <!-- Logo -->
+        <a class="navbar-brand" href="./">
+          <img src="img/air-medical-logo.png" alt="Air Medical 24X7" class="logo-img" loading="eager">
+        </a>
+
+        <!-- Mobile Quote Button (ONLY phone view) -->
+        <a href="./#quoteForm" class="btn btn-request btn-header-quote ms-auto me-2">Get a Quotation in 30 minutes</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Menu -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav ms-auto py-0">
+            <a href="./" class="nav-item nav-link">Home</a>
+            <a href="about-us" class="nav-item nav-link">About Us</a>
+
+            <div class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Our Services</a>
+              <div class="dropdown-menu m-0">
+                <a href="air-ambulance" class="dropdown-item">Air Ambulance</a>
+                <a href="air-ambulance-charters" class="dropdown-item">Air Ambulance Charters</a>
+                <a href="commercial-airlines-medical-transfer-services" class="dropdown-item">Commercial Airlines Medical Transfer</a>
+                <a href="commercial-flight-stretcher" class="dropdown-item">Airline Stretcher Services</a>
+                <a href="flight-medical-escort-services" class="dropdown-item">Flight Medical Escort Services</a>
+                <a href="ECMO-transfer" class="dropdown-item">ECMO Transfer Services</a>
+                <a href="organ-transplant-assistance" class="dropdown-item">Organ Transplant Assistance</a>
+                <a href="medical-tourism" class="dropdown-item">Medical Tourism</a>
+                <a href="medical-travel-assistance" class="dropdown-item">Medical Travel Assistance</a>
+                <a href="home-health-care" class="dropdown-item">Home Health Care</a>
+                <a href="hospital-acceptance" class="dropdown-item">Hospital Acceptance</a>
+                <a href="doctor-appointment" class="dropdown-item">Doctor Appointment</a>
+                <a href="second-opinion-services" class="dropdown-item">Second Opinion Services</a>
+              </div>
+            </div>
+
+            <a href="countries" class="nav-item nav-link">Countries</a>
+            <a href="blogs" class="nav-item nav-link">Blogs</a>
+            <a href="career" class="nav-item nav-link">Career</a>
+            <a href="contact-us" class="nav-item nav-link">Contact Us</a>
+          </div>
+        </div>
+
+      </nav>
     </div>
+  </div>
+  <!-- Navbar End -->
+
+  <!-- 404 Message -->
+  <div class="error-section">
+    <div class="error-card">
+        <h1>404 - Page Not Found</h1>
+        <p>The page you're looking for doesn't exist or has been moved.</p>
+        <a href="./" class="error-home-btn">Go to Homepage</a>
+        <div class="error-quick-links">
+          <p>Or try one of these</p>
+          <a href="air-ambulance">Air Ambulance</a>
+          <a href="countries">Countries We Serve</a>
+          <a href="contact-us">Contact Us</a>
+        </div>
+    </div>
+  </div>
+  <!-- End 404 Message -->
+
+  <!-- Footer Start -->
+  <div class="container-fluid bg-dark text-light mt-5 py-5">
+    <div class="container py-4 py-lg-5">
+      <div class="row g-5">
+        <div class="col-lg-3 col-md-6">
+          <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+            Get In Touch</h4>
+          <p class="mb-4">Air Medical 24X7 - Worldwide Air Ambulance and Medical Evacuation Services,
+            delivering compassionate and patient-focused care every step of the journey.</p>
+          <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>310, Garhoud Community, Near Dubai
+            International Airport Terminal-1, P.O. Box : 29086 Dubai - (U.A.E)</p>
+          <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>1111, 11th Floor, Padma Tower 1,
+            Rajendra Place, New Delhi - 110008, (INDIA)</p>
+          <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@airmedical24x7.com</p>
+                              <h6 class="text-primary text-uppercase mt-4 mb-3">Global Helpline Numbers</h6>
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;">UAE:</small>
+            <a href="tel:+971565542001" style="text-decoration: none; color: inherit;">+971 56 554 2001</a>
+          </p>
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;">India:</small>
+            <a href="tel:+918000504740" style="text-decoration: none; color: inherit;">+91 80005 04740</a>
+          </p>
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;">USA:</small>
+            <a href="tel:+18335186535" style="text-decoration: none; color: inherit;">+1 833-518-6535</a>
+          </p>
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;">UK:</small>
+            <a href="tel:+448002294751" style="text-decoration: none; color: inherit;">+44 800 229 4751</a>
+          </p>
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;">Canada:</small>
+            <a href="tel:+18337257598" style="text-decoration: none; color: inherit;">+1 833-725-7598</a>
+          </p>
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;">Vietnam:</small>
+            <a href="tel:+8412032123" style="text-decoration: none; color: inherit;">+84 1203 2123</a>
+          </p>
+          <p class="mb-0">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;">Seychelles:</small>
+            <a href="tel:+2484632054" style="text-decoration: none; color: inherit;">+248 4 632 054</a>
+          </p>
+
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+            Quick Links</h4>
+          <div class="d-flex flex-column justify-content-start">
+            <a class="text-light mb-2" href="/"><i class="fa fa-angle-right me-2"></i>Home</a>
+            <a class="text-light mb-2" href="about-us"><i class="fa fa-angle-right me-2"></i>About Us</a>
+            <a class="text-light mb-2" href="career"><i class="fa fa-angle-right me-2"></i>Career</a>
+            <a class="text-light mb-2" href="blogs"><i class="fa fa-angle-right me-2"></i>Latest Blogs</a>
+            <a class="text-light mb-2" href="countries"><i class="fa fa-angle-right me-2"></i>Global
+              Pages</a>
+            <a class="text-light mb-2" href="terms-and-conditions"><i class="fa fa-angle-right me-2"></i>Terms &
+              Conditions</a>
+            <a class="text-light mb-2" href="privacy-policy"><i class="fa fa-angle-right me-2"></i>Privacy
+              Policy</a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+            Popular Links</h4>
+          <div class="d-flex flex-column justify-content-start">
+            <a class="text-light mb-2" href="air-ambulance"><i class="fa fa-angle-right me-2"></i>Air Ambulance</a>
+            <a class="text-light mb-2" href="air-ambulance-charters"><i class="fa fa-angle-right me-2"></i>Air Ambulance Charters</a>
+            <a class="text-light mb-2" href="commercial-airlines-medical-transfer-services"><i class="fa fa-angle-right me-2"></i>Commercial Airlines Medical Transfer</a>
+            <a class="text-light mb-2" href="commercial-flight-stretcher"><i class="fa fa-angle-right me-2"></i>Airline
+              Stretcher Services</a>
+            <a class="text-light mb-2" href="flight-medical-escort-services"><i
+                class="fa fa-angle-right me-2"></i>Flight Medical Escort Services</a>
+            <a class="text-light mb-2" href="ECMO-transfer"><i class="fa fa-angle-right me-2"></i>ECMO Transfer
+              Services</a>
+            <a class="text-light mb-2" href="organ-transplant-assistance"><i class="fa fa-angle-right me-2"></i>Organ
+              Transplant Assistance</a>
+            <a class="text-light mb-2" href="medical-tourism"><i class="fa fa-angle-right me-2"></i>Medical Tourism</a>
+            <a class="text-light mb-2" href="medical-travel-assistance"><i class="fa fa-angle-right me-2"></i>Medical
+              Travel Assistance</a>
+            <a class="text-light mb-2" href="home-health-care"><i class="fa fa-angle-right me-2"></i>Home Health
+              Care</a>
+            <a class="text-light mb-2" href="hospital-acceptance"><i class="fa fa-angle-right me-2"></i>Hospital
+              Acceptance</a>
+            <a class="text-light mb-2" href="doctor-appointment"><i class="fa fa-angle-right me-2"></i>Doctor
+              Appointment</a>
+            <a class="text-light mb-2" href="second-opinion-services"><i class="fa fa-angle-right me-2"></i>Second
+              Opinion Services</a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+            Newsletter</h4>
+          <form action="#">
+            <div class="input-group">
+              <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address">
+              <button class="btn btn-primary">Sign Up</button>
+            </div>
+          </form>
+          <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>
+          <div class="d-flex">
+            <a class="footer-social-btn me-2" href="https://www.facebook.com/airmedical24x7/"><i
+                class="fab fa-facebook-f"></i></a>
+            <a class="footer-social-btn me-2" href="https://www.instagram.com/airmedical24x7/"><i
+                class="fab fa-instagram"></i></a>
+            <a class="footer-social-btn me-2" href="https://in.linkedin.com/company/airmedical24x7"><i
+                class="fab fa-linkedin-in"></i></a>
+            <a class="footer-social-btn" href="https://x.com/airmedical24x7"><svg xmlns="http://www.w3.org/2000/svg"
+                width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg></a>
+          </div>
+          <!-- World Map Section -->
+          <div class="row mt-5">
+            <div class="col-12">
+              <div class="footer-world-map">
+                <img src="img/worldmap.png" alt="Worldwide air ambulance coverage of Air Medical 24X7" loading="lazy">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- Footer Bottom -->
+  <div class="container-fluid bg-dark text-light border-top border-secondary py-4">
+    <div class="container">
+      <div class="row align-items-center g-3">
+
+        <!-- Copyright -->
+        <div class="col-md-6 text-center text-md-start">
+          <p class="mb-0">
+            &copy; <a href="/" class="text-primary">Air Medical 24X7</a>. All Rights Reserved.
+          </p>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="col-md-6 text-center text-md-end">
+          <img src="img/visa-card.jpg" alt="We accept Visa, Mastercard, American Express, RuPay, UPI, Western Union"
+            class="footer-payment-img" loading="lazy">
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer End -->
+
+  <!-- Back to Top -->
+  <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+  <!-- JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="lib/easing/easing.min.js" defer></script>
+
+  <!-- Template Javascript -->
+  <script src="js/main.js" defer></script>
+
+  <!-- Mobile Side Menu Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const toggler = document.querySelector('.navbar-toggler');
+      const navbarCollapse = document.querySelector('.navbar-collapse');
+
+      // Add contact links to mobile menu if not present
+      if (navbarCollapse) {
+        const navNav = navbarCollapse.querySelector('.navbar-nav');
+        if (navNav && !navNav.querySelector('.mobile-contact-links')) {
+          const contactLinks = document.createElement('div');
+          contactLinks.className = 'mobile-contact-links d-lg-none mt-4 border-top pt-4';
+          contactLinks.innerHTML = `
+                <a href="tel:+971565542001" class="btn btn-primary w-100 mb-3 py-3" style="display: flex; align-items: center; justify-content: center; background-color: #1d2a4d; border: none; font-weight: 700; border-radius: 8px; color: #fff;">
+                    <i class="bi bi-telephone me-2"></i> Call Now
+                </a>
+                <a href="https://wa.me/971565542001" target="_blank" rel="noopener noreferrer" class="btn btn-success w-100 py-3" style="display: flex; align-items: center; justify-content: center; background-color: #25D366; border: none; font-weight: 700; border-radius: 8px; color: #fff;">
+                    <i class="fab fa-whatsapp me-2"></i> WhatsApp
+                </a>
+            `;
+          navNav.appendChild(contactLinks);
+        }
+      }
+
+      if (toggler && navbarCollapse) {
+        toggler.addEventListener('click', function (e) {
+          e.stopPropagation();
+          navbarCollapse.classList.toggle('show');
+          document.body.style.overflow = navbarCollapse.classList.contains('show') ? 'hidden' : '';
+        });
+
+        // Close on click outside
+        document.addEventListener('click', function (event) {
+          if (!navbarCollapse.contains(event.target) && !toggler.contains(event.target) && navbarCollapse.classList.contains('show')) {
+            navbarCollapse.classList.remove('show');
+            document.body.style.overflow = '';
+          }
+        });
+
+        // Close on link click
+        const navLinks = navbarCollapse.querySelectorAll('.nav-link:not(.dropdown-toggle)');
+        navLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            navbarCollapse.classList.remove('show');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+    });
+  </script>
+
+  <!-- Mobile Sticky bottom CTA Bar -->
+  <div class="mobile-sticky-cta">
+    <div class="row g-2">
+      <div class="col-4">
+        <a href="tel:+971565542001" class="btn btn-call w-100 py-2.5 text-center">
+          <i class="fas fa-phone-alt me-1"></i> Call
+        </a>
+      </div>
+      <div class="col-4">
+        <a href="https://wa.me/971565542001" target="_blank" rel="noopener noreferrer"
+          class="btn btn-whatsapp w-100 py-2.5 text-center">
+          <i class="fab fa-whatsapp me-1"></i> WhatsApp
+        </a>
+      </div>
+      <div class="col-4">
+        <a href="sms:+971565542001" class="btn btn-imessage w-100 py-2.5 text-center">
+          <i class="fas fa-comment me-1"></i> iMessage
+        </a>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>

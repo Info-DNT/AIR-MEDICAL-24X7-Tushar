@@ -3,6 +3,14 @@ RewriteEngine On
 RewriteBase /
 
 # ============================================================
+# 0. CANONICAL HOST: redirect www to non-www
+#    (fixes duplicate-content issue: site was answering identically
+#    on www.airmedical24x7.com and airmedical24x7.com with no redirect)
+# ============================================================
+RewriteCond %{HTTP_HOST} ^www\.airmedical24x7\.com$ [NC]
+RewriteRule ^(.*)$ https://airmedical24x7.com/$1 [R=301,L]
+
+# ============================================================
 # SECURITY HEADERS
 # ============================================================
 <IfModule mod_headers.c>
@@ -12,6 +20,32 @@ RewriteBase /
   Header always set Permissions-Policy "geolocation=(), camera=(), microphone=()"
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
   Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# ============================================================
+# BROWSER CACHING — static assets change rarely; let repeat
+# visitors reuse their local copy instead of re-downloading
+# ============================================================
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/javascript "access plus 1 month"
+  ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.(jpe?g|png|gif|webp|svg|ico|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
 </IfModule>
 
 # ============================================================
