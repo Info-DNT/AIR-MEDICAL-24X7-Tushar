@@ -44,7 +44,7 @@ async function loadBlog() {
   const sanitizedTitle = window.sanitize24X7(data.title);
   titleEl.innerText = sanitizedTitle;
 
-  imageEl.src = data.featured_image || "img/airmedicallogo.png";
+  imageEl.src = data.featured_image || "img/airmedicallogo.webp";
   imageEl.alt = sanitizedTitle;
 
   contentEl.innerHTML = window.sanitize24X7(data.content);

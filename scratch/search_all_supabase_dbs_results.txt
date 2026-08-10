@@ -1,7 +1,0 @@
-=== DB: main_db (https://dtiirdimtbmkvryvqten.supabase.co/rest/v1) ===
-  Table 'comments': Fetched 0 rows.
-=== DB: blogs_db (https://eiqpvuciihwmuznbsyob.supabase.co/rest/v1) ===
-  Table 'blogs': Fetched 10 rows.
-    Match in row 0: {"id": "c1abdb42-dc4a-4a36-8728-71afd3278779", "title": "Chikungunya Virus Disease: Global Impact and Recent Outbreaks", "slug": "chikungunya-virus-disease-global-impact-and-recent-outbreaks", "excerp...
-    Match in row 7: {"id": "b24c15d1-ec9d-476c-b93d-82cd2e43aa09", "title": "How Air Ambulance Services Speed Up Organ Transplants and Emergency Medical Transfers", "slug": "how-air-ambulance-services-speed-up-organ-tran...
-  Table 'comments': Fetched 0 rows.

@@ -13,6 +13,17 @@
     --dark: #1D2A4D;
 }
 
+/* Inline icon SVGs — replaces the bootstrap-icons webfont, which was loading a
+   full icon library from a third render-blocking origin to draw four glyphs.
+   Sized in em so they scale with font-size exactly as the font glyphs did. */
+.bi {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.125em;
+    flex-shrink: 0;
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -140,13 +151,28 @@ h6 {
     text-align: center;
 }
 
+/* Visibility is a class toggle now that main.js is jQuery-free (was .fadeIn()/.fadeOut()).
+   Kept off the `display` property so the fade can actually animate. */
 .back-to-top {
     position: fixed;
-    display: none;
     right: 30px;
     bottom: 0;
     border-radius: 50% 50% 0 0;
     z-index: 99;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s ease, visibility .3s ease;
+}
+
+.back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .back-to-top {
+        transition: none;
+    }
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -201,12 +227,36 @@ h6 {
 }
 
 .hero-header {
-    background: url(../img/home-page-header.jfif) 5% center no-repeat;
+    /* The homepage hero image is now a real <img class="hero-bg"> in the markup so it can
+       use srcset and be preloaded, instead of a background-image that can't paint until
+       this stylesheet has downloaded and parsed. Colour remains as the paint-behind. */
+    background-color: var(--primary);
     background-size: cover;
     min-height: 600px;
     /* Added to give image more vertical space */
     display: flex;
     align-items: center;
+}
+
+/* Homepage hero: image layer (z0) -> mobile gradient overlay ::before (z1) -> content (z2) */
+.home-hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.home-hero .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 5% center;
+    z-index: 0;
+}
+
+.home-hero>.container {
+    position: relative;
+    z-index: 2;
 }
 
 .hero-header .container.py-5 {
@@ -235,6 +285,11 @@ h6 {
 @media (min-width: 992px) and (max-width: 1400px) {
     .hero-header {
         background-position: left center !important;
+    }
+
+    /* keep the <img> hero framed exactly like the old background-position */
+    .home-hero .hero-bg {
+        object-position: left center;
     }
 }
 
@@ -1349,6 +1404,11 @@ h6 {
         min-height: 400px !important;
         /* Sensible mobile height */
         background-position: left center !important;
+    }
+
+    /* keep the <img> hero framed exactly like the old background-position */
+    .home-hero .hero-bg {
+        object-position: left center;
         background-size: cover !important;
         padding: 60px 0 !important;
         display: flex;
@@ -1772,6 +1832,11 @@ h6 {
         min-height: 450px !important;
         height: auto !important;
         background-position: left center !important;
+    }
+
+    /* keep the <img> hero framed exactly like the old background-position */
+    .home-hero .hero-bg {
+        object-position: left center;
         /* Slide tarmac crew to the left/center on mobile */
         background-size: cover !important;
         padding: 60px 0 !important;

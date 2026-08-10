@@ -14,26 +14,17 @@
 
     <!-- Favicon -->
     <link rel="icon" href="../img/favicon.ico" sizes="any">
-  <link rel="icon" href="../img/airmedicallogo.png" type="image/png">
-  <link rel="apple-touch-icon" href="../img/airmedicallogo.png">
+  <link rel="icon" href="../img/airmedicallogo.webp" type="image/webp">
+  <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
 
     <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com/">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&amp;family=Roboto:wght@400;700&amp;display=swap"
-        rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
-  <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet"></noscript>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-  <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"></noscript>
-
+<!-- Icon Font Stylesheet -->
+    <link href="../lib/fontawesome/fontawesome-subset.min.css" rel="stylesheet">
     <!-- Libraries Stylesheet -->
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-  <noscript><link href="../css/bootstrap.min.css" rel="stylesheet"></noscript>
+      <link href="../lib/fonts/fonts.css" rel="stylesheet">
+  <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
     <link href="../css/style.css" rel="stylesheet">
@@ -48,7 +39,7 @@
     "@type": "MedicalOrganization",
     "name": "Air Medical 24X7",
     "url": "https://airmedical24x7.com/",
-    "logo": "https://airmedical24x7.com/img/air-medical-logo.png"
+    "logo": "https://airmedical24x7.com/img/air-medical-logo.webp"
   },
   "areaServed": {
     "@type": "Country",
@@ -151,7 +142,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             <!-- Logo -->
             <a class="navbar-brand" href="../">
-                <img src="../img/air-medical-logo.png" alt="Air Medical 24X7" class="logo-img" loading="eager">
+                <img src="../img/air-medical-logo.webp" alt="Air Medical 24X7" class="logo-img" loading="eager" width="220" height="110">
             </a>
 
             
@@ -222,7 +213,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="row gx-5">
                 <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
                     <div class="position-relative h-100">
-                        <img class="position-absolute w-100 h-100 rounded" src="../img/angola-country.png"
+                        <img class="position-absolute w-100 h-100 rounded" src="../img/angola-country.webp"
                             style="object-fit: cover;" loading="lazy">
                     </div>
                 </div>
@@ -628,7 +619,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <div class="row mt-5">
                                <div class="col-12">
                                <div class="footer-world-map">
-                             <img src="../img/worldmap.png" alt="Worldwide air ambulance coverage of Air Medical 24X7" loading="lazy">
+                             <img src="../img/worldmap.webp" alt="Worldwide air ambulance coverage of Air Medical 24X7" loading="lazy">
                              </div>
                               </div>
                                 </div>
@@ -652,7 +643,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
             <!-- Payment Methods -->
             <div class="col-md-6 text-center text-md-end">
-                <img src="../img/visa-card.jpg"
+                <img src="../img/visa-card.webp"
                     alt="We accept Visa, Mastercard, American Express, RuPay, UPI, Western Union"
                     class="footer-payment-img" loading="lazy">
             </div>
@@ -665,17 +656,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
     <!-- Back to Top -->
-    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/></svg></a>
 
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="../lib/easing/easing.min.js" defer></script>
 
     <!-- Template Javascript -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-<script src="../js/config.js" defer></script>
 <script src="../js/main.js" defer></script>
 
 
@@ -694,7 +681,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             contactLinks.className = 'mobile-contact-links d-lg-none mt-4 border-top pt-4';
             contactLinks.innerHTML = `
                 <a href="tel:+971565542001" class="btn btn-primary w-100 mb-3 py-3" style="display: flex; align-items: center; justify-content: center; background-color: #1d2a4d; border: none; font-weight: 700; border-radius: 8px; color: #fff;">
-                    <i class="bi bi-telephone me-2"></i> Call Now
+                    <svg class="bi me-2" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/></svg> Call Now
                 </a>
                 <a href="https://wa.me/971565542001" target="_blank" rel="noopener noreferrer" class="btn btn-success w-100 py-3" style="display: flex; align-items: center; justify-content: center; background-color: #25D366; border: none; font-weight: 700; border-radius: 8px; color: #fff;">
                     <i class="fab fa-whatsapp me-2"></i> WhatsApp

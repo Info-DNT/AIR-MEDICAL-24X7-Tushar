@@ -9,23 +9,18 @@
 
   <!-- Favicon -->
   <link rel="icon" href="img/favicon.ico" sizes="any">
-  <link rel="icon" href="img/airmedicallogo.png" type="image/png">
-  <link rel="apple-touch-icon" href="img/airmedicallogo.png">
+  <link rel="icon" href="img/airmedicallogo.webp" type="image/webp">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 
   <!-- Google Web Fonts -->
-  <link rel="preconnect" href="https://fonts.gstatic.com/">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Icon Font Stylesheet -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
+<!-- Icon Font Stylesheet -->
+  <link href="lib/fontawesome/fontawesome-subset.min.css" rel="stylesheet">
   <!-- Quill Rich Text Editor Stylesheet -->
   <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
 
   <!-- Customized Bootstrap Stylesheet -->
+    <link href="lib/fonts/fonts.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
-  <noscript><link href="css/bootstrap.min.css" rel="stylesheet"></noscript>
 
   <!-- Template Stylesheet -->
   <link href="css/style.css" rel="stylesheet">
@@ -267,7 +262,7 @@
   <!-- ==================== LOGIN SCREEN ==================== -->
   <div id="login-view" class="login-container">
     <div class="login-card">
-      <img src="img/air-medical-logo.png" alt="Air Medical 24X7" class="login-logo">
+      <img src="img/air-medical-logo.webp" alt="Air Medical 24X7" class="login-logo" width="220" height="110">
       <h3 class="text-center fw-bold mb-4" style="color: #1d2a4d;">Admin Panel Login</h3>
 
       <div id="login-alert" class="alert alert-danger d-none" role="alert"></div>
@@ -297,7 +292,7 @@
     <header class="admin-header py-3 px-4 text-white d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center gap-3">
         <a href="./">
-          <img src="img/air-medical-logo.png" alt="Air Medical 24X7" class="admin-nav-logo bg-white p-1.5 rounded">
+          <img src="img/air-medical-logo.webp" alt="Air Medical 24X7" class="admin-nav-logo bg-white p-1.5 rounded" width="220" height="110">
         </a>
         <span class="fs-5 fw-bold d-none d-sm-inline">Blog Editor Dashboard</span>
       </div>
@@ -526,12 +521,12 @@
                   <h5 class="fw-bold mb-3" style="color: #1d2a4d;"><i class="fas fa-eye me-2 text-primary"></i>Real-time Live Preview</h5>
                   
                   <div class="preview-card bg-white">
-                    <img id="preview-blog-image" class="img-fluid w-100 rounded mb-4 shadow-sm" src="img/airmedicallogo.png" alt="Featured Image Preview" style="height: 240px; object-fit: cover; display: none;">
+                    <img id="preview-blog-image" class="img-fluid w-100 rounded mb-4 shadow-sm" src="img/airmedicallogo.webp" alt="Featured Image Preview" style="height: 240px; object-fit: cover; display: none;">
                     
                     <h1 id="preview-blog-title" class="mb-4 fw-bold" style="color: #1d2a4d; font-size: 28px; line-height: 1.3;">Blog Title Preview</h1>
                     
                     <div class="d-flex align-items-center border-bottom pb-3 mb-4 text-muted small">
-                      <img class="rounded-circle me-2" src="img/airmedicallogo.png" width="40" height="40" alt="Author">
+                      <img class="rounded-circle me-2" src="img/airmedicallogo.webp" width="40" height="40" alt="Author">
                       <span>Written by: <strong id="preview-blog-author" class="text-dark">Air Medical 24X7</strong></span>
                       <span class="mx-2">•</span>
                       <span>Category: <strong id="preview-blog-category" class="text-primary">General</strong></span>
@@ -862,7 +857,6 @@
   </div>
 
   <!-- JavaScript Libraries -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Supabase client and Config scripts -->

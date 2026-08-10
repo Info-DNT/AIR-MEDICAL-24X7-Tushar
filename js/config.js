@@ -91,7 +91,7 @@ function showQuoteSuccessModal() {
 
   const isRoot = !window.location.pathname.includes("/services/") &&
                  !window.location.pathname.includes("/countries/");
-  const logoPath = isRoot ? "img/air-medical-logo.png" : "../img/air-medical-logo.png";
+  const logoPath = isRoot ? "img/air-medical-logo.webp" : "../img/air-medical-logo.webp";
 
   const overlay = document.createElement("div");
   overlay.id = "quoteSuccessModal";

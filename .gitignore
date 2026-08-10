@@ -1,0 +1,9 @@
+# Local dev scratch — never publish: has contained live credentials
+scratch/
+
+# OS / editor noise
+Thumbs.db
+.DS_Store
+
+# Local dev server logs
+*.log

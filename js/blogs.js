@@ -53,7 +53,7 @@ async function loadBlogs(reset = false) {
       <div class="premium-card p-0 overflow-hidden h-100">
         <a href="blogs-detail.html?slug=${blog.slug}" class="d-block">
           <img class="img-fluid w-100"
-               src="${blog.featured_image || "img/airmedicallogo.png"}"
+               src="${blog.featured_image || "img/airmedicallogo.webp"}"
                alt="${title}" style="height: 220px; object-fit: cover;">
         </a>
         <div class="p-4">

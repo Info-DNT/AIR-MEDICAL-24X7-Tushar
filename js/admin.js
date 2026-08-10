@@ -678,7 +678,7 @@ function renderBlogsTable(list) {
 
     tr.innerHTML = `
       <td>
-        <img src="${blog.featured_image || 'img/airmedicallogo.png'}" class="thumbnail-img" alt="Blog Featured Image">
+        <img src="${blog.featured_image || 'img/airmedicallogo.webp'}" class="thumbnail-img" alt="Blog Featured Image">
       </td>
       <td>
         <div class="fw-bold text-dark">${window.sanitize24X7(blog.title)}</div>
