@@ -19,11 +19,10 @@
 
     <!-- Google Web Fonts -->
 <!-- Icon Font Stylesheet -->
-    <link href="../lib/fontawesome/fontawesome-subset.min.css" rel="stylesheet">
     <!-- Libraries Stylesheet -->
 
     <!-- Customized Bootstrap Stylesheet -->
-      <link href="../lib/fonts/fonts.css" rel="stylesheet">
+      <link href="../lib/site-fonts.css" rel="stylesheet">
   <link href="../css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
@@ -87,18 +86,23 @@
         if (scriptsLoaded) return;
         scriptsLoaded = true;
 
+        // container first, so tags inside GTM fire before the Ads configs
+        if (window.loadGTM) window.loadGTM();
+
         // Google Tag Manager
-        (function (w, d, s, l, i) {
-          w[l] = w[l] || []; w[l].push({
-            'gtm.start': new Date().getTime(), event: 'gtm.js'
-          });
-          var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-          var jScript = d.createElement(s);
-          jScript.async = true;
-          jScript.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-          f.parentNode.insertBefore(jScript, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-KG4BQ6SM');
+        // GTM container — deferred. dataLayer is created synchronously so any early
+    // push (conversions, ecommerce) still queues; only the container download waits.
+    window.dataLayer = window.dataLayer || [];
+    window.loadGTM = function () {
+      if (window.__gtmLoaded) return;
+      window.__gtmLoaded = true;
+      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+      var f = document.getElementsByTagName('script')[0];
+      var j = document.createElement('script');
+      j.async = true;
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-KG4BQ6SM';
+      f.parentNode.insertBefore(j, f);
+    };
 
         // Google Ads Tag 1
         var g1 = document.createElement('script');
@@ -695,9 +699,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </form>
                     <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>
                     <div class="d-flex">
-                        <a class="footer-social-btn me-2" href="https://www.facebook.com/airmedical24x7/"><i class="fab fa-facebook-f"></i></a>
-              <a class="footer-social-btn me-2" href="https://www.instagram.com/airmedical24x7/"><i class="fab fa-instagram"></i></a>
-              <a class="footer-social-btn me-2" href="https://in.linkedin.com/company/airmedical24x7"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="footer-social-btn me-2" href="https://www.facebook.com/airmedical24x7/" aria-label="Air Medical 24X7 on Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a class="footer-social-btn me-2" href="https://www.instagram.com/airmedical24x7/" aria-label="Air Medical 24X7 on Instagram"><i class="fab fa-instagram"></i></a>
+              <a class="footer-social-btn me-2" href="https://in.linkedin.com/company/airmedical24x7" aria-label="Air Medical 24X7 on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
               <a class="footer-social-btn" href="https://x.com/airmedical24x7"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
                     </div>
                             <!-- World Map Section -->
@@ -741,7 +745,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
     <!-- Back to Top -->
-    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/></svg></a>
+    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top" aria-label="Back to top"><svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/></svg></a>
 
 
     <!-- JavaScript Libraries -->
