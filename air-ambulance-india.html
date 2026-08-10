@@ -5,9 +5,25 @@
 
 <head>
   <meta charset="utf-8">
-  
+    <!-- Event snippet for Click to call (1) conversion page
+In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+<script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') { window.location = url; }
+  };
+  gtag('event', 'conversion', {'send_to': 'AW-10787559741/YQ5NCLCfnfsbEL2y9Jco', 'value': 1.0, 'currency': 'INR', 'event_callback': callback});
+  gtag('event', 'conversion', {'send_to': 'AW-16644189187/l7ACCInt7P8bEIPYyIA-', 'value': 1.0, 'currency': 'INR'});
+  return false;
+}
+</script>
 
-  <script type="application/ld+json">
+
+
+
+    
+
+    <script type="application/ld+json">
 {
   "@type": "MedicalOrganization",
   "@id": "https://airmedical24x7.com/#organization",
@@ -70,10 +86,10 @@
     "@type": "PostalAddress",
     "streetAddress": "310, Garhoud Community, Near Dubai International Airport Terminal-1",
     "addressLocality": "Dubai",
+    "postalCode": "29086",
     "addressCountry": "AE"
   },
   "telephone": "+971565542001",
-  "areaServed": "Middle East",
   "parentOrganization": {
     "@id": "https://airmedical24x7.com/#organization"
   },
@@ -87,13 +103,12 @@
   "name": "Air Medical 24X7 India",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Padma Tower 1, Rajendra Place",
+    "streetAddress": "1111, 11th Floor, Padma Tower 1, Rajendra Place",
     "addressLocality": "New Delhi",
     "postalCode": "110008",
     "addressCountry": "IN"
   },
   "telephone": ["+911171859928", "+919217710155"],
-  "areaServed": "India",
   "parentOrganization": {
     "@id": "https://airmedical24x7.com/#organization"
   },
@@ -102,79 +117,119 @@
 </script>
   <script type="application/ld+json">
 {
-  "@type": "AboutPage",
-  "@id": "https://airmedical24x7.com/about-us",
-  "url": "https://airmedical24x7.com/about-us",
-  "name": "About Us | Air Medical 24X7",
-  "description": "Air Medical 24X7 - Worldwide coverage.",
-  "about": {
+  "@type": "MedicalBusiness",
+  "@id": "https://airmedical24x7.com/countries#service",
+  "name": "Worldwide Air Ambulance Services",
+  "url": "https://airmedical24x7.com/countries",
+  "description": "Air Medical 24X7 provides air ambulance, ICU-equipped medical transport, patient transfer, and medical escort services in 195+ countries.",
+  "provider": {
     "@id": "https://airmedical24x7.com/#organization"
   },
-  "@context": "https://schema.org"
-}
-</script>
-  <script type="application/ld+json">
-{
-  "@type": "BreadcrumbList",
-  "@id": "https://airmedical24x7.com/about-us#breadcrumb",
-  "itemListElement": [
+  "areaServed": "Worldwide",
+  "availableService": [
     {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://airmedical24x7.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "About Us",
-      "item": "https://airmedical24x7.com/about-us"
+      "@type": "MedicalProcedure",
+      "name": "Air Ambulance Transport",
+      "howPerformed": "Patients are transported safely via ICU-equipped aircraft with professional medical escorts."
     }
   ],
   "@context": "https://schema.org"
 }
 </script>
+  <script type="application/ld+json">
+{
+  "@type": "WebPage",
+  "@id": "https://airmedical24x7.com/countries#webpage",
+  "url": "https://airmedical24x7.com/countries",
+  "name": "Air Ambulance Services Worldwide \u2013 Air Medical 24X7",
+  "description": "Explore Air Medical 24X7's air ambulance and medical evacuation services across 195+ countries. Fast, safe, and reliable patient transport with expert medical support.",
+  "about": {
+    "@id": "https://airmedical24x7.com/#organization"
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://airmedical24x7.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Global Pages",
+        "item": "https://airmedical24x7.com/countries"
+      }
+    ]
+  },
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [
+      "h1",
+      "h2",
+      ".display-4",
+      ".text-primary"
+    ]
+  },
+  "@context": "https://schema.org"
+}
+</script>
+
+    
+    <title>Air Ambulance India | Emergency ICU Medical Flights</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="Emergency air ambulance service in India. Safe, bed-to-bed patient transfers, critical care medical flights, and organ transport domestic and globally.">
+    <meta name="keywords" content="air ambulance india, medical flight india, domestic air ambulance india, patient transfer india, air ambulance cost india">
+    <meta name="author" content="Air Medical 24X7">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://airmedical24x7.com/air-ambulance-india">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://airmedical24x7.com/air-ambulance-india">
+    <meta property="og:title" content="Air Ambulance India | Emergency ICU Medical Flights">
+    <meta property="og:description" content="Emergency air ambulance service in India. Safe, bed-to-bed patient transfers, critical care medical flights, and organ transport domestic and globally.">
+    <meta property="og:image" content="https://airmedical24x7.com/img/airmedicallogo.webp">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://airmedical24x7.com/air-ambulance-india">
+    <meta property="twitter:title" content="Air Ambulance Services Worldwide | Air Medical 24X7">
+    <meta property="twitter:description" content="Air Medical 24X7 provides fast, reliable Air Ambulance and Medical Evacuation services in 195+ countries. Expert medical escort, 24X7 support, global coverage.">
+    <meta property="twitter:image" content="https://airmedical24x7.com/img/airmedicallogo.webp">
 
 
 
-  
-  <title>Medical Repatriation Dubai | Global Patient Transfer</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta name="keywords" content="medical repatriation dubai, patient repatriation dubai, emergency repatriation dubai, global repatriation dubai">
-  <meta name="description" content="Worldwide medical repatriation from Dubai. Secure, bed-to-bed patient transfers, commercial flight stretchers, and air ambulance with medical escort.">
-  <link rel="canonical" href="https://airmedical24x7.com/repatriation-services-dubai">
-  <meta name="robots" content="index, follow">
-
-
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Medical Repatriation Dubai | Global Patient Transfer">
-  <meta property="og:description" content="Worldwide medical repatriation from Dubai. Secure, bed-to-bed patient transfers, commercial flight stretchers, and air ambulance with medical escort.">
-  <meta property="og:url" content="https://airmedical24x7.com/repatriation-services-dubai">
-  <meta property="og:image" content="https://airmedical24x7.com/img/about-us.webp">
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Medical Repatriation Dubai | Global Patient Transfer">
-  <meta name="twitter:description" content="Worldwide medical repatriation from Dubai. Secure, bed-to-bed patient transfers, commercial flight stretchers, and air ambulance with medical escort.">
-  <meta name="twitter:image" content="https://airmedical24x7.com/img/about-us.webp">
-
-
-
-
-  <!-- Favicon -->
-  <link rel="icon" href="img/favicon.ico" sizes="any">
+    <!-- Favicon -->
+    <link rel="icon" href="img/favicon.ico" sizes="any">
   <link rel="icon" href="img/airmedicallogo.webp" type="image/webp">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 
-  <!-- Google Web Fonts -->
+    <!-- Google Web Fonts -->
 <!-- Icon Font Stylesheet -->
-  <!-- Libraries Stylesheet -->
+    <!-- Libraries Stylesheet -->
 
-  <!-- Customized Bootstrap Stylesheet -->
-    <link href="lib/site-fonts.css" rel="stylesheet">
+    <!-- Customized Bootstrap Stylesheet -->
+      <link href="lib/site-fonts.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Template Stylesheet -->
-  <link href="css/style.css" rel="stylesheet">
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "How quickly can you arrange an air ambulance?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We can typically coordinate flight readiness and clearances within 30 minutes of receiving patient details."
+      }
+    }]
+  }
+  </script>
   <!-- Optimized Google Analytics and GTM Lazy Loader -->
   <script>
     (function() {
@@ -233,44 +288,42 @@
 </head>
 
 <body>
-  <!-- Google Tag Manager (noscript) -->
-  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KG4BQ6SM" height="0" width="0"
-      style="display:none;visibility:hidden"></iframe></noscript>
-  <!-- End Google Tag Manager (noscript) -->
-  
+        
 
 
-  <!-- Navbar Start -->
-  <div class="container-fluid sticky-top bg-white shadow-sm">
+<!-- Navbar Start -->
+<div class="container-fluid sticky-top bg-white shadow-sm">
     <div class="container">
-      <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
+        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
 
-        <!-- Logo -->
-        <a class="navbar-brand" href="./">
-          <img src="img/air-medical-logo.webp" alt="Air Medical 24X7" class="logo-img" loading="eager" width="220" height="110">
-        </a>
+            <!-- Logo -->
+            <a class="navbar-brand" href="./">
+                <img src="img/air-medical-logo.webp" alt="Air Medical 24X7" class="logo-img" loading="eager" width="220" height="110">
+            </a>
 
-        
+            
 
-        <!-- Mobile Call + WhatsApp (ONLY mobile/tablet) -->
-        
+            <!-- Mobile Call + WhatsApp (ONLY mobile/tablet) -->
+            
 
-        <!-- Bootstrap Menu Button -->
-        <!-- Mobile Quote Button (ONLY phone view) -->
-        <a href="#quoteForm" class="btn btn-request btn-header-quote ms-auto me-2">Get a Quotation in 30 minutes</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+            <!-- Bootstrap Menu Button -->
+            <!-- Mobile Quote Button (ONLY phone view) -->
+            <a href="#quoteForm" class="btn btn-request btn-header-quote ms-auto me-2">Get a Quotation in 30 minutes</a>
+            <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <!-- Menu -->
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <div class="navbar-nav ms-auto py-0">
-            <a href="./" class="nav-item nav-link">Home</a>
-            <a href="about-us" class="nav-item nav-link">About Us</a>
+            <!-- Menu -->
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="./" class="nav-item nav-link">Home</a>
+                    <a href="about-us" class="nav-item nav-link">About Us</a>
 
-            <div class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Our Services</a>
-              <div class="dropdown-menu m-0">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Our Services</a>
+                        <div class="dropdown-menu m-0">
                 <a href="air-ambulance" class="dropdown-item">Air Ambulance</a>
                 <a href="air-ambulance-charters" class="dropdown-item">Air Ambulance Charters</a>
                 <a href="commercial-airlines-medical-transfer-services" class="dropdown-item">Commercial Airlines Medical Transfer</a>
@@ -285,41 +338,41 @@
                 <a href="doctor-appointment" class="dropdown-item">Doctor Appointment</a>
                 <a href="second-opinion-services" class="dropdown-item">Second Opinion Services</a>
               </div>
+                    </div>
+          
+
+                    <a href="blogs" class="nav-item nav-link">Blogs</a>
+                    <a href="career" class="nav-item nav-link">Career</a>
+                    <a href="contact-us" class="nav-item nav-link">Contact Us</a>
+                </div>
             </div>
-          
 
-            <a href="blogs" class="nav-item nav-link">Blogs</a>
-            <a href="career" class="nav-item nav-link">Career</a>
-            <a href="contact-us" class="nav-item nav-link">Contact Us</a>
-          
-          
-          </div>
-        </div>
-
-      </nav>
+        </nav>
     </div>
-  </div>
-  <!-- Navbar End -->
+</div>
+<!-- Navbar End -->
 
   <!-- SOS Popup -->
 
 
-  
-  
-
-  
-  
-  
+        
 
 
-  
+
+
+
+
+
+
+
+
     <!-- Hero Start -->
     <div class="container-fluid bg-primary py-5 mb-5 hero-header" style="background: linear-gradient(rgba(26, 52, 107, 0.85), rgba(26, 52, 107, 0.85)); background-size: cover;">
         <div class="container py-5">
             <div class="row justify-content-start">
                 <div class="col-lg-9 text-center text-lg-start">
-                    <h1>Medical Repatriation Services Dubai</h1>
-                    <p class="text-white fs-5">Consular assistance, embassy clearances, and global bed-to-bed medical repatriation.</p>
+                    <h1>Air Ambulance India</h1>
+                    <p class="text-white fs-5">Emergency critical care flights and patient transfers across India and worldwide.</p>
                     <div class="pt-3">
                         <a href="tel:+971565542001" class="btn btn-request me-3 py-3 px-4"><i class="fas fa-phone-alt me-2"></i> Call emergency desk</a>
                         <a href="https://wa.me/971565542001" target="_blank" rel="noopener noreferrer" class="btn btn-ghost py-3 px-4"><i class="fab fa-whatsapp me-2"></i> WhatsApp Quote</a>
@@ -337,16 +390,16 @@
             <div class="row gx-5">
                 <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
                     <div class="position-relative h-100">
-                        <img class="position-absolute w-100 h-100 rounded" src="img/uae-country.webp"
-                            alt="Worldwide Medical Repatriation Services from Dubai" style="object-fit: cover;" loading="lazy">
+                        <img class="position-absolute w-100 h-100 rounded" src="img/flight-medical.webp"
+                            alt="24X7 ICU Air Ambulance Service in India" style="object-fit: cover;" loading="lazy">
                     </div>
                 </div>
                 <div class="col-lg-7">
                     <div class="mb-4">
                         <h3 class="d-inline-block text-primary text-uppercase border-bottom border-5">About Our Service</h3>
-                        <h2 class="about-heading">Worldwide Medical Repatriation Services from Dubai</h2>
+                        <h2 class="about-heading">24X7 ICU Air Ambulance Service in India</h2>
                     </div>
-                    <p class="fs-5">For tourists, expatriates, and corporate travelers who fall ill in Dubai, returning to their home country for treatment is often the best choice. Air Medical 24X7 coordinates complete medical repatriation.</p>
+                    <p class="fs-5">Providing domestic and international air ambulance flights across India. With our primary Indian operations center in Rajendra Place, New Delhi, we coordinate seamless, fast bed-to-bed medical transfers.</p>
                     <div class="row g-3 pt-3">
                         <div class="col-sm-3 col-6">
                             <div class="premium-card text-center py-4">
@@ -386,70 +439,75 @@
             
             <div class="row g-5 align-items-start">
                 <div class="col-lg-7">
-                    <h2 class="mb-4 text-primary">Bringing Loved Ones Home Safely</h2>
-                    <p>We work closely with major travel insurance providers, corporate assistance programs, international embassies, and family members to manage all logistical aspects of returning a patient home safely.</p>
+                    <h2 class="mb-4 text-primary">Emergency ICU Flights Across India</h2>
+                    <p>Air Medical 24X7 provides specialized air ambulance services across all major cities in India, including Delhi NCR, Mumbai, Chennai, Bangalore, Hyderabad, Guwahati, and Kolkata. We connect patients with the country's leading super-specialty hospitals (Medanta, Fortis, Max, Apollo, AIIMS) via emergency medical flights.</p>
                     
-                    <h4 class="mt-4 text-dark">Our Repatriation Capabilities:</h4>
+                    <h4 class="mt-4 text-dark">Comprehensive Patient Shifting in India</h4>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-check text-red me-2"></i> <strong>Embassy & Customs Clearances:</strong> Coordination of visa paperwork, border control approvals, and medical declarations.</li>
-                        <li class="mb-2"><i class="fas fa-check text-red me-2"></i> <strong>Flexible Transport Modes:</strong> Private ICU air ambulances or scheduled airline stretchers depending on patient stability.</li>
-                        <li class="mb-2"><i class="fas fa-check text-red me-2"></i> <strong>Hospital Handover:</strong> Managing direct transfers from local Dubai clinics to the receiving facility in the patient's home country.</li>
+                        <li class="mb-2"><i class="fas fa-check text-red me-2"></i> <strong>Wide Fleet Availability:</strong> Private turbo-props for shorter domestic runways and heavy jets for long-haul international flights.</li>
+                        <li class="mb-2"><i class="fas fa-check text-red me-2"></i> <strong>Critical Care Doctors:</strong> Intensive care specialists and anesthesiologists onboard every flight.</li>
+                        <li class="mb-2"><i class="fas fa-check text-red me-2"></i> <strong>Organ Transport:</strong> Rapid logistics for time-critical organ transplant transfers.</li>
+                        <li class="mb-2"><i class="fas fa-check text-red me-2"></i> <strong>Cost-Effective Options:</strong> Offering custom flight stretcher solutions on scheduled domestic airlines.</li>
                     </ul>
+
+                    <h4 class="mt-4 text-dark">Domestic & International Approvals</h4>
+                    <p>Our operations team handles all DGCA compliance approvals, landing rights at defense airports, and ground coordination with local authorities to ensure zero delay in emergency situations.</p>
                 </div>
                 
-        <!-- Right Section - New Form -->
-        <div class="col-lg-5">
-          <div class="bg-white text-center rounded p-5 shadow-lg">
-            <h2 class="mb-2">Get a Quotation in 30 minutes</h2>
-            <div class="form-underline"></div>
-            <form id="quoteForm">
-              <div class="row g-3 text-start">
-                <!-- Full Name -->
-                <div class="col-12 col-sm-12">
-                  <label class="fw-bold mb-1">Full Name</label>
-                  <input type="text" id="name" name="name" class="form-control bg-light border-0"
-                    placeholder="Enter your name"  pattern="[A-Za-z ]+" style="height:55px" required>
-                </div>
+            <!-- RIGHT FORM -->
+            <div class="col-lg-5">
+                <div class="bg-light rounded p-4 p-lg-5 shadow-sm">
+                    <h4 class="text-primary mb-2 text-center">
+                        Get a Free Quotation
+                    </h4>
+                    <form id="quoteForm">
+                      <div class="row g-3 text-start">
+                        <!-- Full Name -->
+                        <div class="col-12 col-sm-12">
+                          <label class="fw-bold mb-1">Full Name</label>
+                          <input type="text" id="name" name="name" class="form-control bg-light border-0"
+                            placeholder="Enter your name"  pattern="[A-Za-z ]+" style="height:55px" required>
+                        </div>
 
-                <!-- Phone -->
-                <div class="col-12 col-sm-12">
-                  <label class="fw-bold mb-1">Phone Number</label>
-                  <div class="input-group">
-                    <input type="text" id="countryCode" class="form-control bg-light border-0"
-                      style="max-width:90px; height:55px;">
-                    <input type="tel" id="phone" name="phone" class="form-control bg-light border-0"
-                      placeholder="Enter your phone number"  style="height:55px" required>
-                  </div>
-                </div>
+                        <!-- Phone -->
+                        <div class="col-12 col-sm-12">
+                          <label class="fw-bold mb-1">Phone Number</label>
+                          <div class="input-group">
+                            <input type="text" id="countryCode" class="form-control bg-light border-0"
+                              style="max-width:90px; height:55px;">
+                            <input type="tel" id="phone" name="phone" class="form-control bg-light border-0"
+                              placeholder="Enter your phone number"  style="height:55px" required>
+                          </div>
+                        </div>
 
-                <!-- Hidden combined phone -->
-                <input type="hidden" name="full_phone" id="full_phone">
+                        <!-- Hidden combined phone -->
+                        <input type="hidden" name="full_phone" id="full_phone">
 
-                <!-- Email -->
-                <div class="col-12 col-sm-12">
-                  <label class="fw-bold mb-1">Email</label>
-                  <input type="email" id="email" name="email" class="form-control bg-light border-0"
-                    placeholder="Enter your email"  style="height:55px">
-                </div>
+                        <!-- Email -->
+                        <div class="col-12 col-sm-12">
+                          <label class="fw-bold mb-1">Email</label>
+                          <input type="email" id="email" name="email" class="form-control bg-light border-0"
+                            placeholder="Enter your email"  style="height:55px">
+                        </div>
 
-                <!-- Patient Location -->
-                <div class="col-12 col-sm-6">
-                  <label class="fw-bold mb-1">Patient Location</label>
-                  <input type="text" id="patientLocation" name="patientLocation" class="form-control bg-light border-0"
-                    placeholder="City / Country"  style="height:55px" required>
-                </div>
+                        <!-- Patient Location -->
+                        <div class="col-12 col-sm-6">
+                          <label class="fw-bold mb-1">Patient Location</label>
+                          <input type="text" id="patientLocation" name="patientLocation" class="form-control bg-light border-0"
+                            placeholder="City / Country"  style="height:55px" required>
+                        </div>
 
-                <!-- Destination -->
-                <div class="col-12 col-sm-6">
-                  <label class="fw-bold mb-1">Destination</label>
-                  <input type="text" id="destination" name="destination" class="form-control bg-light border-0"
-                    placeholder="City / Country"  style="height:55px" required>
-                </div>
+                        <!-- Destination -->
+                        <div class="col-12 col-sm-6">
+                          <label class="fw-bold mb-1">Destination</label>
+                          <input type="text" id="destination" name="destination" class="form-control bg-light border-0"
+                            placeholder="City / Country"  style="height:55px" required>
+                        </div>
 
-                <!-- Services -->
-                <div class="col-12 col-sm-12">
-                  <label class="fw-bold mb-1">Select Service</label>
-                  <select id="service" name="service" class="form-select bg-light border-0"  style="height:55px" required>
+                        <!-- Services -->
+                        <div class="col-12 col-sm-12">
+                          <label class="fw-bold mb-1">Select Service</label>
+                          <select id="service" name="service" class="form-select bg-light border-0"  style="height:55px" required>
                     <option value="">Select a Service</option>
                     <option value="Air Ambulance">Air Ambulance</option>
                     <option value="Airline Stretcher Services">Airline Stretcher Services</option>
@@ -460,17 +518,17 @@
                     <option value="Medical Travel Assistance">Medical Travel Assistance</option>
                     <option value="Home Health Care">Home Health Care</option>
                   </select>
-                </div>
+                        </div>
 
-                <div class="col-12">
-                  <button class="btn btn-primary w-100 py-3" type="submit">
+                        <div class="col-12">
+                          <button class="btn btn-primary w-100 py-3" type="submit">
                   REQUEST CALLBACK
                 </button>
+                        </div>
+                      </div>
+                    </form>
                 </div>
-              </div>
-            </form>
-          </div>
-        </div>
+            </div>
 
             </div>
         
@@ -478,20 +536,18 @@
     </div>
     <!-- Main Content Section End -->
     <!-- Footer Start -->
-  <div class="container-fluid bg-dark text-light mt-5 py-5">
-    <div class="container py-4 py-lg-5">
-      <div class="row g-5">
-        <div class="col-lg-3 col-md-6">
-          <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
-            Get In Touch</h4>
-          <p class="mb-4">Air Medical 24X7 - Worldwide Air Ambulance and Medical Evacuation Services,
-            delivering compassionate and patient-focused care every step of the journey.</p>
-          <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>310, Garhoud Community, Near Dubai
-            International Airport Terminal-1, P.O. Box : 29086 Dubai - (U.A.E)</p>
-          <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>1111, 11th Floor, Padma Tower 1,
-            Rajendra Place, New Delhi - 110008, (INDIA)</p>
-          <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@airmedical24x7.com</p>
-                              <h6 class="text-primary text-uppercase mt-4 mb-3">Global Helpline Numbers</h6>
+    <div class="container-fluid bg-dark text-light mt-5 py-5">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                        Get In Touch</h4>
+                    <p class="mb-4">Air Medical 24X7 - Worldwide Air Ambulance and Medical Evacuation Services, 
+                     delivering compassionate and patient-focused care every step of the journey.</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>310, Garhoud Community, Near Dubai International Airport Terminal-1, P.O. Box : 29086 Dubai - (U.A.E)</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>1111, 11th Floor, Padma Tower 1, Rajendra Place, New Delhi - 110008, (INDIA)</p>
+                    <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@airmedical24x7.com</p>
+                                         <h6 class="text-primary text-uppercase mt-4 mb-3">Global Helpline Numbers</h6>
           <p class="mb-1">
             <i class="fa fa-phone-alt text-primary me-2"></i>
             <small class="text-uppercase fw-bold text-muted" style="font-size: 0.75rem; letter-spacing: 0.5px;">UAE:</small> 
@@ -528,27 +584,25 @@
             <a href="tel:+2484632054" style="text-decoration: none; color: inherit;">+248 4 632 054</a>
           </p>
 
-        </div>
-        <div class="col-lg-3 col-md-6">
-          <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
-            Quick Links</h4>
-          <div class="d-flex flex-column justify-content-start">
-            <a class="text-light mb-2" href="./"><i class="fa fa-angle-right me-2"></i>Home</a>
-            <a class="text-light mb-2" href="about-us"><i class="fa fa-angle-right me-2"></i>About Us</a>
-            <a class="text-light mb-2" href="career"><i class="fa fa-angle-right me-2"></i>Career</a>
-            <a class="text-light mb-2" href="blogs"><i class="fa fa-angle-right me-2"></i>Latest Blogs</a>
-            <a class="text-light mb-2" href="countries"><i class="fa fa-angle-right me-2"></i>Global
-              Pages</a>
-            <a class="text-light mb-2" href="terms-and-conditions"><i class="fa fa-angle-right me-2"></i>Terms & Conditions</a>
-            <a class="text-light mb-2" href="privacy-policy"><i class="fa fa-angle-right me-2"></i>Privacy
-              Policy</a>
-          </div>
-        </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                        Quick Links</h4>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-light mb-2" href="./"><i class="fa fa-angle-right me-2"></i>Home</a>
+                        <a class="text-light mb-2" href="about-us"><i class="fa fa-angle-right me-2"></i>About Us</a>
+                        <a class="text-light mb-2" href="career"><i class="fa fa-angle-right me-2"></i>Career</a>
+                        <a class="text-light mb-2" href="blogs"><i class="fa fa-angle-right me-2"></i>Latest Blogs</a>
+                       <a class="text-light mb-2" href="countries"><i class="fa fa-angle-right me-2"></i>Global Pages</a>
+                      <a class="text-light mb-2" href="terms-and-conditions"><i class="fa fa-angle-right me-2"></i>Terms & Conditions</a>
+                        <a class="text-light mb-2" href="privacy-policy"><i class="fa fa-angle-right me-2"></i>Privacy Policy</a>
+                    </div>
+                </div>
 
-        <div class="col-lg-3 col-md-6">
-          <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
-            Popular Links</h4>
-          <div class="d-flex flex-column justify-content-start">
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                        Popular Links</h4>
+                    <div class="d-flex flex-column justify-content-start">
             <a class="text-light mb-2" href="air-ambulance"><i class="fa fa-angle-right me-2"></i>Air Ambulance</a>
             <a class="text-light mb-2" href="air-ambulance-charters"><i class="fa fa-angle-right me-2"></i>Air Ambulance Charters</a>
             <a class="text-light mb-2" href="commercial-airlines-medical-transfer-services"><i class="fa fa-angle-right me-2"></i>Commercial Airlines Medical Transfer</a>
@@ -563,71 +617,72 @@
             <a class="text-light mb-2" href="doctor-appointment"><i class="fa fa-angle-right me-2"></i>Doctor Appointment</a>
             <a class="text-light mb-2" href="second-opinion-services"><i class="fa fa-angle-right me-2"></i>Second Opinion Services</a>
           </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-          <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
-            Newsletter</h4>
-          <form action="#">
-            <div class="input-group">
-              <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address">
-              <button class="btn btn-primary">Sign Up</button>
-            </div>
-          </form>
-          <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>
-          <div class="d-flex">
-            <a class="footer-social-btn me-2" href="https://www.facebook.com/airmedical24x7/" aria-label="Air Medical 24X7 on Facebook"><i class="fab fa-facebook-f"></i></a>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                        Newsletter</h4>
+                    <form action="#">
+                        <div class="input-group">
+                            <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address">
+                            <button class="btn btn-primary">Sign Up</button>
+                        </div>
+                    </form>
+                    <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>
+                    <div class="d-flex">
+                        <a class="footer-social-btn me-2" href="https://www.facebook.com/airmedical24x7/" aria-label="Air Medical 24X7 on Facebook"><i class="fab fa-facebook-f"></i></a>
               <a class="footer-social-btn me-2" href="https://www.instagram.com/airmedical24x7/" aria-label="Air Medical 24X7 on Instagram"><i class="fab fa-instagram"></i></a>
               <a class="footer-social-btn me-2" href="https://in.linkedin.com/company/airmedical24x7" aria-label="Air Medical 24X7 on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
               <a class="footer-social-btn" href="https://x.com/airmedical24x7"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-          </div>
-          <!-- World Map Section -->
-          <div class="row mt-5">
-            <div class="col-12">
-              <div class="footer-world-map">
-                <img src="img/worldmap.webp" alt="Worldwide air ambulance coverage of Air Medical 24X7" loading="lazy">
-              </div>
+                    </div>
+                            <!-- World Map Section -->
+                                <div class="row mt-5">
+                               <div class="col-12">
+                               <div class="footer-world-map">
+                             <img src="img/worldmap.webp" alt="Worldwide air ambulance coverage of Air Medical 24X7" loading="lazy">
+                             </div>
+                              </div>
+                                </div>
+
+                </div>
             </div>
-          </div>
 
         </div>
-      </div>
-
     </div>
-  </div>
-  <!-- Footer Bottom -->
-  <div class="container-fluid bg-dark text-light border-top border-secondary py-4">
+   <!-- Footer Bottom -->
+<div class="container-fluid bg-dark text-light border-top border-secondary py-4">
     <div class="container">
-      <div class="row align-items-center g-3">
+        <div class="row align-items-center g-3">
 
-        <!-- Copyright -->
-        <div class="col-md-6 text-center text-md-start">
-          <p class="mb-0">
-            &copy; <a href="./" class="text-primary">Air Medical 24X7</a>. All Rights Reserved.
-          </p>
+            <!-- Copyright -->
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-0">
+                    &copy; <a href="./" class="text-primary">Air Medical 24X7</a>. All Rights Reserved.
+                </p>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="col-md-6 text-center text-md-end">
+                <img src="img/visa-card.webp"
+                    alt="We accept Visa, Mastercard, American Express, RuPay, UPI, Western Union"
+                    class="footer-payment-img" loading="lazy">
+            </div>
+
         </div>
-
-        <!-- Payment Methods -->
-        <div class="col-md-6 text-center text-md-end">
-          <img src="img/visa-card.webp" alt="We accept Visa, Mastercard, American Express, RuPay, UPI, Western Union"
-            class="footer-payment-img" loading="lazy">
-        </div>
-
-      </div>
     </div>
-  </div>
+</div>
 
-  <!-- Footer End -->
-
-
-  <!-- Back to Top -->
-  <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top" aria-label="Back to top"><svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/></svg></a>
+    <!-- Footer End -->
 
 
-  <!-- JavaScript Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <!-- Back to Top -->
+    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top" aria-label="Back to top"><svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/></svg></a>
 
-  <!-- Template Javascript -->
-  <script src="js/main.js" defer></script>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" defer></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js" defer></script>
 
 
 
@@ -755,6 +810,12 @@
 
 
 </html>
+
+
+
+
+
+
 
 
 

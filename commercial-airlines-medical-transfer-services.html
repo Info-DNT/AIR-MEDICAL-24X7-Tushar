@@ -9,55 +9,35 @@
 
   <script type="application/ld+json">
 {
-  "@type": "MedicalOrganization",
+  "@type": "Organization",
   "@id": "https://airmedical24x7.com/#organization",
   "name": "Air Medical 24X7",
-  "alternateName": "Air Medical 24X7 Global Air Ambulance",
   "url": "https://airmedical24x7.com/",
   "logo": "https://airmedical24x7.com/img/air-medical-logo.webp",
-  "description": "Air Medical 24X7 - Worldwide air ambulance, medical evacuation, flight medical escort and critical care patient transport services.",
   "sameAs": [
-    "https://www.facebook.com/airmedical24x7/",
-    "https://x.com/airmedical24x7",
-    "https://in.linkedin.com/company/airmedical24x7",
-    "https://www.instagram.com/airmedical24x7/"
+    "https://www.facebook.com/airmedical24x7",
+    "https://www.linkedin.com/company/airmedical24x7",
+    "https://www.instagram.com/airmedical24x7"
   ],
-  "contactPoint": [
-    {
-      "@type": "ContactPoint",
-      "telephone": "+971565542001",
-      "contactType": "Emergency Medical Transport",
-      "areaServed": "Worldwide",
-      "availableLanguage": [
-        "en",
-        "hi",
-        "ar",
-        "fr",
-        "es",
-        "ru"
-      ]
-    },
-    {
-      "@type": "ContactPoint",
-      "telephone": "+911171859928",
-      "contactType": "Emergency Medical Transport",
-      "areaServed": "IN",
-      "availableLanguage": [
-        "en",
-        "hi"
-      ]
-    },
-    {
-      "@type": "ContactPoint",
-      "telephone": "+919217710155",
-      "contactType": "Emergency Medical Transport",
-      "areaServed": "IN",
-      "availableLanguage": [
-        "en",
-        "hi"
-      ]
-    }
+  "@context": "https://schema.org"
+}
+</script>
+  <script type="application/ld+json">
+{
+  "@type": "MedicalOrganization",
+  "@id": "https://airmedical24x7.com/#medicalorganization",
+  "name": "Air Medical 24X7",
+  "url": "https://airmedical24x7.com/",
+  "parentOrganization": {
+    "@id": "https://airmedical24x7.com/#organization"
+  },
+  "medicalSpecialty": [
+    "Medical Escort",
+    "Commercial Airline Patient Transfer",
+    "Critical Care Transport",
+    "Air Ambulance"
   ],
+  "areaServed": "Worldwide",
   "@context": "https://schema.org"
 }
 </script>
@@ -66,14 +46,13 @@
   "@type": "LocalBusiness",
   "@id": "https://airmedical24x7.com/#dubai",
   "name": "Air Medical 24X7 Dubai",
+  "url": "https://airmedical24x7.com/",
+  "telephone": "+971565542001",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "310, Garhoud Community, Near Dubai International Airport Terminal-1",
     "addressLocality": "Dubai",
     "addressCountry": "AE"
   },
-  "telephone": "+971565542001",
-  "areaServed": "Middle East",
   "parentOrganization": {
     "@id": "https://airmedical24x7.com/#organization"
   },
@@ -85,15 +64,13 @@
   "@type": "LocalBusiness",
   "@id": "https://airmedical24x7.com/#india",
   "name": "Air Medical 24X7 India",
+  "url": "https://airmedical24x7.com/",
+  "telephone": ["+911171859928", "+919217710155"],
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Padma Tower 1, Rajendra Place",
     "addressLocality": "New Delhi",
-    "postalCode": "110008",
     "addressCountry": "IN"
   },
-  "telephone": ["+911171859928", "+919217710155"],
-  "areaServed": "India",
   "parentOrganization": {
     "@id": "https://airmedical24x7.com/#organization"
   },
@@ -102,35 +79,39 @@
 </script>
   <script type="application/ld+json">
 {
-  "@type": "AboutPage",
-  "@id": "https://airmedical24x7.com/about-us",
-  "url": "https://airmedical24x7.com/about-us",
-  "name": "About Us | Air Medical 24X7",
-  "description": "Air Medical 24X7 - Worldwide coverage.",
-  "about": {
-    "@id": "https://airmedical24x7.com/#organization"
+  "@type": "MedicalService",
+  "@id": "https://airmedical24x7.com/services/commercial-flight-stretcher#service",
+  "name": "Commercial Airline Medical Transfer",
+  "description": "International patient transfer via commercial airlines with medical escorts, ICU monitoring, and hospital coordination.",
+  "provider": {
+    "@id": "https://airmedical24x7.com/#medicalorganization"
   },
+  "areaServed": "Worldwide",
+  "serviceType": "International Patient Transfer via Commercial Airline",
   "@context": "https://schema.org"
 }
 </script>
   <script type="application/ld+json">
 {
-  "@type": "BreadcrumbList",
-  "@id": "https://airmedical24x7.com/about-us#breadcrumb",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://airmedical24x7.com/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "About Us",
-      "item": "https://airmedical24x7.com/about-us"
-    }
-  ],
+  "@type": "WebPage",
+  "@id": "https://airmedical24x7.com/services/commercial-flight-stretcher#webpage",
+  "url": "https://airmedical24x7.com/commercial-flight-stretcher",
+  "name": "Commercial Airline Medical Transfer Services \u2013 Air Medical 24X7",
+  "about": {
+    "@id": "https://airmedical24x7.com/services/commercial-flight-stretcher#service"
+  },
+  "isPartOf": {
+    "@id": "https://airmedical24x7.com/#website"
+  },
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [
+      "h1",
+      "h2",
+      ".display-4",
+      ".text-primary"
+    ]
+  },
   "@context": "https://schema.org"
 }
 </script>
@@ -138,24 +119,29 @@
 
 
   
-  <title>Medical Repatriation Dubai | Global Patient Transfer</title>
+  <title>Commercial Flight Patient Transfers | Air Medical 24X7</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta name="keywords" content="medical repatriation dubai, patient repatriation dubai, emergency repatriation dubai, global repatriation dubai">
-  <meta name="description" content="Worldwide medical repatriation from Dubai. Secure, bed-to-bed patient transfers, commercial flight stretchers, and air ambulance with medical escort.">
-  <link rel="canonical" href="https://airmedical24x7.com/repatriation-services-dubai">
+  <meta name="description"
+    content="Safe and reliable patient transfers on commercial airlines. Complete medical clearance, in-flight nursing care, and global bed-to-bed transfers.">
+
+  <meta name="keywords"
+    content="commercial airline medical transfer, air ambulance escort, stretcher flight services, medical flight escort, patient transfer by air, medical evacuation, Air Medical 24X7">
+  <meta content="Air Medical 24X7" name="author">
+  <link rel="canonical" href="https://airmedical24x7.com/commercial-airlines-medical-transfer-services">
   <meta name="robots" content="index, follow">
 
-
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Medical Repatriation Dubai | Global Patient Transfer">
-  <meta property="og:description" content="Worldwide medical repatriation from Dubai. Secure, bed-to-bed patient transfers, commercial flight stretchers, and air ambulance with medical escort.">
-  <meta property="og:url" content="https://airmedical24x7.com/repatriation-services-dubai">
-  <meta property="og:image" content="https://airmedical24x7.com/img/about-us.webp">
+  <meta property="og:title" content="Commercial Flight Patient Transfers | Air Medical 24X7">
+  <meta property="og:description"
+    content="Safe and reliable patient transfers on commercial airlines. Complete medical clearance, in-flight nursing care, and global bed-to-bed transfers.">
+  <meta property="og:url" content="https://airmedical24x7.com/commercial-airlines-medical-transfer-services">
+  <meta property="og:image" content="https://airmedical24x7.com/img/commercial-airlines-medical-transfer-services.webp">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Medical Repatriation Dubai | Global Patient Transfer">
-  <meta name="twitter:description" content="Worldwide medical repatriation from Dubai. Secure, bed-to-bed patient transfers, commercial flight stretchers, and air ambulance with medical escort.">
-  <meta name="twitter:image" content="https://airmedical24x7.com/img/about-us.webp">
+  <meta name="twitter:title" content="Commercial Flight Patient Transfers | Air Medical 24X7">
+  <meta name="twitter:description"
+    content="Safe and reliable patient transfers on commercial airlines. Complete medical clearance, in-flight nursing care, and global bed-to-bed transfers.">
+  <meta name="twitter:image" content="https://airmedical24x7.com/img/commercial-airlines-medical-transfer-services.webp">
 
 
 
@@ -257,7 +243,7 @@
 
         <!-- Bootstrap Menu Button -->
         <!-- Mobile Quote Button (ONLY phone view) -->
-        <a href="#quoteForm" class="btn btn-request btn-header-quote ms-auto me-2">Get a Quotation in 30 minutes</a>
+        <a href="contact-us#quoteForm" class="btn btn-request btn-header-quote ms-auto me-2">Get a Quotation in 30 minutes</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -291,8 +277,6 @@
             <a href="blogs" class="nav-item nav-link">Blogs</a>
             <a href="career" class="nav-item nav-link">Career</a>
             <a href="contact-us" class="nav-item nav-link">Contact Us</a>
-          
-          
           </div>
         </div>
 
@@ -312,144 +296,268 @@
   
 
 
-  
-    <!-- Hero Start -->
-    <div class="container-fluid bg-primary py-5 mb-5 hero-header" style="background: linear-gradient(rgba(26, 52, 107, 0.85), rgba(26, 52, 107, 0.85)); background-size: cover;">
-        <div class="container py-5">
-            <div class="row justify-content-start">
-                <div class="col-lg-9 text-center text-lg-start">
-                    <h1>Medical Repatriation Services Dubai</h1>
-                    <p class="text-white fs-5">Consular assistance, embassy clearances, and global bed-to-bed medical repatriation.</p>
-                    <div class="pt-3">
-                        <a href="tel:+971565542001" class="btn btn-request me-3 py-3 px-4"><i class="fas fa-phone-alt me-2"></i> Call emergency desk</a>
-                        <a href="https://wa.me/971565542001" target="_blank" rel="noopener noreferrer" class="btn btn-ghost py-3 px-4"><i class="fab fa-whatsapp me-2"></i> WhatsApp Quote</a>
-                    </div>
-                </div>
-            </div>
+  <!-- About Start -->
+  <div class="container-fluid py-5">
+    <div class="container">
+      <div class="row gx-5">
+        <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
+          <div class="position-relative h-100">
+            <img class="position-absolute w-100 h-100 rounded"
+              src="img/commercial-airlines-medical-transfer-services.webp"
+              alt="Patient being safely transferred on a commercial airline stretcher with medical escort by Air Medical 24X7"
+              style="object-fit: cover;" loading="lazy">
+          </div>
         </div>
-    </div>
-    <!-- Hero End -->
-
-    
-    <!-- About Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="row gx-5">
-                <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
-                    <div class="position-relative h-100">
-                        <img class="position-absolute w-100 h-100 rounded" src="img/uae-country.webp"
-                            alt="Worldwide Medical Repatriation Services from Dubai" style="object-fit: cover;" loading="lazy">
-                    </div>
-                </div>
-                <div class="col-lg-7">
-                    <div class="mb-4">
-                        <h3 class="d-inline-block text-primary text-uppercase border-bottom border-5">About Our Service</h3>
-                        <h2 class="about-heading">Worldwide Medical Repatriation Services from Dubai</h2>
-                    </div>
-                    <p class="fs-5">For tourists, expatriates, and corporate travelers who fall ill in Dubai, returning to their home country for treatment is often the best choice. Air Medical 24X7 coordinates complete medical repatriation.</p>
-                    <div class="row g-3 pt-3">
-                        <div class="col-sm-3 col-6">
-                            <div class="premium-card text-center py-4">
-                                <i class="fa fa-3x fa-user-md premium-icon mb-3"></i>
-                                <h6 class="mb-0">Expert <small class="d-block text-primary">Medical Escort</small></h6>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 col-6">
-                            <div class="premium-card text-center py-4">
-                                <i class="fa fa-3x fa-plane premium-icon mb-3"></i>
-                                <h6 class="mb-0">Emergency <small class="d-block text-primary">Services</small></h6>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 col-6">
-                            <div class="premium-card text-center py-4">
-                                <i class="fas fa-clock fa-3x premium-icon mb-3"></i>
-                                <h6 class="mb-0">24X7 <small class="d-block text-primary">Support</small></h6>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 col-6">
-                            <div class="premium-card text-center py-4">
-                                <i class="fas fa-globe fa-3x premium-icon mb-3"></i>
-                                <h6 class="mb-0">Global <small class="d-block text-primary">Service</small></h6>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-lg-7">
+          <div class="mb-4">
+            <h3 class="d-inline-block text-primary text-uppercase border-bottom border-5">Commercial Airlines Medical
+              Transfer Services</h3>
+            <h1 class="about-heading">Commercial Airlines Medical Transfer Services</h1>
+          </div>
+          <p> 24X7 Air Ambulance & Medical Evacuation services worldwide. Safe, fast, and reliable medical flight
+            transfers with Air Medical 24X7.</p>
+          <div class="row g-3 pt-3">
+            <div class="col-sm-3 col-6">
+              <div class="premium-card text-center py-4">
+                <i class="fa fa-3x fa-user-md text-primary mb-3"></i>
+                <h6 class="mb-0">Expert <small class="d-block text-primary">Medical Escort</small></h6>
+              </div>
             </div>
+            <div class="col-sm-3 col-6">
+              <div class="premium-card text-center py-4">
+                <i class="fa fa-3x fa-plane text-primary mb-3"></i>
+                <h6 class="mb-0">Emergency <small class="d-block text-primary">Services</small></h6>
+              </div>
+            </div>
+            <div class="col-sm-3 col-6">
+              <div class="premium-card text-center py-4">
+                <i class="fas fa-clock fa-3x text-primary mb-3"></i>
+                <h6 class="mb-0">24X7 <small class="d-block text-primary">Support</small></h6>
+              </div>
+            </div>
+            <div class="col-sm-3 col-6">
+              <div class="premium-card text-center py-4">
+                <i class="fas fa-globe fa-3x text-primary mb-3"></i>
+                <h6 class="mb-0">Global <small class="d-block text-primary">Service</small></h6>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <!-- About End -->
-    
+  </div>
+  <!-- About End -->
 
-    <!-- Main Content Section Start -->
-    <div class="container-fluid py-5">
-        <div class="container">
-            
-            <div class="row g-5 align-items-start">
-                <div class="col-lg-7">
-                    <h2 class="mb-4 text-primary">Bringing Loved Ones Home Safely</h2>
-                    <p>We work closely with major travel insurance providers, corporate assistance programs, international embassies, and family members to manage all logistical aspects of returning a patient home safely.</p>
-                    
-                    <h4 class="mt-4 text-dark">Our Repatriation Capabilities:</h4>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-check text-red me-2"></i> <strong>Embassy & Customs Clearances:</strong> Coordination of visa paperwork, border control approvals, and medical declarations.</li>
-                        <li class="mb-2"><i class="fas fa-check text-red me-2"></i> <strong>Flexible Transport Modes:</strong> Private ICU air ambulances or scheduled airline stretchers depending on patient stability.</li>
-                        <li class="mb-2"><i class="fas fa-check text-red me-2"></i> <strong>Hospital Handover:</strong> Managing direct transfers from local Dubai clinics to the receiving facility in the patient's home country.</li>
-                    </ul>
-                </div>
-                
-        <!-- Right Section - New Form -->
+
+
+  <div class="container-fluid py-5">
+    <div class="container">
+      <div class="row g-5 align-items-start">
+
+        <!-- Left Column: Content and Contact Info -->
+        <div class="col-lg-7">
+          <!-- PAGE TITLE -->
+          <h2 class="text-primary mb-4">
+            Commercial Airlines Medical Transfer Services
+          </h2>
+
+          <p>
+            At Air Medical 24X7, we specialize in Air Ambulance Services and Medical Evacuation
+            flights, providing urgent medical transfer and care 24X7. Our expert team ensures
+            safe, comfortable, and rapid patient transfer from any location to advanced
+            medical facilities worldwide.
+          </p>
+
+          <p>
+            Whether you require a private air ambulance, international medevac, or
+            Commercial Airline Stretcher Services, we offer tailored medical flight solutions
+            to meet your unique needs.
+          </p>
+
+          <!-- WHY CHOOSE -->
+          <h2 class="text-primary mt-5 mb-3">
+            Why Choose Air Medical 24X7 for Medical Evacuation?
+          </h2>
+
+          <h3 class="h5 mt-4">Global Reach</h3>
+          <p>
+            We provide global air ambulance services and medical evacuation worldwide.
+            No matter where you are, we coordinate rapid and safe Medical Evacuation to
+            ensure timely care.
+          </p>
+
+          <h3 class="h5 mt-4">Experienced Medical Staff</h3>
+          <p>
+            Our team includes certified flight medics experienced in medical air transfer.
+            Every flight is equipped with state-of-the-art medical equipment and staffed
+            with professionals to monitor and manage patients throughout the journey.
+          </p>
+
+          <h3 class="h5 mt-4">Comfort and Safety</h3>
+          <p>
+            Our aircraft are designed for patient comfort and safety, whether transferring
+            a critically ill patient or someone requiring a stable, supportive environment.
+            We prioritize both medical care and patient well-being.
+          </p>
+
+          <h3 class="h5 mt-4">Affordable Rates</h3>
+          <p>
+            We offer transparent pricing for all air ambulance services, making Medical
+            Evacuation accessible without compromising quality.
+          </p>
+
+          <h3 class="h5 mt-4">Quick Response</h3>
+          <p>
+            In medical emergencies, time is critical. Our rapid-response air ambulance
+            services ensure swift deployment and safe patient transfer.
+          </p>
+
+          <!-- SERVICES -->
+          <h2 class="text-primary mt-5 mb-3">
+            Our 24X7 Medical Air Services
+          </h2>
+
+          <h3 class="h5 mt-4">Air Ambulance Services</h3>
+          <p>
+            We provide emergency Air Ambulance Services and critical patient transfer,
+            ensuring timely care for life-threatening or urgent medical situations.
+          </p>
+
+          <h3 class="h5 mt-4">Commercial Airline Stretcher Services</h3>
+          <p>
+            For non-emergency transfers, our commercial airline stretcher services provide
+            safe, comfortable, and medically supervised travel.
+          </p>
+
+          <h3 class="h5 mt-4">International Medical Flight</h3>
+          <p>
+            Our international medical flights handle cross-border patient transfers,
+            delivering prompt treatment and repatriation regardless of location.
+          </p>
+
+          <h3 class="h5 mt-4">Medical Flight Charter</h3>
+          <p>
+            For urgent cases requiring customized medical attention, our air ambulance
+            charter services provide private, personalized air transfers.
+          </p>
+
+          <h3 class="h5 mt-4">Air Medical Escort</h3>
+          <p>
+            If full air ambulance services are unnecessary, our air medical escort services
+            ensure safe medical support on commercial flights.
+          </p>
+
+          <!-- TRUST -->
+          <h2 class="text-primary mt-5 mb-3">
+            Why Air Medical 24X7 is Your Trusted Medical Evacuation Partner
+          </h2>
+
+          <p>
+            We are leaders in global Medical Evacuation, offering 24X7 access to emergency
+            air ambulance services and international medical transfers. Whether you need a
+            medevac flight, critical care air transfer, or commercial stretcher services,
+            we provide safe, reliable, and high-quality solutions.
+          </p>
+
+          <h2 class="text-primary mt-5 mb-3">
+            What Sets Us Apart?
+          </h2>
+
+          <ul class="mb-5">
+            <li>
+              <strong>24X7 Availability:</strong> Round-the-clock services ensure patients
+              can access emergency air transfers anytime.
+            </li>
+            <li>
+              <strong>Advanced Medical Equipment:</strong> All aircraft are equipped with
+              oxygen support, monitoring systems, and ICU-level care.
+            </li>
+            <li>
+              <strong>Transparent Costs:</strong> Upfront pricing guarantees no surprises
+              during your medical flight transfer.
+            </li>
+            <li>
+              <strong>Comfortable Experience:</strong> From private air ambulances to
+              commercial stretcher flights, we prioritize comfort and medical attention
+              throughout the journey.
+            </li>
+          </ul>
+
+          <h2 class="text-primary mt-5 mb-3">Contact Us</h2>
+          <p class="mb-4">
+            Our experts are available 24X7 to assist you with commercial stretcher and air ambulance services worldwide.
+          </p>
+          <div class="row g-4 mb-4 text-start">
+            <div class="col-md-6">
+              <div class="bg-light rounded p-4 h-100">
+                <h5 class="text-primary mb-3"><i class="fa fa-phone-alt me-2"></i>Call Us</h5>
+                <p class="mb-2"><strong>UAE:</strong> <a href="tel:+971565542001" class="text-dark">+971 56 554 2001</a></p>
+                <p class="mb-2"><strong>UAE:</strong> <a href="tel:+97143230261" class="text-dark">+971 4 323 0261</a></p>
+                <p class="mb-2"><strong>INDIA:</strong> <a href="tel:+919217710155" class="text-dark">+91 92177 10155</a></p>
+                <p class="mb-0"><strong>INDIA:</strong> <a href="tel:+911171859928" class="text-dark">+91 11 7185 9928</a></p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="bg-light rounded p-4 h-100">
+                <h5 class="text-primary mb-3"><i class="fa fa-envelope me-2"></i>Email Us</h5>
+                <p class="mb-0"><a href="mailto:info@airmedical24x7.com" class="text-dark">info@airmedical24x7.com</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Sticky Quote Form -->
         <div class="col-lg-5">
-          <div class="bg-white text-center rounded p-5 shadow-lg">
-            <h2 class="mb-2">Get a Quotation in 30 minutes</h2>
-            <div class="form-underline"></div>
+          <div class="bg-white rounded shadow-lg p-4" style="position: sticky; top: 90px;">
+            <h4 class="text-center mb-2 fw-bold">Get a Quotation in 30 minutes</h4>
+            <div class="form-underline mb-3"></div>
             <form id="quoteForm">
               <div class="row g-3 text-start">
                 <!-- Full Name -->
-                <div class="col-12 col-sm-12">
-                  <label class="fw-bold mb-1">Full Name</label>
+                <div class="col-12">
+                  <label class="fw-bold mb-1 small">Full Name</label>
                   <input type="text" id="name" name="name" class="form-control bg-light border-0"
-                    placeholder="Enter your name"  pattern="[A-Za-z ]+" style="height:55px" required>
+                    placeholder="Enter your name"  pattern="[A-Za-z ]+"
+                    style="height: 48px;" required>
                 </div>
 
-                <!-- Phone -->
-                <div class="col-12 col-sm-12">
-                  <label class="fw-bold mb-1">Phone Number</label>
+                <!-- Phone Number -->
+                <div class="col-12">
+                  <label class="fw-bold mb-1 small">Phone Number</label>
                   <div class="input-group">
                     <input type="text" id="countryCode" class="form-control bg-light border-0"
-                      style="max-width:90px; height:55px;">
+                      style="max-width: 80px; height: 48px;">
                     <input type="tel" id="phone" name="phone" class="form-control bg-light border-0"
-                      placeholder="Enter your phone number"  style="height:55px" required>
+                      placeholder="Enter phone number"  style="height: 48px;" required>
                   </div>
                 </div>
 
-                <!-- Hidden combined phone -->
-                <input type="hidden" name="full_phone" id="full_phone">
-
                 <!-- Email -->
-                <div class="col-12 col-sm-12">
-                  <label class="fw-bold mb-1">Email</label>
+                <div class="col-12">
+                  <label class="fw-bold mb-1 small">Email Address</label>
                   <input type="email" id="email" name="email" class="form-control bg-light border-0"
-                    placeholder="Enter your email"  style="height:55px">
+                    placeholder="Enter your email"  style="height: 48px;">
                 </div>
 
-                <!-- Patient Location -->
-                <div class="col-12 col-sm-6">
-                  <label class="fw-bold mb-1">Patient Location</label>
-                  <input type="text" id="patientLocation" name="patientLocation" class="form-control bg-light border-0"
-                    placeholder="City / Country"  style="height:55px" required>
+                <!-- Patient Location & Destination -->
+                <div class="col-6">
+                  <label class="fw-bold mb-1 small">Patient Location</label>
+                  <input type="text" id="patientLocation" name="patientLocation"
+                    class="form-control bg-light border-0" placeholder="City / Country" 
+                    style="height: 48px;" required>
+                </div>
+                <div class="col-6">
+                  <label class="fw-bold mb-1 small">Destination</label>
+                  <input type="text" id="destination" name="destination"
+                    class="form-control bg-light border-0" placeholder="City / Country" 
+                    style="height: 48px;" required>
                 </div>
 
-                <!-- Destination -->
-                <div class="col-12 col-sm-6">
-                  <label class="fw-bold mb-1">Destination</label>
-                  <input type="text" id="destination" name="destination" class="form-control bg-light border-0"
-                    placeholder="City / Country"  style="height:55px" required>
-                </div>
-
-                <!-- Services -->
-                <div class="col-12 col-sm-12">
-                  <label class="fw-bold mb-1">Select Service</label>
-                  <select id="service" name="service" class="form-select bg-light border-0"  style="height:55px" required>
+                <!-- Service -->
+                <div class="col-12">
+                  <label class="fw-bold mb-1 small">Select Service</label>
+                  <select id="service" name="service" class="form-select bg-light border-0" 
+                    style="height: 48px;" required>
                     <option value="">Select a Service</option>
                     <option value="Air Ambulance">Air Ambulance</option>
                     <option value="Airline Stretcher Services">Airline Stretcher Services</option>
@@ -462,8 +570,9 @@
                   </select>
                 </div>
 
+                <!-- Submit -->
                 <div class="col-12">
-                  <button class="btn btn-primary w-100 py-3" type="submit">
+                  <button class="btn btn-primary w-100 py-3 fw-bold" type="submit">
                   REQUEST CALLBACK
                 </button>
                 </div>
@@ -472,14 +581,15 @@
           </div>
         </div>
 
-            </div>
-        
-        </div>
+      </div>
     </div>
-    <!-- Main Content Section End -->
-    <!-- Footer Start -->
+  </div>
+
+
+
+  <!-- Footer Start -->
   <div class="container-fluid bg-dark text-light mt-5 py-5">
-    <div class="container py-4 py-lg-5">
+    <div class="container py-5">
       <div class="row g-5">
         <div class="col-lg-3 col-md-6">
           <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
@@ -627,6 +737,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" defer></script>
 
   <!-- Template Javascript -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="js/config.js" defer></script>
   <script src="js/main.js" defer></script>
 
 
@@ -703,58 +815,46 @@
         </a>
       </div>
     </div>
-  </div>
-
-
+  <!-- Country Code Auto Detect -->
   <script>
-    // Auto-detect country code via IP
-    fetch("https://ipapi.co/json/")
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("countryCode").value = data.country_calling_code || "+1";
-      })
-      .catch(() => {
-        document.getElementById("countryCode").value = "+1";
-      });
+    document.addEventListener("DOMContentLoaded", function () {
+      const countryInput = document.getElementById("countryCode");
+      if (!countryInput) return;
 
-    // Combine phone and concatenate locations on submit
-    window.addEventListener("load", function () {
-      const form = document.getElementById("quoteForm");
-      if (!form) return;
-      const supabase = window.supabaseClient;
+      // Default fallback
+      countryInput.value = "+1";
 
-      form.addEventListener("submit", async function (e) {
-        e.preventDefault();
-        const fullPhone = document.getElementById("countryCode").value + document.getElementById("phone").value;
-        const selectedService = document.getElementById("service").value;
-        const patientLocation = document.getElementById("patientLocation").value;
-        const destination = document.getElementById("destination").value;
-
-        const payload = {
-          name: document.getElementById("name").value,
-          email: document.getElementById("email").value,
-          full_phone: fullPhone,
-          service: `${selectedService} (From: ${patientLocation}, To: ${destination})`
-        };
-
-        const { error } = await supabase.from("main_page").insert([payload]);
-        if (error) {
-          alert("Error: " + error.message);
-        } else {
-          alert("✅ Thank you! Our team will contact you soon.");
-          form.reset();
-        }
-      });
+      // Try ipapi first
+      fetch("https://ipapi.co/json/")
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.country_calling_code) {
+            countryInput.value = data.country_calling_code;
+          }
+        })
+        .catch(() => {
+          // Try ipwho.is as backup
+          fetch("https://ipwho.is/")
+            .then(res => res.json())
+            .then(data => {
+              if (data && data.calling_code) {
+                countryInput.value = "+" + data.calling_code;
+              }
+            })
+            .catch(() => {
+              countryInput.value = "+1";
+            });
+        });
     });
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="js/config.js" defer></script>
 
 </body>
 
 
 
 </html>
+
+
 
 
 

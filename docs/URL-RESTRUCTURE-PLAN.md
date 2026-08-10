@@ -2,7 +2,32 @@
 
 **Goal:** `…/countries/air-ambulance-afghanistan` → `…/air-ambulance-afghanistan`, for every page.
 
-**Status:** plan only. Nothing in this document has been executed.
+**Chosen form:** no trailing slash — `https://airmedical24x7.com/air-ambulance-albania`
+(Option B below, flat files at the root). This matches the canonicals and sitemap that
+were already in place.
+
+**Status: EXECUTED** — 10 Aug 2026. Committed locally, not yet deployed.
+
+| Step | Result |
+|---|---|
+| 47 pages moved to the root | 34 country + 13 service |
+| `countries/index.html` deleted | duplicate of `countries.html` |
+| `countries/` and `services/` removed | both now empty |
+| References rewritten | 2,520 across 62 files |
+| Root-absolute links made relative | 32 → 0 (step 3b) |
+| Service canonicals / OG / Twitter URLs corrected | 39 across 9 files |
+| `sw.js` routing simplified | hardcoded slug list removed |
+| `nginx.conf` `try_files` simplified | directory fallbacks no longer needed |
+
+**Verified:** all 63 pages' same-site references resolve to real files; 61/61 canonicals
+point at a page that exists; 60/60 sitemap URLs are backed by a file; no page lost a core
+asset; `sw.js` parses.
+
+**Known, pre-existing, not caused by this move:** `blogs.html` and `blogs-detail.html`
+both declare the canonical `/blogs` — tied to the blog routing issue (INF-03/INF-04), to
+be handled with that work.
+
+**Still required before this is live:** deploy to EC2, and apply the redirects in §5.
 
 ---
 
