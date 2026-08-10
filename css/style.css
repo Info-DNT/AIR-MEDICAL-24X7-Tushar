@@ -194,6 +194,27 @@ h6 {
     color: var(--primary);
 }
 
+/* "Our Services" is a <button>, not a link: it opens a menu rather than navigating, so it
+   has no href and never puts a bare "#" in the address bar. The rules above are
+   class-based and carry over, but a button still arrives with user-agent chrome
+   (background, border, centred text) that has to be stripped to match its anchor siblings. */
+.navbar-nav button.nav-link {
+    background: none;
+    border: 0;
+    width: auto;
+    text-align: left;
+    line-height: inherit;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+/* Keyboard users must still see focus, which `outline: none` above would otherwise remove. */
+.navbar-nav button.nav-link:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
 @media (min-width: 992px) {
     .navbar-light .navbar-nav .nav-link::before {
         position: absolute;
