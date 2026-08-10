@@ -5,6 +5,34 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Helper to dynamically identify the page/region name from the filename
+    const getPageIdentifier = () => {
+        const path = window.location.pathname;
+        const filename = path.substring(path.lastIndexOf('/') + 1); // e.g. "air-ambulance-india-to-international.html"
+        
+        if (!filename || filename === 'index.html' || filename === '') {
+            return 'Main';
+        }
+        
+        // Extract region name from "air-ambulance-[region].html"
+        if (filename.startsWith('air-ambulance-')) {
+            let name = filename.replace('air-ambulance-', '').replace('.html', '');
+            
+            // Capitalize words and handle uppercase acronyms (UAE, UK, USA)
+            name = name.split('-').map(word => {
+                const lower = word.toLowerCase();
+                if (lower === 'uae' || lower === 'uk' || lower === 'usa') {
+                    return word.toUpperCase();
+                }
+                return word.charAt(0).toUpperCase() + word.slice(1);
+            }).join(' ');
+            
+            return name;
+        }
+        
+        return 'Main';
+    };
+
     // --- 1. CORE ANIMATION ENGINE (Intersection Observer) ---
     const observerOptions = {
         root: null,
@@ -182,6 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
 
                 const formData = new FormData(quoteForm);
+                const pageId = getPageIdentifier();
                 const payload = {
                     name: formData.get('name'),
                     phone: formData.get('phone'),
@@ -189,7 +218,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     from_location: formData.get('from_location'),
                     to_location: formData.get('to_location'),
                     service: formData.get('service'),
-                    token: turnstileToken
+                    token: turnstileToken,
+                    page: pageId,
+                    page_name: pageId,
+                    country: pageId
                 };
 
                 // Invoke Supabase Edge Function to securely process the captcha and insert lead
