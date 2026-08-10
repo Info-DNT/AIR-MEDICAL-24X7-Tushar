@@ -2,13 +2,39 @@
 const supabaseUrl = "https://dtiirdimtbmkvryvqten.supabase.co/";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0aWlyZGltdGJta3ZyeXZxdGVuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNDQ0MzksImV4cCI6MjA5MTcyMDQzOX0.MwOkE8tsM2itUhTxNJDDHPPPAxImjRS9Ch1ACWzdTmI";
 
-// Initialize the Supabase client for lead capture
-window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-
-// Initialize a separate Supabase client for blogs & comments (stored in original project)
 const blogsSupabaseUrl = "https://dtiirdimtbmkvryvqten.supabase.co/";
 const blogsSupabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0aWlyZGltdGJta3ZyeXZxdGVuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYxNDQ0MzksImV4cCI6MjA5MTcyMDQzOX0.MwOkE8tsM2itUhTxNJDDHPPPAxImjRS9Ch1ACWzdTmI";
-window.blogsSupabaseClient = supabase.createClient(blogsSupabaseUrl, blogsSupabaseKey);
+
+// The SDK is only needed by pages that read the database (blogs, reviews, admin panel).
+// The quote forms POST straight to the submit-main-page Edge Function with fetch(), so
+// this file must keep working when the SDK is absent — otherwise a missing SDK would
+// throw here and the form submit handlers below would never be registered.
+function createSupabaseClients() {
+  if (typeof supabase === "undefined") return false;
+  window.supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+  window.blogsSupabaseClient = supabase.createClient(blogsSupabaseUrl, blogsSupabaseKey);
+  return true;
+}
+createSupabaseClients();
+
+// Loads the SDK on demand and resolves with a ready client. Used by below-the-fold
+// content so 54 KB of SDK stays off the critical path on pages that may never need it.
+window.loadSupabase = function () {
+  if (window.supabaseClient) return Promise.resolve(window.supabaseClient);
+  if (window.__supabaseLoading) return window.__supabaseLoading;
+  window.__supabaseLoading = new Promise(function (resolve, reject) {
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+    s.onload = function () {
+      createSupabaseClients();
+      window.supabaseClient ? resolve(window.supabaseClient)
+                            : reject(new Error("Supabase SDK loaded but no client"));
+    };
+    s.onerror = function () { reject(new Error("Supabase SDK failed to load")); };
+    document.head.appendChild(s);
+  });
+  return window.__supabaseLoading;
+};
 
 // Automatically inject and handle Cloudflare Turnstile Captcha
 const turnstileSiteKey = "0x4AAAAAADTA3gG7SVL4awln";

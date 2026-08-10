@@ -277,6 +277,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   <!-- Libraries Stylesheet -->
 
   <!-- Customized Bootstrap Stylesheet -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="lib/fonts/webfonts/roboto-subset.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="lib/fonts/webfonts/roboto-condensed-subset.woff2">
     <link href="lib/site-fonts.css" rel="stylesheet">
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -1038,7 +1040,6 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         });
     });
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="js/config.js" defer></script>
 
 
@@ -1056,10 +1057,10 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   <!-- Blog End -->
 
   <script>
-    const supabaseClient = window.supabaseClient;
 
     async function loadHomeBlogs() {
       try {
+        const supabaseClient = await window.loadSupabase();
         const { data, error } = await supabaseClient
           .from("blogs")
           .select("title, slug, excerpt, featured_image, author")
@@ -1115,6 +1116,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
     async function loadHomeReviews() {
       try {
+        const supabaseClient = await window.loadSupabase();
         const { data, error } = await supabaseClient
           .from("reviews")
           .select("*")
@@ -1201,10 +1203,29 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
       }
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      loadHomeBlogs();
-      loadHomeReviews();
-    });
+    // Both sections sit below the fold, so defer their work — and the 54 KB SDK they
+    // need — until the user scrolls near them. Falls back to loading immediately where
+    // IntersectionObserver is unavailable.
+    (function () {
+      const targets = [
+        { el: document.getElementById("home-blog-section"), fn: loadHomeBlogs },
+        { el: document.getElementById("testimonialTrack"), fn: loadHomeReviews }
+      ].filter(t => t.el);
+
+      if (!("IntersectionObserver" in window)) {
+        targets.forEach(t => t.fn());
+        return;
+      }
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          obs.unobserve(entry.target);
+          const hit = targets.find(t => t.el === entry.target);
+          if (hit) hit.fn();
+        });
+      }, { rootMargin: "400px" });
+      targets.forEach(t => io.observe(t.el));
+    })();
   </script>
 
 
