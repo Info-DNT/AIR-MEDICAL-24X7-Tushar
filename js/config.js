@@ -165,6 +165,21 @@ function showQuoteSuccessModal() {
   document.body.appendChild(overlay);
 }
 
+// Turns the current URL into a short, readable page name for lead-source tracking
+// (e.g. "/air-ambulance-india" -> "Air Ambulance India", "/" -> "Homepage").
+// One rule for every page — no per-page lookup list to keep updated as pages are added.
+function getPageIdentifier() {
+  const slug = window.location.pathname.replace(/^\/+|\/+$/g, "").split("/").pop();
+  if (!slug || slug === "index" || slug === "index.html") return "Homepage";
+
+  const clean = slug.replace(/\.html$/i, "");
+  const ACRONYMS = new Set(["uae", "uk", "usa", "ecmo", "icu", "faa", "iso", "dgca"]);
+  return clean.split("-").map(word => {
+    const lower = word.toLowerCase();
+    return ACRONYMS.has(lower) ? lower.toUpperCase() : word.charAt(0).toUpperCase() + word.slice(1);
+  }).join(" ");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const forms = [
     document.getElementById("quoteForm"),
@@ -249,7 +264,11 @@ document.addEventListener("DOMContentLoaded", () => {
             email: document.getElementById(emailId)?.value || "",
             full_phone: fullPhone,
             service: serviceVal,
-            token: response
+            token: response,
+            // Which page the lead came from, e.g. "Air Ambulance India" — the
+            // Edge Function must also be updated to persist this into the new
+            // Supabase column; until then it's simply ignored, harmlessly.
+            source_page: getPageIdentifier()
           };
 
           // Capture new patient location and destination fields
