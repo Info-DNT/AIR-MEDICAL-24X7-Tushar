@@ -21,12 +21,6 @@
         relPath = relPath.substring(basePath.length);
       }
 
-      // Handle legacy /about redirect
-      if (relPath === '/about' || relPath === '/about.html' || relPath === '/about/') {
-        window.location.replace(basePath + '/about-us.html' + search + hash);
-        return;
-      }
-
       // Clean blog URLs: /blogs/<slug> is what history.replaceState puts in the address
       // bar, so it is what gets shared and bookmarked. On a host with the rewrite applied
       // this never runs; without it, this is what stops those links being dead.
@@ -37,15 +31,18 @@
         return;
       }
 
-      // Every page now lives at the site root: /services/<slug> and /countries/<slug>
-      // were flattened, so an inbound link to either resolves to the bare slug, as do
-      // the .html forms and the legacy singular names below.
+      // Only known legacy shapes are redirected. Both hosts already resolve an
+      // extensionless URL to <slug>.html server-side, so retrying that here achieved
+      // nothing except rewriting the address bar to /typo.html before showing this page.
+      // An unrecognised URL now simply renders the 404 at the address the visitor typed.
       var cleanRelPath = relPath;
       if (cleanRelPath.endsWith('/') && cleanRelPath !== '/') {
         cleanRelPath = cleanRelPath.slice(0, -1);
       }
       var lastSegment = cleanRelPath.substring(cleanRelPath.lastIndexOf('/') + 1);
+      var bare = lastSegment.replace(/\.html$/i, '');
 
+      // Pages renamed since launch.
       var RENAMES = {
         'about': 'about-us',
         'country': 'countries',
@@ -55,28 +52,20 @@
         'custom-medical-packages': 'medical-tourism',
         'medical-tourism-services': 'medical-tourism'
       };
+      if (RENAMES[bare]) {
+        window.location.replace(basePath + '/' + RENAMES[bare] + search + hash);
+        return;
+      }
 
-      var slug = lastSegment.replace(/\.html$/i, '');
-      if (RENAMES[slug]) { slug = RENAMES[slug]; }
-
-      if (slug && cleanRelPath !== '/' && cleanRelPath !== '') {
-        var hadExtension = lastSegment.indexOf('.') !== -1;
-        var isHtml = /\.html$/i.test(lastSegment);
-        var fromOldDirectory = cleanRelPath.indexOf('/services/') === 0 ||
-                               cleanRelPath.indexOf('/countries/') === 0;
-        var wasRenamed = RENAMES[lastSegment.replace(/\.html$/i, '')] !== undefined;
-
-        // Redirect when there is somewhere new to send the request. Arriving here with a
-        // .html extension that was not renamed and did not come from an old directory
-        // means that file already 404'd, so stop. That check is what prevents a redirect
-        // loop, and it is why no list of valid pages has to be kept in sync here.
-        if (!hadExtension || fromOldDirectory || wasRenamed) {
-          if (!isHtml || fromOldDirectory || wasRenamed) {
-            window.location.replace(basePath + '/' + slug + '.html' + search + hash);
-            return;
-          }
+      // /services/<slug> and /countries/<slug> were flattened to the site root.
+      if (cleanRelPath.indexOf('/services/') === 0 || cleanRelPath.indexOf('/countries/') === 0) {
+        if (bare) {
+          window.location.replace(basePath + '/' + bare + search + hash);
+          return;
         }
       }
+
+      // Anything else: no redirect. This page is the answer.
     })();
   </script>
     <meta charset="utf-8">
