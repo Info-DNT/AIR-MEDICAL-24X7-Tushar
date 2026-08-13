@@ -1080,7 +1080,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           <img class="img-fluid w-100" src="${b.featured_image || 'img/blog1.jpg'}" style="height: 220px; object-fit: cover;" alt="${title}" loading="lazy">
           <div class="p-4">
             <a class="h4 d-block mb-3 text-dark fw-bold"
-               href="blogs-detail?slug=${b.slug}" style="text-decoration: none; line-height: 1.4;">
+               href="blogs/${b.slug}" style="text-decoration: none; line-height: 1.4;">
                ${title}
              </a>
             <p class="m-0 text-muted" style="font-size: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">

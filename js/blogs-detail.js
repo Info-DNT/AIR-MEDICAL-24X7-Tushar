@@ -16,6 +16,10 @@ function resolveSlug() {
 }
 const slug = resolveSlug();
 
+// This script runs from two depths: blogs-detail.html at the site root, and the
+// pre-rendered blogs/<slug>.html one level down. Sidebar links must resolve from both.
+const sitePrefix = /\/blogs\/[^/]+\/?$/.test(window.location.pathname) ? "../" : "";
+
 /***************** DOM *****************/
 const titleEl = document.getElementById("blog-title");
 const imageEl = document.getElementById("blog-image");
@@ -26,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
   loadBlog();
   loadCategories();
   loadRecentPosts();
-  loadTags();
 });
 
 /***************** BLOG LOAD *****************/
@@ -214,7 +217,7 @@ async function loadCategories() {
   [...new Set(data.map(b => b.category))].forEach(category => {
     container.innerHTML += `
       <a class="d-block mb-2"
-         href="blogs?category=${encodeURIComponent(category)}">
+         href="${sitePrefix}blogs?category=${encodeURIComponent(category)}">
         ${category}
       </a>
     `;
@@ -239,31 +242,13 @@ async function loadRecentPosts() {
     const title = window.sanitize24X7(post.title);
     container.innerHTML += `
       <a class="d-block mb-2"
-         href="blogs-detail?slug=${post.slug}">
+         href="${sitePrefix}blogs/${post.slug}">
         ${title}
       </a>
     `;
   });
 }
 
-/***************** TAG CLOUD *****************/
-async function loadTags() {
-  const { data } = await supabaseClient
-    .from("blogs")
-    .select("tags")
-    .eq("status", "published");
-
-  const container = document.getElementById("tag-cloud");
-  if (!container) return;
-
-  const tags = [...new Set(data.flatMap(b => b.tags || []))];
-
-  container.innerHTML = tags
-    .map(tag => `
-      <a href="blogs?tag=${encodeURIComponent(tag)}"
-         class="btn btn-primary btn-sm m-1">
-        ${tag}
-      </a>
-    `)
-    .join("");
-}
+/* Tag cloud removed: the blogs table has no "tags" column — the query returned
+   400 column blogs.tags does not exist on every post page — and blogs-detail.html
+   has no #tag-cloud container for it to fill. Reinstate only if the column is added. */

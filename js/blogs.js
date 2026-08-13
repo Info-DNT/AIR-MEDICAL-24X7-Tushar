@@ -6,10 +6,9 @@ const PAGE_SIZE = 9;
 let page = 0;
 
 /***************** FILTER *****************/
-// The sidebar on a post links here as blogs?category=X and blogs?tag=X.
+// The sidebar on a post links here as blogs?category=X.
 const urlParams = new URLSearchParams(window.location.search);
 const filterCategory = urlParams.get("category");
-const filterTag = urlParams.get("tag");
 
 /***************** DOM *****************/
 const blogList = document.getElementById("blog-list");
@@ -19,8 +18,8 @@ const loadMoreBtn = document.getElementById("load-more");
 // Say what is being filtered and offer a way out, otherwise a filtered list is
 // indistinguishable from a short one.
 function showFilterNotice() {
-  if (!blogList || (!filterCategory && !filterTag)) return;
-  const label = filterCategory ? `Category: ${filterCategory}` : `Tag: ${filterTag}`;
+  if (!blogList || !filterCategory) return;
+  const label = `Category: ${filterCategory}`;
   const bar = document.createElement("div");
   bar.className = "col-12 mb-4";
   bar.innerHTML = `
@@ -54,7 +53,6 @@ async function loadBlogs(reset = false) {
     .eq("status", "published");
 
   if (filterCategory) query = query.eq("category", filterCategory);
-  if (filterTag) query = query.contains("tags", [filterTag]);   // tags is an array column
 
   const { data, error } = await query
     .order("created_at", { ascending: false })
@@ -84,14 +82,14 @@ async function loadBlogs(reset = false) {
 
     blogCard.innerHTML = `
       <div class="premium-card p-0 overflow-hidden h-100">
-        <a href="blogs-detail?slug=${blog.slug}" class="d-block">
+        <a href="blogs/${blog.slug}" class="d-block">
           <img class="img-fluid w-100"
                src="${blog.featured_image || "img/airmedicallogo.webp"}"
                alt="${title}" style="height: 220px; object-fit: cover;">
         </a>
         <div class="p-4">
           <a class="h4 d-block mb-3 text-dark fw-bold"
-             href="blogs-detail?slug=${blog.slug}" style="text-decoration: none; line-height: 1.4;">
+             href="blogs/${blog.slug}" style="text-decoration: none; line-height: 1.4;">
             ${title}
           </a>
           <p class="m-0 text-muted" style="font-size: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">

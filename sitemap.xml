@@ -342,4 +342,21 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- ===== BLOG POSTS (pre-rendered, see tools/build-blog-pages.py) ===== -->
+  <url>
+    <loc>https://airmedical24x7.com/blogs/a-high-risk-air-medical-mission-from-ras-al-khaimah-uae-to-assiut-egypt</loc>
+    <lastmod>2026-08-13</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://airmedical24x7.com/blogs/how-air-ambulance-services-speed-up-organ-transplants-and-emergency-medical-transfers</loc>
+    <lastmod>2026-08-13</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://airmedical24x7.com/blogs/medical-evacuation-bringing-your-loved-ones-home-safely</loc>
+    <lastmod>2026-08-13</lastmod>
+    <priority>0.6</priority>
+  </url>
+
 </urlset>
