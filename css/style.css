@@ -271,7 +271,7 @@ h6 {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 5% center;
+    object-position: right center;
     z-index: 0;
 }
 
@@ -310,7 +310,7 @@ h6 {
 
     /* keep the <img> hero framed exactly like the old background-position */
     .home-hero .hero-bg {
-        object-position: left center;
+        object-position: right center;
     }
 }
 
@@ -1429,7 +1429,7 @@ h6 {
 
     /* keep the <img> hero framed exactly like the old background-position */
     .home-hero .hero-bg {
-        object-position: left center;
+        object-position: right center;
         background-size: cover !important;
         padding: 60px 0 !important;
         display: flex;
@@ -1857,7 +1857,7 @@ h6 {
 
     /* keep the <img> hero framed exactly like the old background-position */
     .home-hero .hero-bg {
-        object-position: left center;
+        object-position: right center;
         /* Slide tarmac crew to the left/center on mobile */
         background-size: cover !important;
         padding: 60px 0 !important;
