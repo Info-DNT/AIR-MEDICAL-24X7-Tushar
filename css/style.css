@@ -290,7 +290,13 @@ h6 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+/* Hero headings sit on a dark navy gradient, but the global h1-h6 rule paints them
+   var(--dark) (#1D2A4D) — so a bare <h1> rendered navy-on-navy and was invisible on the
+   nine pages whose hero heading carries no utility class. .hero-header h4 already set a
+   colour; h1 was simply missed. Fixed here rather than in nine files so any future hero
+   heading inherits it. */
 .hero-header h1 {
+    color: #FFFFFF;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
     max-width: 850px;
 }
