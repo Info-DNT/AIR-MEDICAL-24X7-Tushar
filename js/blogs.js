@@ -4,11 +4,36 @@ const supabaseClient = window.blogsSupabaseClient;
 /***************** STATE *****************/
 const PAGE_SIZE = 9;
 let page = 0;
-let expanded = false;
+
+/***************** FILTER *****************/
+// The sidebar on a post links here as blogs?category=X and blogs?tag=X.
+const urlParams = new URLSearchParams(window.location.search);
+const filterCategory = urlParams.get("category");
+const filterTag = urlParams.get("tag");
 
 /***************** DOM *****************/
 const blogList = document.getElementById("blog-list");
 const loadMoreBtn = document.getElementById("load-more");
+
+/***************** FILTER NOTICE *****************/
+// Say what is being filtered and offer a way out, otherwise a filtered list is
+// indistinguishable from a short one.
+function showFilterNotice() {
+  if (!blogList || (!filterCategory && !filterTag)) return;
+  const label = filterCategory ? `Category: ${filterCategory}` : `Tag: ${filterTag}`;
+  const bar = document.createElement("div");
+  bar.className = "col-12 mb-4";
+  bar.innerHTML = `
+    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2
+                px-4 py-3 rounded" style="background:#EFF5F9;">
+      <span class="fw-bold text-dark mb-0">Showing posts in
+        <span class="text-primary"></span></span>
+      <a href="blogs" class="btn btn-sm btn-outline-primary">Clear filter</a>
+    </div>`;
+  // textContent, not innerHTML — the value comes from the query string
+  bar.querySelector(".text-primary").textContent = label;
+  blogList.parentNode.insertBefore(bar, blogList);
+}
 
 /***************** LOAD BLOGS *****************/
 async function loadBlogs(reset = false) {
@@ -17,17 +42,21 @@ async function loadBlogs(reset = false) {
   if (reset) {
     blogList.innerHTML = "";
     page = 0;
-    expanded = false;
     loadMoreBtn.innerText = "Load More";
   }
 
   const from = page * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
 
-  const { data, error } = await supabaseClient
+  let query = supabaseClient
     .from("blogs")
     .select("*")
-    .eq("status", "published")
+    .eq("status", "published");
+
+  if (filterCategory) query = query.eq("category", filterCategory);
+  if (filterTag) query = query.contains("tags", [filterTag]);   // tags is an array column
+
+  const { data, error } = await query
     .order("created_at", { ascending: false })
     .range(from, to);
 
@@ -38,6 +67,10 @@ async function loadBlogs(reset = false) {
 
   if (!data || data.length === 0) {
     loadMoreBtn.style.display = "none";
+    if (page === 0) {
+      blogList.innerHTML =
+        '<div class="col-12 text-center text-muted py-5">No posts found.</div>';
+    }
     return;
   }
 
@@ -74,27 +107,22 @@ async function loadBlogs(reset = false) {
     blogList.appendChild(blogCard);
   });
 
-  // Toggle button text
-  if (!expanded && data.length === PAGE_SIZE) {
-    loadMoreBtn.style.display = "inline-block";
-  } else {
-    loadMoreBtn.style.display = "none";
-  }
+  // A full page back means there may be more; a short page means this was the last.
+  loadMoreBtn.style.display = data.length === PAGE_SIZE ? "inline-block" : "none";
 }
 
 /***************** BUTTON CLICK *****************/
-loadMoreBtn.addEventListener("click", () => {
-  if (!expanded) {
-    expanded = true;
+// Appends the next page each time, rather than the old two-state toggle that could only
+// ever reach page 2 and left every post past the 18th unreachable.
+if (loadMoreBtn) {
+  loadMoreBtn.addEventListener("click", () => {
     page++;
     loadBlogs();
-    loadMoreBtn.innerText = "Show Less";
-  } else {
-    loadBlogs(true);
-  }
-});
+  });
+}
 
 /***************** INIT *****************/
 document.addEventListener("DOMContentLoaded", () => {
+  showFilterNotice();
   loadBlogs(true);
 });

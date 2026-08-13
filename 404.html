@@ -27,6 +27,16 @@
         return;
       }
 
+      // Clean blog URLs: /blogs/<slug> is what history.replaceState puts in the address
+      // bar, so it is what gets shared and bookmarked. On a host with the rewrite applied
+      // this never runs; without it, this is what stops those links being dead.
+      var blogMatch = relPath.match(/^\/blogs\/([^/]+)\/?$/);
+      if (blogMatch) {
+        window.location.replace(basePath + '/blogs-detail?slug=' +
+                                encodeURIComponent(decodeURIComponent(blogMatch[1])) + hash);
+        return;
+      }
+
       // Every page now lives at the site root: /services/<slug> and /countries/<slug>
       // were flattened, so an inbound link to either resolves to the bare slug, as do
       // the .html forms and the legacy singular names below.

@@ -4,9 +4,17 @@ const supabaseClient = window.blogsSupabaseClient;
 /***************** GLOBAL STATE *****************/
 let currentBlogId = null;
 
-/***************** URL PARAM *****************/
-const params = new URLSearchParams(window.location.search);
-const slug = params.get("slug");
+/***************** SLUG RESOLUTION *****************/
+// Accept both entry forms. ?slug= is what the blog listing links to; /blogs/{slug} is the
+// clean URL written into the address bar by history.replaceState below, so it is what
+// anyone who copies, bookmarks or refreshes the page will arrive on.
+function resolveSlug() {
+  const q = new URLSearchParams(window.location.search).get("slug");
+  if (q) return q;
+  const m = window.location.pathname.match(/\/blogs\/([^/]+)\/?$/);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+const slug = resolveSlug();
 
 /***************** DOM *****************/
 const titleEl = document.getElementById("blog-title");
@@ -57,12 +65,14 @@ async function loadBlog() {
       window.sanitize24X7(data.meta_description || data.excerpt || "")
     );
 
-  // SUGG-07: Update URL to /blogs/{slug} without reload + sync canonical
-  const cleanUrl = `/blogs/${slug}`;
+  // Rewrite to the clean URL. Uses the directory the page is served from, so it stays
+  // correct at the domain root and under a project subpath.
+  const basePath = window.location.pathname.replace(/\/[^/]*$/, "").replace(/\/blogs$/, "");
+  const cleanUrl = `${basePath}/blogs/${slug}`;
   history.replaceState({ slug }, sanitizedTitle, cleanUrl);
   const canonicalEl = document.getElementById("page-canonical");
   if (canonicalEl) {
-    canonicalEl.setAttribute("href", `https://airmedical24x7.com${cleanUrl}`);
+    canonicalEl.setAttribute("href", `https://airmedical24x7.com/blogs/${slug}`);
   }
 
   currentBlogId = data.id;
