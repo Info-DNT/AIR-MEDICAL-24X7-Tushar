@@ -1424,16 +1424,15 @@ h6 {
     .hero-header {
         min-height: 400px !important;
         /* Sensible mobile height */
-        background-position: left center !important;
-    }
-
-    /* keep the <img> hero framed exactly like the old background-position */
-    .home-hero .hero-bg {
-        object-position: right center;
         background-size: cover !important;
         padding: 60px 0 !important;
         display: flex;
         align-items: center;
+    }
+
+    /* keep the <img> hero framed like the old background-position */
+    .home-hero .hero-bg {
+        object-position: right center;
     }
 
     /* Scale down hero text on mobile */
@@ -1852,18 +1851,16 @@ h6 {
         overflow: hidden !important;
         min-height: 450px !important;
         height: auto !important;
-        background-position: left center !important;
-    }
-
-    /* keep the <img> hero framed exactly like the old background-position */
-    .home-hero .hero-bg {
-        object-position: right center;
-        /* Slide tarmac crew to the left/center on mobile */
         background-size: cover !important;
         padding: 60px 0 !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
+    }
+
+    /* keep the <img> hero framed like the old background-position */
+    .home-hero .hero-bg {
+        object-position: right center;
     }
 
     /* Darker Navy Gradient Overlay for premium feel & high contrast */
