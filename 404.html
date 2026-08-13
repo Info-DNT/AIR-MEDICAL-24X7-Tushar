@@ -27,80 +27,44 @@
         return;
       }
 
-      // Handle legacy singular redirects
+      // Every page now lives at the site root: /services/<slug> and /countries/<slug>
+      // were flattened, so an inbound link to either resolves to the bare slug, as do
+      // the .html forms and the legacy singular names below.
       var cleanRelPath = relPath;
       if (cleanRelPath.endsWith('/') && cleanRelPath !== '/') {
         cleanRelPath = cleanRelPath.slice(0, -1);
       }
-      if (cleanRelPath === '/country' || cleanRelPath === '/country.html') {
-        window.location.replace(basePath + '/countries.html' + search + hash);
-        return;
-      }
-      if (cleanRelPath === '/blog' || cleanRelPath === '/blog.html') {
-        window.location.replace(basePath + '/blogs.html' + search + hash);
-        return;
-      }
-      if (cleanRelPath === '/blog-detail' || cleanRelPath === '/blog-detail.html') {
-        window.location.replace(basePath + '/blogs-detail.html' + search + hash);
-        return;
-      }
-      if (cleanRelPath === '/flight-medical-escort-services' || cleanRelPath === '/flight-medical-escort-services.html') {
-        window.location.replace(basePath + '/services/flight-medical-escort-services.html' + search + hash);
-        return;
-      }
-
       var lastSegment = cleanRelPath.substring(cleanRelPath.lastIndexOf('/') + 1);
-      if (cleanRelPath !== '/' && cleanRelPath !== '' && !lastSegment.includes('.')) {
-        var targetUrl;
-        if (cleanRelPath === '/countries') {
-          targetUrl = basePath + '/countries.html' + search + hash;
-        } else if (lastSegment.indexOf('air-ambulance-') === 0 && lastSegment !== 'air-ambulance-charters') {
-          // NEW: country pages now live at /countries/{slug}.html (root URL handled by .htaccess on Apache)
-          targetUrl = basePath + '/countries/' + lastSegment + '.html' + search + hash;
-        } else if (cleanRelPath.indexOf('/countries/air-ambulance-') === 0) {
-          // Legacy /countries/air-ambulance-* → /air-ambulance-* (already redirected by .htaccess on Apache)
-          var slug = lastSegment;
-          targetUrl = basePath + '/' + slug + search + hash;
-        } else {
-          var cleanSegment = lastSegment;
-          if (cleanSegment === 'airline-stretcher-services') {
-            cleanSegment = 'commercial-flight-stretcher';
-          }
-          if (cleanSegment === 'custom-medical-packages' || cleanSegment === 'medical-tourism-services') {
-            cleanSegment = 'medical-tourism';
-          }
 
-          var services = [
-            'air-ambulance', 'air-ambulance-charters', 'ECMO-transfer',
-            'commercial-airlines-medical-transfer-services', 'commercial-flight-stretcher',
-            'doctor-appointment', 'flight-medical-escort-services', 'hospital-acceptance',
-            'second-opinion-services', 'organ-transplant-assistance', 'medical-tourism',
-            'medical-travel-assistance', 'home-health-care'
-          ];
+      var RENAMES = {
+        'about': 'about-us',
+        'country': 'countries',
+        'blog': 'blogs',
+        'blog-detail': 'blogs-detail',
+        'airline-stretcher-services': 'commercial-flight-stretcher',
+        'custom-medical-packages': 'medical-tourism',
+        'medical-tourism-services': 'medical-tourism'
+      };
 
-          var serviceMatch = services.find(function(s) {
-            return s.toLowerCase() === cleanSegment.toLowerCase();
-          });
+      var slug = lastSegment.replace(/\.html$/i, '');
+      if (RENAMES[slug]) { slug = RENAMES[slug]; }
 
-          if (serviceMatch) {
-            targetUrl = basePath + '/services/' + serviceMatch + '.html' + search + hash;
-          } else {
-            // Only redirect if we expect a real page — prevent redirect loops
-            var knownRootPages = [
-              'about-us', 'contact-us', 'blogs', 'blogs-detail', 'career',
-              'countries', 'privacy-policy', 'terms-and-conditions',
-              'ecmo-air-transfer', 'medical-escort-dubai', 'medical-tourism-india',
-              'repatriation-services-dubai', 'commercial-stretcher-service'
-            ];
-            if (knownRootPages.indexOf(cleanSegment) !== -1) {
-              targetUrl = basePath + cleanRelPath + '.html' + search + hash;
-            } else {
-              targetUrl = null;
-            }
+      if (slug && cleanRelPath !== '/' && cleanRelPath !== '') {
+        var hadExtension = lastSegment.indexOf('.') !== -1;
+        var isHtml = /\.html$/i.test(lastSegment);
+        var fromOldDirectory = cleanRelPath.indexOf('/services/') === 0 ||
+                               cleanRelPath.indexOf('/countries/') === 0;
+        var wasRenamed = RENAMES[lastSegment.replace(/\.html$/i, '')] !== undefined;
+
+        // Redirect when there is somewhere new to send the request. Arriving here with a
+        // .html extension that was not renamed and did not come from an old directory
+        // means that file already 404'd, so stop. That check is what prevents a redirect
+        // loop, and it is why no list of valid pages has to be kept in sync here.
+        if (!hadExtension || fromOldDirectory || wasRenamed) {
+          if (!isHtml || fromOldDirectory || wasRenamed) {
+            window.location.replace(basePath + '/' + slug + '.html' + search + hash);
+            return;
           }
-        }
-        if (targetUrl) {
-          window.location.replace(targetUrl);
         }
       }
     })();

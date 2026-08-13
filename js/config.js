@@ -115,9 +115,9 @@ function showQuoteSuccessModal() {
   const existing = document.getElementById("quoteSuccessModal");
   if (existing) existing.remove();
 
-  const isRoot = !window.location.pathname.includes("/services/") &&
-                 !window.location.pathname.includes("/countries/");
-  const logoPath = isRoot ? "img/air-medical-logo.webp" : "../img/air-medical-logo.webp";
+  // Every page sits at the site root since /services/ and /countries/ were flattened,
+  // so the old depth check always resolved to the root branch.
+  const logoPath = "img/air-medical-logo.webp";
 
   const overlay = document.createElement("div");
   overlay.id = "quoteSuccessModal";
@@ -142,7 +142,7 @@ function showQuoteSuccessModal() {
       <p style="color:#1a2e5a;font-size:0.92rem;font-weight:700;font-style:italic;margin-bottom:28px;">
         Our expert will get back to you shortly with your customized quote.
       </p>
-      <a href="${isRoot ? 'index.html' : '../index.html'}"
+      <a href="./"
          style="display:inline-block;background:#1a2e5a;color:#fff;font-weight:700;
                 font-size:0.82rem;letter-spacing:0.08em;padding:13px 32px;border-radius:50px;
                 text-decoration:none;transition:background 0.2s;">

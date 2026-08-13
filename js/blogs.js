@@ -51,14 +51,14 @@ async function loadBlogs(reset = false) {
 
     blogCard.innerHTML = `
       <div class="premium-card p-0 overflow-hidden h-100">
-        <a href="blogs-detail.html?slug=${blog.slug}" class="d-block">
+        <a href="blogs-detail?slug=${blog.slug}" class="d-block">
           <img class="img-fluid w-100"
                src="${blog.featured_image || "img/airmedicallogo.webp"}"
                alt="${title}" style="height: 220px; object-fit: cover;">
         </a>
         <div class="p-4">
           <a class="h4 d-block mb-3 text-dark fw-bold"
-             href="blogs-detail.html?slug=${blog.slug}" style="text-decoration: none; line-height: 1.4;">
+             href="blogs-detail?slug=${blog.slug}" style="text-decoration: none; line-height: 1.4;">
             ${title}
           </a>
           <p class="m-0 text-muted" style="font-size: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
