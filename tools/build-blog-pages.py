@@ -38,6 +38,15 @@ TEMPLATE = os.path.join(ROOT, "blogs-detail.html")
 
 
 def anon_key():
+    """Prefer .env; fall back to js/config.js so this keeps working without one."""
+    env = os.path.join(ROOT, ".env")
+    if os.path.isfile(env):
+        for line in open(env, encoding="utf-8"):
+            line = line.strip()
+            if line.startswith("SUPABASE_ANON_KEY=") and not line.startswith("#"):
+                v = line.split("=", 1)[1].strip().strip("\"'")
+                if v:
+                    return v
     cfg = open(os.path.join(ROOT, "js", "config.js"), encoding="utf-8").read()
     return re.search(r'const supabaseKey = "([^"]+)"', cfg).group(1)
 
