@@ -1,6 +1,12 @@
 # Local dev scratch — never publish: has contained live credentials
 scratch/
 
+# Environment files — never commit. This repository is public, and a
+# service_role JWT already reached its history once via scratch/.
+.env
+.env.*
+!.env.example
+
 # OS / editor noise
 Thumbs.db
 .DS_Store
