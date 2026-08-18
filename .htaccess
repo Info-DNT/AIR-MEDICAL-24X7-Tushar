@@ -78,8 +78,7 @@ RewriteRule ^countries/index$ /countries [R=301,L,NC]
 # ============================================================
 # 3. Legacy root service/country redirects (keep existing)
 # ============================================================
-RewriteRule ^airline-stretcher-services$ /commercial-flight-stretcher [R=301,L,NC]
-RewriteRule ^commercial-flight-stretcher$ /commercial-flight-stretcher [R=301,L,NC]
+RewriteRule ^commercial-flight-stretcher$ /airline-stretcher-services [R=301,L,NC]
 RewriteRule ^air-ambulance$ /air-ambulance [R=301,L,NC]
 RewriteRule ^air-ambulance-charters$ /air-ambulance-charters [R=301,L,NC]
 RewriteRule ^flight-medical-escort-services$ /flight-medical-escort-services [R=301,L,NC]
