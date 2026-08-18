@@ -3,7 +3,11 @@
 **Reported:** the site opens on `index.html`; `www` does not redirect to non-`www`; the
 404 page never appears.
 
-**Status:** plan only. Nothing executed. Nothing pushed.
+**Status:** ✅ **implemented in `nginx.conf`.** Syntax validated with `crossplane` (nginx's
+own config parser) inside a real `http { }` context: 3 server blocks, no errors.
+
+Still requires a server-side apply — see "Steps" below. Nothing is fixed in production
+until the config is merged and nginx reloaded.
 
 ---
 
