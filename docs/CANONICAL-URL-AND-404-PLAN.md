@@ -166,11 +166,29 @@ Add one line so the extensionless form does not answer 200:
 location = /404 { internal; }
 ```
 
-### 4. Delete `.htaccess`
+### 4. `.htaccess` — optional, not required
 
-It cannot execute, it duplicates rules that now live in `nginx.conf`, and leaving it
-invites someone to edit it and assume the change took effect. Removing it is safe — nginx
-has never read it.
+**Nothing here depends on removing it.** Recorded because it is misleading, not because it
+is harmful.
+
+Measured: of the seven things `.htaccess` declares — six security headers, caching, and the
+www redirect — the live server applies **none**. The response carries no
+`X-Frame-Options`, no `Strict-Transport-Security`, no `Cache-Control`, and `www` does not
+redirect. `Server: nginx/1.28.3` with no proxy header, so there is no Apache layer to read
+it.
+
+The security headers the file appears to provide are therefore **already absent in
+production**. Deleting it removes nothing that currently works; `nginx.conf` is what will
+supply them.
+
+One real consideration: `/.htaccess` is **publicly downloadable** (200, 5702 bytes),
+exposing the intended config. The dotfile deny added in `1737e30` closes that, so it is
+handled whether the file stays or goes.
+
+**Keeping it is perfectly reasonable** — it costs nothing once dotfiles are denied, and it
+would become useful again on a move to Apache or shared hosting. The only argument for
+removing it is that a file which reads as configured but never executes is what allowed
+these three issues to persist unnoticed.
 
 ---
 
@@ -182,7 +200,7 @@ has never read it.
 | 2 | Confirm certificate paths (`sudo certbot certificates`) | server | 5 min |
 | 3 | Apply config, `sudo nginx -t`, reload | server | 10 min |
 | 4 | Verify (below) | — | 10 min |
-| 5 | Delete `.htaccess` | repo | 1 min |
+| 5 | *(optional)* remove `.htaccess` — see §4, nothing depends on it | repo | 1 min |
 | 6 | Resubmit sitemap in Search Console | — | 5 min |
 
 `nginx -t` is the safety gate — a bad config fails there and the running server is
