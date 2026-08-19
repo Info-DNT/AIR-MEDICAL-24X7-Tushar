@@ -110,42 +110,11 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- ===== LANDING / HUB PAGES ===== -->
-  <url>
-    <loc>https://airmedical24x7.com/ecmo-air-transfer</loc>
-    <lastmod>2026-06-11</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airmedical24x7.com/medical-escort-dubai</loc>
-    <lastmod>2026-06-11</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airmedical24x7.com/medical-tourism-india</loc>
-    <lastmod>2026-06-11</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airmedical24x7.com/repatriation-services-dubai</loc>
-    <lastmod>2026-06-11</lastmod>
-    <priority>0.8</priority>
-  </url>
 
   <!-- ===== COUNTRY PAGES — clean root-level URLs ===== -->
   <url>
-    <loc>https://airmedical24x7.com/air-ambulance-india</loc>
-    <lastmod>2026-06-11</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
     <loc>https://airmedical24x7.com/air-ambulance-dubai</loc>
     <lastmod>2026-06-11</lastmod>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://airmedical24x7.com/united-arabs</loc>
-    <lastmod>2026-08-18</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
@@ -170,16 +139,6 @@
   </url>
   <url>
     <loc>https://airmedical24x7.com/air-ambulance-bahrain</loc>
-    <lastmod>2026-06-11</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airmedical24x7.com/air-ambulance-cost-dubai</loc>
-    <lastmod>2026-06-11</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://airmedical24x7.com/air-ambulance-to-india</loc>
     <lastmod>2026-06-11</lastmod>
     <priority>0.8</priority>
   </url>
