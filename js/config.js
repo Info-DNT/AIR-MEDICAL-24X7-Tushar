@@ -343,7 +343,26 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Sanitizer function to ensure "24X7" casing everywhere client-side
+// Returns the URL only if it is a form that cannot execute script, otherwise the
+// fallback. Guards href and src values that come from the database: a stored
+// "javascript:..." in a link would run on click, and a "data:text/html,..." would
+// run in its own document. Everything the site legitimately stores — a relative
+// slug, an https image, a mailto or tel — passes through untouched.
+window.safeUrl = function (value, fallback) {
+  fallback = fallback || "#";
+  if (!value || typeof value !== "string") return fallback;
+  const v = value.trim();
+  if (!v) return fallback;
+  // Reject any scheme other than the ones below; relative paths have no scheme.
+  const scheme = v.match(/^([a-z][a-z0-9+.-]*):/i);
+  if (scheme && !/^(https?|mailto|tel)$/i.test(scheme[1])) return fallback;
+  return v;
+};
+
+// NOT an HTML sanitizer, despite the name. It normalizes brand casing — 24/7 and
+// 24x7 become 24X7 — and leaves markup exactly as it found it. Never rely on it to
+// make database content safe to put in innerHTML; use textContent, or DOMPurify for
+// values that are genuinely rich HTML.
 window.sanitize24X7 = function (text) {
   if (!text || typeof text !== "string") return text;
   try {

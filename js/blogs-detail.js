@@ -55,7 +55,7 @@ async function loadBlog() {
   const sanitizedTitle = window.sanitize24X7(data.title);
   titleEl.innerText = sanitizedTitle;
 
-  imageEl.src = data.featured_image || "img/airmedicallogo.webp";
+  imageEl.src = window.safeUrl(data.featured_image, "img/airmedicallogo.webp");
   imageEl.alt = sanitizedTitle;
 
   contentEl.innerHTML = window.sanitize24X7(data.content);
@@ -127,35 +127,40 @@ async function loadComments(blogId) {
     const message = window.sanitize24X7(c.message);
     const adminReply = window.sanitize24X7(c.admin_reply);
 
+    // Comment fields are visitor-supplied and are plain text. Building the markup
+    // first and filling the values in with textContent means a comment containing
+    // markup is displayed as written rather than executed — which is the whole
+    // point, since anyone can submit one.
     div.innerHTML = `
       <div class="mb-1">
-        <strong>${name}</strong>
+        <strong class="js-c-name"></strong>
         <small class="text-muted">
-          • ${new Date(c.created_at).toDateString()}
+          • <span class="js-c-date"></span>
         </small>
       </div>
 
-      <div class="mb-2">
-        ${message}
-      </div>
-
-      ${
-        adminReply
-          ? `
-          <div style="
-            margin-left: 15px;
-            padding: 10px 12px;
-            background: #f8f9fa;
-            border-left: 3px solid #dc3545;
-            font-size: 14px;
-          ">
-            <strong>Air Medical 24X7:</strong><br>
-            ${adminReply}
-          </div>
-        `
-          : ""
-      }
+      <div class="mb-2 js-c-message"></div>
     `;
+
+    div.querySelector(".js-c-name").textContent = name || "";
+    div.querySelector(".js-c-date").textContent = new Date(c.created_at).toDateString();
+    div.querySelector(".js-c-message").textContent = message || "";
+
+    // Built only when a reply exists, not hidden with display:none. A hidden block is
+    // still in the DOM and still read aloud by a screen reader, so leaving it there
+    // would change the page for anyone not looking at it.
+    if (adminReply) {
+      const reply = document.createElement("div");
+      reply.style.cssText =
+        "margin-left:15px;padding:10px 12px;background:#f8f9fa;" +
+        "border-left:3px solid #dc3545;font-size:14px;";
+      const label = document.createElement("strong");
+      label.textContent = "Air Medical 24X7:";
+      const text = document.createElement("span");
+      text.textContent = adminReply;
+      reply.append(label, document.createElement("br"), text);
+      div.appendChild(reply);
+    }
 
     list.appendChild(div);
   });
@@ -215,12 +220,11 @@ async function loadCategories() {
   container.innerHTML = "";
 
   [...new Set(data.map(b => b.category))].forEach(category => {
-    container.innerHTML += `
-      <a class="d-block mb-2"
-         href="${sitePrefix}blogs?category=${encodeURIComponent(category)}">
-        ${category}
-      </a>
-    `;
+    const a = document.createElement("a");
+    a.className = "d-block mb-2";
+    a.href = sitePrefix + "blogs?category=" + encodeURIComponent(category || "");
+    a.textContent = category || "";
+    container.appendChild(a);
   });
 }
 
@@ -240,12 +244,14 @@ async function loadRecentPosts() {
 
   data.forEach(post => {
     const title = window.sanitize24X7(post.title);
-    container.innerHTML += `
-      <a class="d-block mb-2"
-         href="${sitePrefix}blogs/${post.slug}">
-        ${title}
-      </a>
-    `;
+    const a = document.createElement("a");
+    a.className = "d-block mb-2";
+    a.href = window.safeUrl(
+      sitePrefix + "blogs/" + encodeURIComponent(post.slug || ""),
+      sitePrefix + "blogs"
+    );
+    a.textContent = title || "";
+    container.appendChild(a);
   });
 }
 

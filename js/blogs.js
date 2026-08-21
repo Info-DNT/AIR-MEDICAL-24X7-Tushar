@@ -80,27 +80,41 @@ async function loadBlogs(reset = false) {
     const excerpt = window.sanitize24X7(blog.excerpt || "");
     const author = window.sanitize24X7(blog.author || "Air Medical 24X7");
 
+    // Markup first, with no database values in it, then the values via textContent
+    // and setAttribute. These fields are plain text — a title or an author name is
+    // never markup — so interpolating them into innerHTML only ever created an
+    // injection path. Identical output for real content; stored HTML now shows as
+    // the characters it is instead of being executed.
     blogCard.innerHTML = `
       <div class="premium-card p-0 overflow-hidden h-100">
-        <a href="blogs/${blog.slug}" class="d-block">
-          <img class="img-fluid w-100"
-               src="${blog.featured_image || "img/airmedicallogo.webp"}"
-               alt="${title}" style="height: 220px; object-fit: cover;">
+        <a class="d-block js-card-link">
+          <img class="img-fluid w-100 js-card-img"
+               style="height: 220px; object-fit: cover;">
         </a>
         <div class="p-4">
-          <a class="h4 d-block mb-3 text-dark fw-bold"
-             href="blogs/${blog.slug}" style="text-decoration: none; line-height: 1.4;">
-            ${title}
-          </a>
-          <p class="m-0 text-muted" style="font-size: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
-            ${excerpt}
-          </p>
+          <a class="h4 d-block mb-3 text-dark fw-bold js-card-title"
+             style="text-decoration: none; line-height: 1.4;"></a>
+          <p class="m-0 text-muted js-card-excerpt" style="font-size: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;"></p>
         </div>
         <div class="mt-auto border-top p-4">
-          <small class="text-primary fw-bold"><i class="far fa-user me-2"></i>${author}</small>
+          <small class="text-primary fw-bold"><i class="far fa-user me-2"></i><span class="js-card-author"></span></small>
         </div>
       </div>
     `;
+
+    const href = window.safeUrl("blogs/" + encodeURIComponent(blog.slug || ""), "blogs");
+    blogCard.querySelector(".js-card-link").href = href;
+
+    const img = blogCard.querySelector(".js-card-img");
+    img.src = window.safeUrl(blog.featured_image, "img/airmedicallogo.webp");
+    img.alt = title || "";
+
+    const titleEl = blogCard.querySelector(".js-card-title");
+    titleEl.href = href;
+    titleEl.textContent = title || "";
+
+    blogCard.querySelector(".js-card-excerpt").textContent = excerpt;
+    blogCard.querySelector(".js-card-author").textContent = author;
 
     blogList.appendChild(blogCard);
   });
