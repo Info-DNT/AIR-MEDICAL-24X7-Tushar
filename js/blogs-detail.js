@@ -32,6 +32,41 @@ document.addEventListener("DOMContentLoaded", () => {
   loadRecentPosts();
 });
 
+/***************** POST BODY *****************/
+// The post body is the one field that is legitimately rich HTML — Quill produces it —
+// so it cannot use textContent without destroying every post's formatting. It is the
+// only place innerHTML still receives database content, and DOMPurify is what makes
+// that safe.
+//
+// The allowlist is deliberately wider than what the live posts use (p, strong, em, h2,
+// h3, ul, ol, li, br, a) so a future post using tables or code blocks is not silently
+// stripped. `style` is NOT allowed: no post uses it, and it was the one thing that let
+// a css url(javascript:...) payload through in testing.
+const POST_HTML_RULES = {
+  ALLOWED_TAGS: ["p", "br", "strong", "em", "u", "s", "blockquote", "pre", "code",
+                 "h1", "h2", "h3", "h4", "h5", "h6", "ul", "ol", "li",
+                 "a", "img", "span", "div", "sub", "sup", "hr",
+                 "table", "thead", "tbody", "tr", "td", "th"],
+  ALLOWED_ATTR: ["href", "title", "target", "rel", "src", "alt",
+                 "width", "height", "class"],
+  FORBID_TAGS: ["script", "style", "iframe", "object", "embed", "form", "input"],
+  FORBID_ATTR: ["onerror", "onload", "onclick", "onmouseover", "formaction"]
+};
+
+function renderPostBody(el, raw) {
+  const branded = window.sanitize24X7(raw || "");
+  if (window.DOMPurify && typeof window.DOMPurify.sanitize === "function") {
+    el.innerHTML = window.DOMPurify.sanitize(branded, POST_HTML_RULES);
+    return;
+  }
+  // A sanitizer that failed to load is not a sanitizer. Rather than fall back to raw
+  // innerHTML — which is the vulnerability this replaces — show the markup as text.
+  // Visibly wrong, which is the point: it surfaces the missing file instead of
+  // silently reopening the hole.
+  console.error("DOMPurify missing — post body rendered as text. Check lib/purify.min.js.");
+  el.textContent = branded;
+}
+
 /***************** BLOG LOAD *****************/
 async function loadBlog() {
   if (!slug) {
@@ -58,7 +93,7 @@ async function loadBlog() {
   imageEl.src = window.safeUrl(data.featured_image, "img/airmedicallogo.webp");
   imageEl.alt = sanitizedTitle;
 
-  contentEl.innerHTML = window.sanitize24X7(data.content);
+  renderPostBody(contentEl, data.content);
 
   document.title = window.sanitize24X7(data.meta_title || data.title);
   document
