@@ -248,10 +248,7 @@ h6 {
 }
 
 .hero-header {
-    /* The homepage hero image is now a real <img class="hero-bg"> in the markup so it can
-       use srcset and be preloaded, instead of a background-image that can't paint until
-       this stylesheet has downloaded and parsed. Colour remains as the paint-behind. */
-    background-color: var(--primary);
+    background: url(../img/home-page-header.jfif) 5% center no-repeat;
     background-size: cover;
     min-height: 600px;
     /* Added to give image more vertical space */
@@ -265,14 +262,234 @@ h6 {
     overflow: hidden;
 }
 
-.home-hero .hero-bg {
-    position: absolute;
-    inset: 0;
+
+/* ================= NEW HERO BANNER DESIGN ================= */
+
+/* Glass Card styling for Hero Banner */
+.glass-card {
+    background: rgba(30, 41, 59, 0.6);
+    /* Less opaque (more transparent) */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    padding: 24px !important;
+    max-width: 680px;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: right center;
-    z-index: 0;
+}
+
+@media (min-width: 992px) {
+    .glass-card {
+        margin-left: 0;
+        margin-right: auto;
+    }
+}
+
+/* White Form Card */
+.hero-form-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    padding: 24px !important;
+    max-width: 430px;
+    width: 100%;
+}
+
+@media (min-width: 992px) {
+    .hero-form-card {
+        margin-left: auto;
+        margin-right: 0;
+    }
+}
+
+.hero-badge-dark {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(17, 24, 39, 0.85);
+    color: #ffffff;
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.badge-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #FB0F0C;
+    border-radius: 50%;
+    display: inline-block;
+    animation: beacon-pulse 1.5s infinite;
+}
+
+@keyframes beacon-pulse {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.9);
+        opacity: 0.6;
+    }
+}
+
+/* A pulsing dot is decoration, not information — hold it still for anyone who
+   has asked the OS to reduce motion. */
+@media (prefers-reduced-motion: reduce) {
+    .badge-dot {
+        animation: none;
+    }
+}
+
+/* Hero Forms Styling */
+.hero-form-label {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.68rem;
+    letter-spacing: 0.5px;
+    color: #354F8E;
+    margin-bottom: 3px;
+}
+
+.hero-form-control {
+    background-color: #EFF2F6 !important;
+    border: 1px solid #D1D5DB !important;
+    border-radius: 6px !important;
+    height: 36px !important;
+    font-size: 0.8rem !important;
+    color: #1D2A4D !important;
+    font-weight: 500;
+    padding: 4px 8px !important;
+}
+
+.hero-form-control:focus {
+    background-color: #ffffff !important;
+    border-color: #1A346B !important;
+    box-shadow: 0 0 0 3px rgba(26, 52, 107, 0.15) !important;
+    outline: 0;
+}
+
+.hero-input-group {
+    background-color: #EFF2F6;
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    height: 36px !important;
+}
+
+.hero-input-group .form-control {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* Hero Buttons */
+.btn-emergency {
+    background-color: #FB0F0C;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    line-height: 1.25;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    white-space: nowrap !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 14px;
+}
+
+.btn-emergency:hover {
+    background-color: #d40d0a;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(251, 15, 12, 0.25);
+}
+
+.btn-whatsapp-dark {
+    background-color: #111827;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    line-height: 1.25;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    white-space: nowrap !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 14px;
+}
+
+.btn-whatsapp-dark:hover {
+    background-color: #1f2937;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(17, 24, 39, 0.25);
+}
+
+.btn-request-callback {
+    background-color: #FB0F0C;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    height: 42px !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.btn-request-callback:hover {
+    background-color: #d40d0a;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(251, 15, 12, 0.25);
+}
+
+/* Home Hero Banner Mobile cleanup */
+@media (max-width: 767px) {
+    .home-hero {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+        margin-bottom: 2rem !important;
+    }
+
+    .hero-form-card {
+        padding: 16px !important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .glass-card {
+        padding: 20px !important;
+        margin-top: 1.5rem !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .glass-card {
+        margin-top: 1.5rem !important;
+    }
 }
 
 .home-hero>.container {
@@ -315,9 +532,6 @@ h6 {
     }
 
     /* keep the <img> hero framed exactly like the old background-position */
-    .home-hero .hero-bg {
-        object-position: right center;
-    }
 }
 
 .hero-btns {
@@ -1428,6 +1642,7 @@ h6 {
 ================================ */
 @media (max-width: 991.98px) {
     .hero-header {
+        background-position: left center !important;
         min-height: 400px !important;
         /* Sensible mobile height */
         background-size: cover !important;
@@ -1437,9 +1652,6 @@ h6 {
     }
 
     /* keep the <img> hero framed like the old background-position */
-    .home-hero .hero-bg {
-        object-position: right center;
-    }
 
     /* Scale down hero text on mobile */
     .hero-header .display-1 {
@@ -1865,9 +2077,6 @@ h6 {
     }
 
     /* keep the <img> hero framed like the old background-position */
-    .home-hero .hero-bg {
-        object-position: right center;
-    }
 
     /* Darker Navy Gradient Overlay for premium feel & high contrast */
     .hero-header::before {
@@ -2117,11 +2326,19 @@ h6 {
     margin-right: 6px;
 }
 
-/* Add padding to body to prevent sticky bar overlapping footer info on mobile */
-@media (max-width: 991.98px) {
-    body {
-        padding-bottom: 70px !important;
-    }
+/* Reserve room for the fixed call/WhatsApp/iMessage bar.
+
+   .mobile-sticky-cta is position:fixed with no media query of its own, so it is
+   on screen at every width -- but this compensating padding used to be inside
+   @media (max-width: 991.98px). Above 992px the bar was there and nothing made
+   room for it, so it sat on top of the footer's copyright and payment rows.
+
+   70px = the bar's 64px (10px padding + 44px button + 10px padding) plus 6px
+   of clearance. No safe-area inset here: the bar is pinned to bottom:0, so it
+   already spans the home-indicator strip -- adding env() would double-count it.
+   Overridden to 60px below 769px, where the bar itself is shorter. */
+body {
+    padding-bottom: 70px !important;
 }
 
 /* 3. Journey Steps (How It Works) */
@@ -2341,8 +2558,11 @@ h6 {
         height: 38px !important;
         font-size: 12px !important;
     }
+    /* bar is 54px here (8px + 38px button + 8px); +6px clearance to match
+       the desktop rule, so the copyright and payment rows do not sit flush
+       against it. */
     body {
-        padding-bottom: 54px !important;
+        padding-bottom: 60px !important;
     }
 }
 

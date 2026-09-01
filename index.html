@@ -352,11 +352,9 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 
-  <!-- Preload the hero (LCP element). Now a real <img>, so the hint carries the same
-       srcset/sizes as the tag and the browser preloads the exact candidate it will render. -->
-  <link rel="preload" as="image" href="img/hero-800.webp"
-    imagesrcset="img/hero-480.webp 480w, img/hero-800.webp 800w, img/hero-1024.webp 1024w" imagesizes="100vw"
-    fetchpriority="high">
+  <!-- Preload the hero background. It is a CSS background now, so the browser cannot
+       discover it until style.css has parsed; this hint starts the download immediately. -->
+  <link rel="preload" as="image" href="img/home-page-header.jfif" fetchpriority="high">
 
 
   <!-- Customized Bootstrap Stylesheet -->
@@ -492,121 +490,126 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
 
   <!-- Hero Start -->
-  <div class="container-fluid bg-primary py-5 mb-5 hero-header home-hero">
-    <!-- LCP element. A real <img> rather than a CSS background so it can carry srcset and
-         start downloading from the preload scanner instead of waiting for style.css to parse. -->
-    <img class="hero-bg" src="img/hero-800.webp"
-      srcset="img/hero-480.webp 480w, img/hero-800.webp 800w, img/hero-1024.webp 1024w" sizes="100vw" width="1024"
-      height="576" fetchpriority="high" decoding="async"
-      alt="Air Ambulance Service and Medical Evacuation worldwide with ICU-equipped aircraft">
-    <div class="container py-4 py-lg-5">
-      <div class="row">
-        <div class="col-lg-5 text-center text-lg-start">
-          <div class="hero-badge">
-            <i class="fas fa-circle"></i> AIR AMBULANCE SERVICE AVAILABLE 24X7
-          </div>
-          <h1 class="display-1 text-white mb-3" style="font-weight: 800; line-height: 1.1;">
-            Emergency<span class="text-red"></span><br>
-            <span class="text-red">Medical Evacuation </span>
-          </h1>
-          <div class="d-flex justify-content-center justify-content-lg-start">
-            <ul class="list-unstyled text-white fs-5 mb-4 text-start" style="max-width: 600px;">
+  <div class="container-fluid bg-primary py-5 mb-5 hero-header home-hero" role="img"
+    aria-label="Air Ambulance Service and Medical Evacuation worldwide with ICU-equipped aircraft">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <!-- Left Glass Card Column -->
+        <div class="col-lg-7 col-12 text-start order-2 order-lg-1">
+          <div class="glass-card shadow-lg text-white">
+            <div class="hero-badge-dark mb-3">
+              <span class="badge-dot"></span> AIR AMBULANCE SERVICE AVAILABLE 24X7
+            </div>
+            <h1 class="text-white fw-bold mb-2"
+              style="font-size: 2.1rem; line-height: 1.15; font-family: 'Roboto Condensed', sans-serif;">
+              Emergency<br>
+              <span class="text-red">Medical Evacuation</span>
+            </h1>
+            <ul class="list-unstyled text-white mb-3 text-start" style="font-size: 0.92rem; font-weight: 500;">
               <li class="mb-2"><i class="fas fa-check text-red me-2"></i>Bed-to-bed transfer in 193+ countries</li>
-              <li class="mb-2"><i class="fas fa-check text-red me-2"></i>ICU-equipped air ambulance & medical escort
+              <li class="mb-2"><i class="fas fa-check text-red me-2"></i>ICU-equipped air ambulance &amp; medical escort
               </li>
               <li class="mb-2"><i class="fas fa-check text-red me-2"></i>Doctors and paramedics onboard</li>
               <li class="mb-2"><i class="fas fa-check text-red me-2"></i>Fast international approvals</li>
               <li class="mb-2"><i class="fas fa-check text-red me-2"></i>Available 24X7</li>
             </ul>
-          </div>
-          <div class="hero-btns pt-2">
-            <a href="#quoteForm" class="btn btn-request">
-              Get Emergency Assistance Now
-            </a>
-            <a href="https://wa.link/6r4c22" target="_blank" rel="nofollow noopener noreferrer" class="btn btn-ghost"><i
-                class="fab fa-whatsapp me-2" aria-hidden="true"></i>Get Quote via WhatsApp</a>
-          </div>
-
-          <!-- Mobile/Tablet Only Form (Shown at the bottom of Hero section) -->
-          <div class="d-block d-lg-none mt-4">
-            <div class="bg-white text-start rounded p-4 shadow text-dark">
-              <h3 class="h5 fw-bold text-center mb-1 text-dark" style="font-family: 'Roboto Condensed', sans-serif;">
-                Get a Quotation in 30 minutes
-              </h3>
-              <div class="mx-auto mb-3" style="width: 50px; height: 3px; background-color: #fb0f0c;"></div>
-
-              <form id="quoteFormHeader">
-                <div class="row g-3">
-                  <!-- Full Name -->
-                  <div class="col-12">
-                    <label class="fw-bold mb-1 text-muted" style="font-size: 0.85rem;">Full Name</label>
-                    <input type="text" id="headerName" name="name" class="form-control bg-light border-0"
-                      placeholder="Enter your name" pattern="[A-Za-z ]+" style="height:48px; font-size:0.9rem;"
-                      required>
-                  </div>
-
-                  <!-- Phone Number -->
-                  <div class="col-12">
-                    <label class="fw-bold mb-1 text-muted" style="font-size: 0.85rem;">Phone Number</label>
-                    <div class="input-group">
-                      <input type="text" id="headerCountryCode" class="form-control bg-light border-0" placeholder="+1"
-                        style="max-width:80px; height:48px; font-size:0.9rem;">
-                      <input type="tel" id="headerPhone" name="phone" class="form-control bg-light border-0"
-                        placeholder="Enter phone number" style="height:48px; font-size:0.9rem;" required>
-                    </div>
-                  </div>
-
-                  <!-- Email -->
-                  <div class="col-12">
-                    <label class="fw-bold mb-1 text-muted" style="font-size: 0.85rem;">Email (Optional)</label>
-                    <input type="email" id="headerEmail" name="email" class="form-control bg-light border-0"
-                      placeholder="Enter your email" style="height:48px; font-size:0.9rem;">
-                  </div>
-
-                  <!-- Patient Location -->
-                  <div class="col-6">
-                    <label class="fw-bold mb-1 text-muted" style="font-size: 0.85rem;">Patient Location</label>
-                    <input type="text" id="headerPatientLocation" name="patientLocation"
-                      class="form-control bg-light border-0" placeholder="City / Country"
-                      style="height:48px; font-size:0.9rem;" required>
-                  </div>
-
-                  <!-- Destination -->
-                  <div class="col-6">
-                    <label class="fw-bold mb-1 text-muted" style="font-size: 0.85rem;">Destination</label>
-                    <input type="text" id="headerDestination" name="destination" class="form-control bg-light border-0"
-                      placeholder="City / Country" style="height:48px; font-size:0.9rem;" required>
-                  </div>
-
-                  <!-- Services Selection -->
-                  <div class="col-12">
-                    <label class="fw-bold mb-1 text-muted" style="font-size: 0.85rem;">Services</label>
-                    <select id="headerService" name="service" class="form-select bg-light border-0"
-                      style="height:48px; font-size:0.9rem;" required>
-                      <option value="">Select a Service</option>
-                      <option value="Air Ambulance">Air Ambulance</option>
-                      <option value="Airline Stretcher Services">Airline Stretcher Services</option>
-                      <option value="Flight Medical Escort Services">Flight Medical Escort Services</option>
-                      <option value="ECMO Transfer Services">ECMO Transfer Services</option>
-                      <option value="Organ Transplant Assistance">Organ Transplant Assistance</option>
-                      <option value="Medical Tourism">Medical Tourism</option>
-                      <option value="Medical Travel Assistance">Medical Travel Assistance</option>
-                      <option value="Home Health Care">Home Health Care</option>
-                    </select>
-                  </div>
-
-                  <!-- Submit Button -->
-                  <div class="col-12 mt-4">
-                    <button class="btn btn-primary w-100 py-3 fw-bold" type="submit"
-                      style="background:#fb0f0c; border:none; font-size:0.95rem;">
-                      REQUEST CALLBACK
-                    </button>
-                  </div>
-                </div>
-              </form>
+            <div class="row g-2 pt-1">
+              <div class="col-sm-6 col-12">
+                <a href="#quoteFormHeader"
+                  class="btn btn-emergency w-100 py-2 text-white fw-bold text-center d-flex align-items-center justify-content-center">
+                  GET EMERGENCY ASSISTANCE NOW
+                </a>
+              </div>
+              <div class="col-sm-6 col-12">
+                <a href="https://wa.me/16593005200" target="_blank" rel="noopener noreferrer"
+                  class="btn btn-whatsapp-dark w-100 py-2 text-white fw-bold text-center d-flex align-items-center justify-content-center">
+                  GET QUOTE VIA WHATSAPP
+                </a>
+              </div>
             </div>
           </div>
+        </div>
 
+        <!-- Right White Form Column -->
+        <div class="col-lg-5 col-12 order-1 order-lg-2">
+          <div class="hero-form-card shadow-lg text-dark">
+            <h3 class="h5 fw-bold text-center mb-2 text-dark"
+              style="font-family: 'Roboto Condensed', sans-serif; color: #1a2e5a; font-size: 1.25rem;">
+              Get a Quotation in 30 minutes
+            </h3>
+
+            <form id="quoteFormHeader">
+              <div class="row g-2">
+                <!-- Full Name -->
+                <div class="col-12">
+                  <label class="hero-form-label mb-1">FULL NAME</label>
+                  <input type="text" id="headerName" name="name"
+                    class="form-control hero-form-control bg-light border-0" placeholder="Enter your full name"
+                    pattern="[A-Za-z ]+" required>
+                </div>
+
+                <!-- Phone Number & Email Address Side by Side -->
+                <div class="col-6">
+                  <label class="hero-form-label mb-1">PHONE NUMBER</label>
+                  <div class="input-group hero-input-group bg-light rounded">
+                    <input type="text" id="headerCountryCode"
+                      class="form-control bg-transparent border-0 text-center fw-bold p-0" value="+91"
+                      style="max-width: 40px; font-size: 0.85rem; color: #1d2a4d;">
+                    <span class="d-flex align-items-center text-muted"
+                      style="opacity: 0.3; font-size: 0.85rem;">|</span>
+                    <input type="tel" id="headerPhone" name="phone" class="form-control bg-transparent border-0"
+                      placeholder="Phone Number" required style="font-size: 0.85rem; padding: 4px 10px;">
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <label class="hero-form-label mb-1">EMAIL ADDRESS</label>
+                  <input type="email" id="headerEmail" name="email"
+                    class="form-control hero-form-control bg-light border-0"
+                    placeholder="Enter your email id (Optional)">
+                </div>
+
+                <!-- From Location & To Location Side by Side -->
+                <div class="col-6">
+                  <label class="hero-form-label mb-1">FROM (LOCATION)</label>
+                  <input type="text" id="headerPatientLocation" name="patientLocation"
+                    class="form-control hero-form-control bg-light border-0" placeholder="e.g. London, Birmingham"
+                    required>
+                </div>
+
+                <div class="col-6">
+                  <label class="hero-form-label mb-1">TO (LOCATION)</label>
+                  <input type="text" id="headerDestination" name="destination"
+                    class="form-control hero-form-control bg-light border-0" placeholder="e.g. Delhi, Mumbai, Dubai"
+                    required>
+                </div>
+
+                <!-- Services Selection -->
+                <div class="col-12">
+                  <label class="hero-form-label mb-1">REQUIRED AIR AMBULANCE SERVICE</label>
+                  <select id="headerService" name="service" class="form-select hero-form-control bg-light border-0"
+                    required>
+                    <option value="">Select a Service</option>
+                    <option value="Air Ambulance">Air Ambulance</option>
+                    <option value="Airline Stretcher Services">Airline Stretcher Services</option>
+                    <option value="Flight Medical Escort Services">Flight Medical Escort Services</option>
+                    <option value="ECMO Transfer Services">ECMO Transfer Services</option>
+                    <option value="Organ Transplant Assistance">Organ Transplant Assistance</option>
+                    <option value="Medical Tourism">Medical Tourism</option>
+                    <option value="Medical Travel Assistance">Medical Travel Assistance</option>
+                    <option value="Home Health Care">Home Health Care</option>
+                  </select>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="col-12 mt-2">
+                  <button class="btn btn-request-callback w-100 fw-bold" type="submit">
+                    REQUEST CALLBACK
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -704,6 +707,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 <i class="fa fa-3x fa-plane premium-icon mb-3"></i>
                 <h6 class="mb-0">Emergency <small class="d-block text-primary">Services</small></h6>
               </div>
+
             </div>
             <div class="col-sm-3 col-6">
               <div class="premium-card text-center py-4">
@@ -1901,8 +1905,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   <!-- Footer Start -->
   <div class="container-fluid bg-dark text-light mt-5 py-5">
     <div class="container py-4 py-lg-5">
-      <div class="row g-5">
-        <div class="col-lg-3 col-md-6">
+      <div class="row gx-4 gy-5">
+<div class="col-lg-3 col-xxl-4 col-md-6">
           <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
             Get In Touch</h4>
           <p class="mb-4">Air Medical 24X7 - Worldwide Air Ambulance and Medical Evacuation Services,
@@ -1911,20 +1915,30 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             International Airport Terminal-1, P.O. Box : 29086 Dubai - (U.A.E)</p>
           <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>1111, 11th Floor, Padma Tower 1,
             Rajendra Place, New Delhi - 110008, (INDIA)</p>
-          <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>info@airmedical24x7.com</p>
-          <h6 class="text-primary text-uppercase mt-4 mb-3">Global Helpline Numbers</h6>
-          <p class="mb-1">
-            <i class="fa fa-phone-alt text-primary me-2"></i>
-            <small class="text-uppercase fw-bold text-muted"
-              style="font-size: 0.75rem; letter-spacing: 0.5px;">UAE:</small>
-            <a href="tel:+9718000160098" style="text-decoration: none; color: inherit;">+971 800 016 0098</a>
-          </p>
-          <p class="mb-1">
-            <i class="fa fa-phone-alt text-primary me-2"></i>
-            <small class="text-uppercase fw-bold text-muted"
-              style="font-size: 0.75rem; letter-spacing: 0.5px;">India:</small>
-            <a href="tel:0008000504740" style="text-decoration: none; color: inherit;">000-800-0504740</a>
-          </p>
+          <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>gcc@airmedical24x7.com<br>
+            <i class="fa fa-envelope text-primary me-3"></i>info@airmedical24x7.com</p>
+          <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>
+          <div class="d-flex">
+            <a class="footer-social-btn me-2" href="https://www.facebook.com/airmedical24x7/"><i
+                class="fab fa-facebook-f"></i></a>
+            <a class="footer-social-btn me-2" href="https://www.instagram.com/airmedical24x7/"><i
+                class="fab fa-instagram"></i></a>
+            <a class="footer-social-btn me-2" href="https://in.linkedin.com/company/airmedical24x7"><i
+                class="fab fa-linkedin-in"></i></a>
+            <a class="footer-social-btn me-2" href="https://x.com/airmedical24x7"><svg
+                xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+              </svg></a>
+            <a class="footer-social-btn" href="https://www.youtube.com/@airmedical24X7"><svg
+                xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+              </svg></a>
+          </div>
+        </div>
+<div class="col-lg-3 col-md-6">
+          <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">Global Helpline Numbers</h4>
           <p class="mb-1">
             <i class="fa fa-phone-alt text-primary me-2"></i>
             <small class="text-uppercase fw-bold text-muted"
@@ -1940,6 +1954,12 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           <p class="mb-1">
             <i class="fa fa-phone-alt text-primary me-2"></i>
             <small class="text-uppercase fw-bold text-muted"
+              style="font-size: 0.75rem; letter-spacing: 0.5px;">India:</small>
+            <a href="tel:0008000504740" style="text-decoration: none; color: inherit;">000-800-050-4740</a>
+          </p>
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted"
               style="font-size: 0.75rem; letter-spacing: 0.5px;">Canada:</small>
             <a href="tel:+18337257598" style="text-decoration: none; color: inherit;">+1 833-725-7598</a>
           </p>
@@ -1949,15 +1969,62 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
               style="font-size: 0.75rem; letter-spacing: 0.5px;">Vietnam:</small>
             <a href="tel:+8412032123" style="text-decoration: none; color: inherit;">+84 1203 2123</a>
           </p>
-          <p class="mb-0">
+          <p class="mb-1">
             <i class="fa fa-phone-alt text-primary me-2"></i>
             <small class="text-uppercase fw-bold text-muted"
               style="font-size: 0.75rem; letter-spacing: 0.5px;">Seychelles:</small>
             <a href="tel:+2484632054" style="text-decoration: none; color: inherit;">+248 4 632 054</a>
           </p>
-
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted"
+              style="font-size: 0.75rem; letter-spacing: 0.5px;">South Africa:</small>
+            <a href="tel:+27800010868" style="text-decoration: none; color: inherit;">+27 80 001 0868</a>
+          </p>
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted"
+              style="font-size: 0.75rem; letter-spacing: 0.5px;">Philippines:</small>
+            <a href="tel:+63180015500181" style="text-decoration: none; color: inherit;">+63 1800 1 550 0181</a>
+          </p>
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted"
+              style="font-size: 0.75rem; letter-spacing: 0.5px;">UAE:</small>
+            <a href="tel:+9718000160098" style="text-decoration: none; color: inherit;">+971 800 016 0098</a>
+          </p>
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted"
+              style="font-size: 0.75rem; letter-spacing: 0.5px;">Tanzania:</small>
+            <a href="tel:+255800120158" style="text-decoration: none; color: inherit;">+255 800 12 0158</a>
+          </p>
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted"
+              style="font-size: 0.75rem; letter-spacing: 0.5px;">Turkey:</small>
+            <a href="tel:+908006213131" style="text-decoration: none; color: inherit;">+90 800 621 3131</a>
+          </p>
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted"
+              style="font-size: 0.75rem; letter-spacing: 0.5px;">Japan:</small>
+            <a href="tel:+818001705180" style="text-decoration: none; color: inherit;">+81 800-170-5180</a>
+          </p>
+          <p class="mb-1">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted"
+              style="font-size: 0.75rem; letter-spacing: 0.5px;">Kenya:</small>
+            <a href="tel:+254800230119" style="text-decoration: none; color: inherit;">+254 800 230 119</a>
+          </p>
+          <p class="mb-0">
+            <i class="fa fa-phone-alt text-primary me-2"></i>
+            <small class="text-uppercase fw-bold text-muted"
+              style="font-size: 0.75rem; letter-spacing: 0.5px;">Saudi Arabia:</small>
+            <a href="tel:+9668001010817" style="text-decoration: none; color: inherit;">+966 800 101 0817</a>
+          </p>
         </div>
-        <div class="col-lg-3 col-md-6">
+<div class="col-lg-3 col-xxl-2 col-md-6">
           <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
             Quick Links</h4>
           <div class="d-flex flex-column justify-content-start">
@@ -1973,8 +2040,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
               Policy</a>
           </div>
         </div>
-
-        <div class="col-lg-3 col-md-6">
+<div class="col-lg-3 col-md-6">
           <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
             Popular Links</h4>
           <div class="d-flex flex-column justify-content-start">
@@ -1999,45 +2065,14 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <a class="text-light mb-2" href="second-opinion-services"><i class="fa fa-angle-right me-2"></i>Second
               Opinion Services</a>
           </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-          <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
-            Newsletter</h4>
+          <h6 class="text-primary text-uppercase mt-4 mb-3">
+            Newsletter</h6>
           <form action="#">
             <div class="input-group">
               <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address">
               <button class="btn btn-primary">Sign Up</button>
             </div>
           </form>
-          <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>
-          <div class="d-flex">
-            <a class="footer-social-btn me-2" href="https://www.facebook.com/airmedical24x7/"><i
-                class="fab fa-facebook-f"></i></a>
-            <a class="footer-social-btn me-2" href="https://www.instagram.com/airmedical24x7/"><i
-                class="fab fa-instagram"></i></a>
-            <a class="footer-social-btn me-2" href="https://in.linkedin.com/company/airmedical24x7"><i
-                class="fab fa-linkedin-in"></i></a>
-            <a class="footer-social-btn me-2" href="https://x.com/airmedical24x7"><svg
-                xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-              </svg></a>
-            <a class="footer-social-btn" href="https://www.youtube.com/@airmedical24X7"><svg
-                xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-              </svg></a>
-          </div>
-          <!-- World Map Section -->
-          <div class="row mt-5">
-            <div class="col-12">
-              <div class="footer-world-map">
-                <img src="img/worldmap.webp" alt="Worldwide air ambulance coverage of Air Medical 24X7" loading="lazy"
-                  width="1920" height="1229">
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
 
