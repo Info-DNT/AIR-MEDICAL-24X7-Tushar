@@ -259,6 +259,21 @@ def main():
     budget = json.loads(BUDGET.read_text(encoding="utf-8"))
     bad = check(results, budget)
 
+    # A single failing run is not evidence. Lighthouse on a busy machine -- a
+    # build running, another browser open -- can drop mobile Performance from 78
+    # to 48 on byte-identical code, and TBT by an order of magnitude. Confirm
+    # before crying wolf: re-measure once and only report what fails twice.
+    if bad:
+        print("  (budget exceeded on the first run - confirming before reporting)")
+        again, err2 = measure()
+        if again is None:
+            print("perf-audit: could not confirm - %s" % err2, file=sys.stderr)
+            return 2
+        bad2 = check(again, budget)
+        confirmed = [b for b in bad2 if b.split(" is ")[0].split(" exceeds ")[0]
+                     in [x.split(" is ")[0].split(" exceeds ")[0] for x in bad]]
+        results, bad = again, confirmed
+
     if args.json:
         print(json.dumps({"results": results, "regressions": bad}, indent=2))
         return 1 if bad else 0
