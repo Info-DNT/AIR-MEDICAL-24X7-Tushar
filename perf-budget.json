@@ -1,0 +1,17 @@
+{
+  "_comment": "Calibrated from the WORST of several local runs via tools/perf-audit.py --calibrate. These are floors, not targets; PageSpeed on the compressed build scores higher. Recalibrate with --calibrate after a genuine improvement, never to excuse a regression.",
+  "mobile": {
+    "min_performance": 64,
+    "min_accessibility": 92,
+    "max_lcp_ms": 6662,
+    "max_tbt_ms": 780,
+    "max_cls": 0.155
+  },
+  "desktop": {
+    "min_performance": 68,
+    "min_accessibility": 92,
+    "max_lcp_ms": 2554,
+    "max_tbt_ms": 1129,
+    "max_cls": 0.094
+  }
+}

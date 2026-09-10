@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash tools/perf-audit-hook.sh",
+            "timeout": 600,
+            "asyncRewake": true,
+            "statusMessage": "Auditing performance against the budget"
+          }
+        ]
+      }
+    ]
+  }
+}

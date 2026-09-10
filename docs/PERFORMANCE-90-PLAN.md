@@ -205,7 +205,32 @@ All confirmed by parsing `index.html`:
 These are cheap, carry no performance risk, and also feed the new "Agentic
 Browsing" category (currently 1/3), which flags the accessibility tree directly.
 
-## Stage 7 — Make 90+ stick
+## Stage 7 — Make 90+ stick  ✅ BUILT
+
+A Stop hook now audits the working tree whenever a `.html`, `.css` or `.js` file
+has changed, and wakes Claude to fix it if the budget is exceeded.
+
+- `tools/perf-audit.py` serves the repo locally — threaded, and gzipping CSS/JS
+  the way nginx.conf and GitHub Pages do — then runs Lighthouse on mobile and
+  desktop and compares against `perf-budget.json`.
+- `tools/perf-audit-hook.sh` skips in ~0.3 s when no front-end file changed, so
+  it costs nothing on a docs-only turn. It runs in the background and only
+  interrupts on a real regression.
+
+**A caveat worth knowing.** Lighthouse is noisy: on identical code, desktop TBT
+was observed anywhere from 23 ms to 517 ms, and the desktop score from 76 to 91.
+The budget is therefore calibrated from the *worst* of several runs plus a
+margin, which means it reliably catches a meaningful regression — a heavy script,
+an unoptimised image — but will not notice a two-point drift. Tightening it to
+catch small changes would produce false alarms, and a guard that cries wolf gets
+switched off.
+
+Recalibrate after a genuine improvement with
+`python tools/perf-audit.py --calibrate`, never to excuse a red run.
+
+The original guidance below still stands for the CI side:
+
+
 
 A score that is fixed once drifts back. To hold it:
 
