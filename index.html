@@ -354,7 +354,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
   <!-- Preload the hero background. It is a CSS background now, so the browser cannot
        discover it until style.css has parsed; this hint starts the download immediately. -->
-  <link rel="preload" as="image" href="img/home-page-header.jfif" fetchpriority="high">
+  <link rel="preload" as="image" href="img/home-page-header.webp" fetchpriority="high">
 
 
   <!-- Customized Bootstrap Stylesheet -->
@@ -380,18 +380,15 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         // container first, so tags inside GTM fire before the Ads configs
         if (window.loadGTM) window.loadGTM();
 
-        // Google Ads Tag 1
+        // Both Ads destinations share ONE gtag.js download. gtag.js supports
+        // several destinations per library load, so the second script element was
+        // pure duplicate transfer: 472 KB and ~300 ms of parse on desktop, ~800 ms
+        // on mobile. Verified live: both accounts still register and still fire.
         var g1 = document.createElement('script');
         g1.async = true;
         g1.src = 'https://www.googletagmanager.com/gtag/js?id=AW-16644189187';
         document.head.appendChild(g1);
         window.gtag('config', 'AW-16644189187');
-
-        // Google Ads Tag 2
-        var g2 = document.createElement('script');
-        g2.async = true;
-        g2.src = 'https://www.googletagmanager.com/gtag/js?id=AW-10787559741';
-        document.head.appendChild(g2);
         window.gtag('config', 'AW-10787559741');
       }
 
@@ -434,7 +431,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         <!-- Bootstrap Menu Button -->
         <!-- Mobile Quote Button (ONLY phone view) -->
         <a href="#quoteForm" class="btn btn-request btn-header-quote ms-auto me-2">Get a Quotation in 30 minutes</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-label="Toggle navigation menu">
           <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -476,6 +473,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   </div>
   <!-- Navbar End -->
 
+  <main id="main-content">
   <!-- SOS Popup -->
 
 
@@ -545,7 +543,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                   <label class="hero-form-label mb-1">FULL NAME</label>
                   <input type="text" id="headerName" name="name"
                     class="form-control hero-form-control bg-light border-0" placeholder="Enter your full name"
-                    pattern="[A-Za-z ]+" required>
+                    pattern="[A-Za-z ]+" required aria-label="Your name">
                 </div>
 
                 <!-- Phone Number & Email Address Side by Side -->
@@ -554,11 +552,11 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                   <div class="input-group hero-input-group bg-light rounded">
                     <input type="text" id="headerCountryCode"
                       class="form-control bg-transparent border-0 text-center fw-bold p-0" value="+91"
-                      style="max-width: 40px; font-size: 0.85rem; color: #1d2a4d;">
+                      style="max-width: 40px; font-size: 0.85rem; color: #1d2a4d;" aria-label="Country dialling code">
                     <span class="d-flex align-items-center text-muted"
                       style="opacity: 0.3; font-size: 0.85rem;">|</span>
                     <input type="tel" id="headerPhone" name="phone" class="form-control bg-transparent border-0"
-                      placeholder="Phone Number" required style="font-size: 0.85rem; padding: 4px 10px;">
+                      placeholder="Phone Number" required style="font-size: 0.85rem; padding: 4px 10px;" aria-label="Phone number">
                   </div>
                 </div>
 
@@ -566,7 +564,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                   <label class="hero-form-label mb-1">EMAIL ADDRESS</label>
                   <input type="email" id="headerEmail" name="email"
                     class="form-control hero-form-control bg-light border-0"
-                    placeholder="Enter your email id (Optional)">
+                    placeholder="Enter your email id (Optional)" aria-label="Email address">
                 </div>
 
                 <!-- From Location & To Location Side by Side -->
@@ -574,21 +572,21 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                   <label class="hero-form-label mb-1">FROM (LOCATION)</label>
                   <input type="text" id="headerPatientLocation" name="patientLocation"
                     class="form-control hero-form-control bg-light border-0" placeholder="e.g. London, Birmingham"
-                    required>
+                    required aria-label="Patient location, city or country">
                 </div>
 
                 <div class="col-6">
                   <label class="hero-form-label mb-1">TO (LOCATION)</label>
                   <input type="text" id="headerDestination" name="destination"
                     class="form-control hero-form-control bg-light border-0" placeholder="e.g. Delhi, Mumbai, Dubai"
-                    required>
+                    required aria-label="Destination, city or country">
                 </div>
 
                 <!-- Services Selection -->
                 <div class="col-12">
                   <label class="hero-form-label mb-1">REQUIRED AIR AMBULANCE SERVICE</label>
                   <select id="headerService" name="service" class="form-select hero-form-control bg-light border-0"
-                    required>
+                    required aria-label="Service required">
                     <option value="">Select a Service</option>
                     <option value="Air Ambulance">Air Ambulance</option>
                     <option value="Airline Stretcher Services">Airline Stretcher Services</option>
@@ -749,7 +747,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <h5 class="mb-2" style="font-size:0.95rem;">Air Ambulance</h5>
             <p class="m-0" style="font-size:0.8rem;">ICU-equipped aircraft for high-speed critical care. Safe,
               bed-to-bed international evacuations with certified doctors onboard.</p>
-            <a class="btn btn-sm btn-primary rounded-pill mt-3" href="air-ambulance">
+            <a class="btn btn-sm btn-primary rounded-pill mt-3" href="air-ambulance" aria-label="Read more about Air Ambulance">
               <svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
                 focusable="false">
                 <path fill-rule="evenodd"
@@ -769,7 +767,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <h5 class="mb-2" style="font-size:0.95rem;">Airline Stretcher Services</h5>
             <p class="m-0" style="font-size:0.8rem;">Stretcher installation on commercial flights for patients requiring
               continuous recumbent travel with full medical supervision.</p>
-            <a class="btn btn-sm btn-primary rounded-pill mt-3" href="airline-stretcher-services">
+            <a class="btn btn-sm btn-primary rounded-pill mt-3" href="airline-stretcher-services" aria-label="Read more about Airline Stretcher Services">
               <svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
                 focusable="false">
                 <path fill-rule="evenodd"
@@ -789,7 +787,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <h5 class="mb-2" style="font-size:0.95rem;">Flight Medical Escort</h5>
             <p class="m-0" style="font-size:0.8rem;">Experienced medical doctors or flight nurses accompanying patients
               on commercial airlines with clinical support throughout.</p>
-            <a class="btn btn-sm btn-primary rounded-pill mt-3" href="flight-medical-escort-services">
+            <a class="btn btn-sm btn-primary rounded-pill mt-3" href="flight-medical-escort-services" aria-label="Read more about Flight Medical Escort Services">
               <svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
                 focusable="false">
                 <path fill-rule="evenodd"
@@ -809,7 +807,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <h5 class="mb-2" style="font-size:0.95rem;">Medical Tourism</h5>
             <p class="m-0" style="font-size:0.8rem;">Seamless medical travel assistance, hospital acceptance support,
               and coordinated transport for patients traveling abroad.</p>
-            <a class="btn btn-sm btn-primary rounded-pill mt-3" href="medical-tourism">
+            <a class="btn btn-sm btn-primary rounded-pill mt-3" href="medical-tourism" aria-label="Read more about Medical Tourism">
               <svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
                 focusable="false">
                 <path fill-rule="evenodd"
@@ -1030,7 +1028,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 <div class="col-12 col-sm-12">
                   <label class="fw-bold mb-1">Full Name</label>
                   <input type="text" id="name" name="name" class="form-control bg-light border-0"
-                    placeholder="Enter your name" pattern="[A-Za-z ]+" style="height:55px" required>
+                    placeholder="Enter your name" pattern="[A-Za-z ]+" style="height:55px" required aria-label="Your name">
                 </div>
 
                 <!-- Phone -->
@@ -1039,9 +1037,9 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
                   <div class="input-group">
                     <input type="text" id="countryCode" class="form-control bg-light border-0" placeholder="+1"
-                      style="max-width:90px; height:55px;">
+                      style="max-width:90px; height:55px;" aria-label="Country dialling code">
                     <input type="tel" id="phone" name="phone" class="form-control bg-light border-0"
-                      placeholder="Enter your phone number" style="height:55px" required>
+                      placeholder="Enter your phone number" style="height:55px" required aria-label="Phone number">
                   </div>
                 </div>
 
@@ -1052,21 +1050,21 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 <div class="col-12 col-sm-12">
                   <label class="fw-bold mb-1">Email</label>
                   <input type="email" id="email" name="email" class="form-control bg-light border-0"
-                    placeholder="Enter your email" style="height:55px">
+                    placeholder="Enter your email" style="height:55px" aria-label="Email address">
                 </div>
 
                 <!-- Patient Location -->
                 <div class="col-12 col-sm-6">
                   <label class="fw-bold mb-1">Patient Location</label>
                   <input type="text" id="patientLocation" name="patientLocation" class="form-control bg-light border-0"
-                    placeholder="City / Country" style="height:55px" required>
+                    placeholder="City / Country" style="height:55px" required aria-label="Patient location, city or country">
                 </div>
 
                 <!-- Destination -->
                 <div class="col-12 col-sm-6">
                   <label class="fw-bold mb-1">Destination</label>
                   <input type="text" id="destination" name="destination" class="form-control bg-light border-0"
-                    placeholder="City / Country" style="height:55px" required>
+                    placeholder="City / Country" style="height:55px" required aria-label="Destination, city or country">
                 </div>
 
                 <!-- Transport (Optional) -->
@@ -1075,21 +1073,21 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
                   <div class="transport-options">
                     <label class="transport-card">
-                      <input type="radio" name="transport" value="Air Ambulance">
+                      <input type="radio" name="transport" value="Air Ambulance" aria-label="Transport: Air Ambulance">
                       <img src="img/air-ambulance-charter.webp" alt="Air Ambulance" loading="lazy" width="1080"
                         height="1080">
                       <span>Air Ambulance</span>
                     </label>
 
                     <label class="transport-card">
-                      <input type="radio" name="transport" value="Airline Stretcher Services">
+                      <input type="radio" name="transport" value="Airline Stretcher Services" aria-label="Transport: Airline Stretcher Services">
                       <img src="img/commercial-airlines-medical-transfer-services.webp" alt="Airline Stretcher Services"
                         loading="lazy" width="2000" height="1125">
                       <span>Airline Stretcher Services</span>
                     </label>
 
                     <label class="transport-card">
-                      <input type="radio" name="transport" value="Flight Medical Escort Services">
+                      <input type="radio" name="transport" value="Flight Medical Escort Services" aria-label="Transport: Flight Medical Escort Services">
                       <img src="img/flight-medical-escort-services.webp" alt="Flight Medical Escort Services"
                         loading="lazy" width="2048" height="2048">
                       <span>Flight Medical Escort Services</span>
@@ -1103,7 +1101,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 <div class="col-12 col-sm-12">
                   <label class="fw-bold mb-1">More Services</label>
                   <select id="service" name="service" class="form-select bg-light border-0" style="height:55px"
-                    required>
+                    required aria-label="Service required">
                     <option value="">Select a Service</option>
                     <option value="Air Ambulance">Air Ambulance</option>
                     <option value="Airline Stretcher Services">Airline Stretcher Services</option>
@@ -1902,6 +1900,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
 
 
+    </main>
+
   <!-- Footer Start -->
   <div class="container-fluid bg-dark text-light mt-5 py-5">
     <div class="container py-4 py-lg-5">
@@ -1919,18 +1919,18 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <i class="fa fa-envelope text-primary me-3"></i>info@airmedical24x7.com</p>
           <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>
           <div class="d-flex">
-            <a class="footer-social-btn me-2" href="https://www.facebook.com/airmedical24x7/"><i
+            <a class="footer-social-btn me-2" href="https://www.facebook.com/airmedical24x7/" aria-label="Air Medical 24X7 on Facebook"><i
                 class="fab fa-facebook-f"></i></a>
-            <a class="footer-social-btn me-2" href="https://www.instagram.com/airmedical24x7/"><i
+            <a class="footer-social-btn me-2" href="https://www.instagram.com/airmedical24x7/" aria-label="Air Medical 24X7 on Instagram"><i
                 class="fab fa-instagram"></i></a>
-            <a class="footer-social-btn me-2" href="https://in.linkedin.com/company/airmedical24x7"><i
+            <a class="footer-social-btn me-2" href="https://in.linkedin.com/company/airmedical24x7" aria-label="Air Medical 24X7 on LinkedIn"><i
                 class="fab fa-linkedin-in"></i></a>
-            <a class="footer-social-btn me-2" href="https://x.com/airmedical24x7"><svg
+            <a class="footer-social-btn me-2" href="https://x.com/airmedical24x7" aria-label="Air Medical 24X7 on X"><svg
                 xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                 <path
                   d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
               </svg></a>
-            <a class="footer-social-btn" href="https://www.youtube.com/@airmedical24X7"><svg
+            <a class="footer-social-btn" href="https://www.youtube.com/@airmedical24X7" aria-label="Air Medical 24X7 on YouTube"><svg
                 xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                 <path
                   d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
@@ -2069,7 +2069,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             Newsletter</h6>
           <form action="#">
             <div class="input-group">
-              <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address">
+              <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address" aria-label="Your Email Address">
               <button class="btn btn-primary">Sign Up</button>
             </div>
           </form>

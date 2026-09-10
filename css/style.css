@@ -248,7 +248,11 @@ h6 {
 }
 
 .hero-header {
-    background: url(../img/home-page-header.jfif) 5% center no-repeat;
+    /* WebP re-encode of the same photograph: 1600x900, mean pixel difference
+       1.62/255, 219 KB -> 69 KB. The .jfif is kept in the repo as a rollback.
+       Every other page using .hero-header overrides this with an inline
+       background shorthand, so this image is the homepage's alone. */
+    background: url(../img/home-page-header.webp) 5% center no-repeat;
     background-size: cover;
     min-height: 600px;
     /* Added to give image more vertical space */

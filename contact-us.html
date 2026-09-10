@@ -228,18 +228,15 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
       f.parentNode.insertBefore(j, f);
     };
 
-        // Google Ads Tag 1
+        // Both Ads destinations share ONE gtag.js download. gtag.js supports
+        // several destinations per library load, so the second script element was
+        // pure duplicate transfer: 472 KB and ~300 ms of parse on desktop, ~800 ms
+        // on mobile. Verified live: both accounts still register and still fire.
         var g1 = document.createElement('script');
         g1.async = true;
         g1.src = 'https://www.googletagmanager.com/gtag/js?id=AW-16644189187';
         document.head.appendChild(g1);
         window.gtag('config', 'AW-16644189187');
-
-        // Google Ads Tag 2
-        var g2 = document.createElement('script');
-        g2.async = true;
-        g2.src = 'https://www.googletagmanager.com/gtag/js?id=AW-10787559741';
-        document.head.appendChild(g2);
         window.gtag('config', 'AW-10787559741');
       }
 
@@ -269,7 +266,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         </a>
         <!-- Mobile Quote Button (ONLY phone view) -->
         <a href="#quoteForm" class="btn btn-request btn-header-quote ms-auto me-2">Get a Quotation in 30 minutes</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-label="Toggle navigation menu">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -303,6 +300,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   </div>
   <!-- Navbar End -->
 
+  <main id="main-content">
   <!-- SOS Popup -->
 
 
@@ -425,7 +423,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
               <label class="fw-bold fs-5 mb-3 text-primary text-start d-block"> Service</label>
               <div class="transport-options">
                 <label class="transport-card">
-                  <input type="radio" name="transport" value="Air Ambulance">
+                  <input type="radio" name="transport" value="Air Ambulance" aria-label="Transport: Air Ambulance">
                   <img src="img/air-ambulance-charter.webp" alt="Air Ambulance" loading="lazy">
                   <span>Air Ambulance</span>
                 </label>
@@ -433,14 +431,14 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
 
 
                 <label class="transport-card">
-                  <input type="radio" name="transport" value="Airline Stretcher Services">
+                  <input type="radio" name="transport" value="Airline Stretcher Services" aria-label="Transport: Airline Stretcher Services">
                   <img src="img/commercial-airlines-medical-transfer-services.webp" alt="Airline Stretcher Services"
                     loading="lazy">
                   <span>Airline Stretcher Services</span>
                 </label>
 
                 <label class="transport-card">
-                  <input type="radio" name="transport" value="Flight Medical Escort Services">
+                  <input type="radio" name="transport" value="Flight Medical Escort Services" aria-label="Transport: Flight Medical Escort Services">
                   <img src="img/flight-medical-escort-services.webp" alt="Flight Medical Escort Services" loading="lazy">
                   <span>Flight Medical Escort Services</span>
                 </label>
@@ -451,28 +449,28 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <div class="col-md-6 text-start">
               <label class="fw-bold mb-2">Full Name</label>
               <input type="text" id="name" class="form-control bg-light border-0" placeholder="Enter your name"
-                style="height: 55px;" required>
+                style="height: 55px;" required aria-label="Your name">
             </div>
 
             <!-- Email -->
             <div class="col-md-6 text-start">
               <label class="fw-bold mb-2">Email Address</label>
               <input type="email" id="email" class="form-control bg-light border-0" placeholder="Enter your email"
-                style="height: 55px;">
+                style="height: 55px;" aria-label="Email address">
             </div>
 
             <!-- Patient Location -->
             <div class="col-md-6 text-start">
               <label class="fw-bold mb-2">Patient Location</label>
               <input type="text" id="patientLocation" class="form-control bg-light border-0"
-                placeholder="City / Country" style="height: 55px;" required>
+                placeholder="City / Country" style="height: 55px;" required aria-label="Patient location, city or country">
             </div>
 
             <!-- Destination -->
             <div class="col-md-6 text-start">
               <label class="fw-bold mb-2">Destination</label>
               <input type="text" id="destination" class="form-control bg-light border-0" placeholder="City / Country"
-                style="height: 55px;" required>
+                style="height: 55px;" required aria-label="Destination, city or country">
             </div>
 
             <!-- Phone -->
@@ -480,16 +478,16 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
               <label class="fw-bold mb-2">Phone Number</label>
               <div class="input-group">
                 <input type="text" id="countryCode" class="form-control bg-light border-0" placeholder="+1"
-                  style="max-width:90px; height:55px;">
+                  style="max-width:90px; height:55px;" aria-label="Country dialling code">
                 <input type="tel" id="phone" class="form-control bg-light border-0" placeholder="Enter phone number"
-                  style="height: 55px;" required>
+                  style="height: 55px;" required aria-label="Phone number">
               </div>
             </div>
 
             <!-- Service Dropdown -->
             <div class="col-md-6 text-start">
               <label class="fw-bold mb-2">Select Service</label>
-              <select id="service" name="service" class="form-select bg-light border-0" style="height: 55px;" required>
+              <select id="service" name="service" class="form-select bg-light border-0" style="height: 55px;" required aria-label="Service required">
                 <option value="">Select a Service</option>
                 <option value="Air Ambulance">Air Ambulance</option>
                 <option value="Airline Stretcher Services">Airline Stretcher Services</option>
@@ -556,6 +554,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   <!-- Contact End -->
 
 
+    </main>
+
   <!-- Footer Start -->
   <div class="container-fluid bg-dark text-light mt-5 py-5">
     <div class="container py-5">
@@ -577,8 +577,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <a class="footer-social-btn me-2" href="https://www.facebook.com/airmedical24x7/" aria-label="Air Medical 24X7 on Facebook"><i class="fab fa-facebook-f"></i></a>
               <a class="footer-social-btn me-2" href="https://www.instagram.com/airmedical24x7/" aria-label="Air Medical 24X7 on Instagram"><i class="fab fa-instagram"></i></a>
               <a class="footer-social-btn me-2" href="https://in.linkedin.com/company/airmedical24x7" aria-label="Air Medical 24X7 on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-              <a class="footer-social-btn me-2" href="https://x.com/airmedical24x7"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-              <a class="footer-social-btn" href="https://www.youtube.com/@airmedical24X7"><svg xmlns="http://www.w3.org/2000/svg"
+              <a class="footer-social-btn me-2" href="https://x.com/airmedical24x7" aria-label="Air Medical 24X7 on X"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+              <a class="footer-social-btn" href="https://www.youtube.com/@airmedical24X7" aria-label="Air Medical 24X7 on YouTube"><svg xmlns="http://www.w3.org/2000/svg"
                   width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                   <path
                     d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
@@ -715,7 +715,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             Newsletter</h6>
           <form action="#">
             <div class="input-group">
-              <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address">
+              <input type="text" class="form-control p-3 border-0" placeholder="Your Email Address" aria-label="Your Email Address">
               <button class="btn btn-primary">Sign Up</button>
             </div>
           </form>

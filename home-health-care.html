@@ -207,7 +207,7 @@
       <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
         <a class="navbar-brand" href="./"><img src="img/air-medical-logo.webp" alt="Air Medical 24X7" class="logo-img" loading="eager" width="220" height="110"></a>
         <a href="contact-us#quoteForm" class="btn btn-request btn-header-quote ms-auto me-2">Get a Quotation in 30 minutes</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-label="Toggle navigation menu">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -240,6 +240,7 @@
   </div>
   <!-- Navbar End -->
 
+  <main id="main-content">
   <!-- About Start -->
   <div class="container-fluid py-5">
     <div class="container">
@@ -394,34 +395,34 @@
                 <div class="col-12">
                   <label class="fw-bold mb-1 small">Full Name</label>
                   <input type="text" id="name" name="name" class="form-control bg-light border-0"
-                    placeholder="Enter your name" pattern="[A-Za-z ]+" style="height: 48px;" required>
+                    placeholder="Enter your name" pattern="[A-Za-z ]+" style="height: 48px;" required aria-label="Your name">
                 </div>
                 <div class="col-12">
                   <label class="fw-bold mb-1 small">Phone Number</label>
                   <div class="input-group">
-                    <input type="text" id="countryCode" class="form-control bg-light border-0" style="max-width: 80px; height: 48px;">
+                    <input type="text" id="countryCode" class="form-control bg-light border-0" style="max-width: 80px; height: 48px;" aria-label="Country dialling code">
                     <input type="tel" id="phone" name="phone" class="form-control bg-light border-0"
-                      placeholder="Enter phone number" style="height: 48px;" required>
+                      placeholder="Enter phone number" style="height: 48px;" required aria-label="Phone number">
                   </div>
                 </div>
                 <div class="col-12">
                   <label class="fw-bold mb-1 small">Email Address</label>
                   <input type="email" id="email" name="email" class="form-control bg-light border-0"
-                    placeholder="Enter your email" style="height: 48px;">
+                    placeholder="Enter your email" style="height: 48px;" aria-label="Email address">
                 </div>
                 <div class="col-6">
                   <label class="fw-bold mb-1 small">Patient Location</label>
                   <input type="text" id="patientLocation" name="patientLocation"
-                    class="form-control bg-light border-0" placeholder="City / Country" style="height: 48px;" required>
+                    class="form-control bg-light border-0" placeholder="City / Country" style="height: 48px;" required aria-label="Patient location, city or country">
                 </div>
                 <div class="col-6">
                   <label class="fw-bold mb-1 small">Destination</label>
                   <input type="text" id="destination" name="destination"
-                    class="form-control bg-light border-0" placeholder="City / Country" style="height: 48px;" required>
+                    class="form-control bg-light border-0" placeholder="City / Country" style="height: 48px;" required aria-label="Destination, city or country">
                 </div>
                 <div class="col-12">
                   <label class="fw-bold mb-1 small">Select Service</label>
-                  <select id="service" name="service" class="form-select bg-light border-0" style="height: 48px;" required>
+                  <select id="service" name="service" class="form-select bg-light border-0" style="height: 48px;" required aria-label="Service required">
                     <option value="">Select a Service</option>
                     <option value="Air Ambulance">Air Ambulance</option>
                     <option value="Airline Stretcher Services">Airline Stretcher Services</option>
@@ -445,6 +446,8 @@
     </div>
   </div>
 
+    </main>
+
   <!-- Footer Start -->
   <div class="container-fluid bg-dark text-light mt-5 py-5">
     <div class="container py-5">
@@ -461,8 +464,8 @@
             <a class="footer-social-btn me-2" href="https://www.facebook.com/airmedical24x7/" aria-label="Air Medical 24X7 on Facebook"><i class="fab fa-facebook-f"></i></a>
               <a class="footer-social-btn me-2" href="https://www.instagram.com/airmedical24x7/" aria-label="Air Medical 24X7 on Instagram"><i class="fab fa-instagram"></i></a>
               <a class="footer-social-btn me-2" href="https://in.linkedin.com/company/airmedical24x7" aria-label="Air Medical 24X7 on LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-              <a class="footer-social-btn me-2" href="https://x.com/airmedical24x7"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-              <a class="footer-social-btn" href="https://www.youtube.com/@airmedical24X7"><svg xmlns="http://www.w3.org/2000/svg"
+              <a class="footer-social-btn me-2" href="https://x.com/airmedical24x7" aria-label="Air Medical 24X7 on X"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+              <a class="footer-social-btn" href="https://www.youtube.com/@airmedical24X7" aria-label="Air Medical 24X7 on YouTube"><svg xmlns="http://www.w3.org/2000/svg"
                   width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
                   <path
                     d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
@@ -584,7 +587,7 @@
             <a class="text-light mb-2" href="second-opinion-services"><i class="fa fa-angle-right me-2"></i>Second Opinion Services</a>
           </div>
           <h6 class="text-primary text-uppercase mt-4 mb-3">Newsletter</h6>
-          <form action="#"><div class="input-group"><input type="text" class="form-control p-3 border-0" placeholder="Your Email Address"><button class="btn btn-primary">Sign Up</button></div></form>
+          <form action="#"><div class="input-group"><input type="text" class="form-control p-3 border-0" placeholder="Your Email Address" aria-label="Your Email Address"><button class="btn btn-primary">Sign Up</button></div></form>
         </div>
       </div>
     </div>
