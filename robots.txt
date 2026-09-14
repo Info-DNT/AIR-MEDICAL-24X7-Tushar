@@ -4,4 +4,19 @@ Disallow: /admin
 Disallow: /scratch/
 Disallow: /sw.js
 
+# Not for crawling.
+#
+# The trailing $ anchors each rule to the end of the URL. Without it Disallow
+# matches by PREFIX, so "Disallow: /air-ambulance-india" would also block
+# /air-ambulance-india-to-international, which is live and listed in the
+# sitemap. The explicit Allow below keeps that page reachable for any crawler
+# that ignores $ but honours longest-match-wins.
+#
+# The .html forms 301 to these, and a trailing slash 404s, so the extensionless
+# URL is the only form that needs a rule.
+Disallow: /medical-tourism-india$
+Disallow: /air-ambulance-to-india$
+Disallow: /air-ambulance-india$
+Allow: /air-ambulance-india-to-international
+
 Sitemap: https://airmedical24x7.com/sitemap.xml
