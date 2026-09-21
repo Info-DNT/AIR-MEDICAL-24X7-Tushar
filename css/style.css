@@ -2656,3 +2656,297 @@ h2.mt-5 {
 .container-fluid.pb-3 {
     padding-bottom: 1.25rem !important;
 }
+
+/* ================= BLOG AUTHOR CARD COMPONENT ================= */
+.author-card-widget {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 6px 20px rgba(26, 52, 107, 0.07);
+    overflow: hidden;
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+    max-width: 320px;
+    margin: 0 auto 1.75rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.author-card-widget:hover {
+    box-shadow: 0 10px 28px rgba(26, 52, 107, 0.11);
+}
+
+.author-card-header {
+    position: relative;
+    padding: 10px 14px 0 14px;
+    background: linear-gradient(180deg, #f0f8ff 0%, #e2f1fc 100%);
+    overflow: hidden;
+}
+
+.author-card-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+}
+
+.author-card-logo-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-card-logo {
+    height: 24px;
+    width: auto;
+    object-fit: contain;
+}
+
+.author-card-subbrand {
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: #1A346B;
+    margin-top: 1px;
+}
+
+.author-card-header-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.author-flight-trail {
+    width: 38px;
+    height: 18px;
+    margin-bottom: 1px;
+}
+
+.author-header-slogan {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    line-height: 1.2;
+    color: #354F8E;
+    text-transform: uppercase;
+    text-align: right;
+    margin-top: 1px;
+}
+
+.author-header-slogan-line {
+    width: 18px;
+    height: 1.5px;
+    background: #354F8E;
+    margin-top: 2px;
+    margin-left: auto;
+}
+
+.author-card-image-wrap {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 2px;
+    z-index: 1;
+}
+
+.author-card-avatar {
+    width: 100%;
+    max-width: 165px;
+    height: 110px;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.author-card-body {
+    padding: 11px 14px;
+    background: #ffffff;
+    position: relative;
+    z-index: 2;
+}
+
+.author-tag-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+}
+
+.author-tag-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #354F8E;
+    text-transform: uppercase;
+}
+
+.author-tag-rule {
+    flex: 1;
+    height: 1px;
+    background: #e2e8f0;
+}
+
+.author-name-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 1px 0 2px;
+}
+
+.author-name {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 16.5px;
+    font-weight: 700;
+    color: #1A346B;
+    margin: 0;
+    line-height: 1.2;
+    letter-spacing: -0.2px;
+}
+
+.author-name-linkedin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    line-height: 1;
+}
+
+.author-name-linkedin:hover {
+    transform: scale(1.12);
+    opacity: 0.9;
+}
+
+.author-linkedin-badge {
+    width: 18px;
+    height: 18px;
+    background: #0A66C2;
+    color: #ffffff;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.author-role {
+    font-size: 11px;
+    font-weight: 600;
+    color: #354F8E;
+    margin-bottom: 5px;
+}
+
+.author-bio {
+    font-size: 11px;
+    line-height: 1.42;
+    color: #4b5563;
+    margin-bottom: 8px;
+}
+
+.author-divider {
+    height: 1px;
+    background: #e2e8f0;
+    margin: 8px 0;
+}
+
+.author-expertise-heading {
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.9px;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.author-expertise-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.author-expertise-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.author-expertise-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #e0f2fe;
+    color: #0284c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9.5px;
+    flex-shrink: 0;
+}
+
+.author-linkedin-wrap {
+    margin-top: 8px;
+    padding-top: 7px;
+    border-top: 1px dashed #e2e8f0;
+}
+
+.author-linkedin-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #0A66C2;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.author-linkedin-link:hover {
+    color: #004182;
+    transform: translateX(3px);
+}
+
+.author-linkedin-icon {
+    width: 18px;
+    height: 18px;
+    background: #0A66C2;
+    color: #ffffff;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9.5px;
+    font-weight: 700;
+}
+
+.author-card-footer {
+    background: linear-gradient(180deg, #ffffff 0%, #edf6fd 100%);
+    padding: 7px 10px;
+    text-align: center;
+    border-top: 1px solid rgba(226, 232, 240, 0.7);
+}
+
+.author-footer-line {
+    width: 20px;
+    height: 1.5px;
+    background: #64748b;
+    margin: 0 auto 3px;
+    border-radius: 2px;
+}
+
+.author-card-motto {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 7.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #475569;
+    text-transform: uppercase;
+    line-height: 1.35;
+}

@@ -399,3 +399,143 @@ window.rebindBlogsSupabaseClient = function (serviceKey) {
   }
 };
 
+// Generates the Author Card component HTML matching Image 2 reference
+window.generateAuthorCardHTML = function (rawAuthor, sitePrefix = "", allowDemoFallback = false) {
+  let authorObj = null;
+
+  if (rawAuthor) {
+    if (typeof rawAuthor === "object") {
+      authorObj = Object.assign({}, rawAuthor);
+    } else if (typeof rawAuthor === "string") {
+      const trimmed = rawAuthor.trim();
+      if (trimmed.startsWith("{") && trimmed.endsWith("}")) {
+        try {
+          authorObj = JSON.parse(trimmed);
+        } catch (e) {
+          authorObj = null;
+        }
+      }
+    }
+  }
+
+  // If no structured author object exists (or it's legacy "Air Medical 24X7")
+  if (!authorObj || !authorObj.name || authorObj.name.trim() === "" || authorObj.name.toLowerCase() === "air medical 24x7") {
+    if (!allowDemoFallback) {
+      // Do not show dummy author card on old blogs
+      return "";
+    }
+    // Only used for live admin preview testing when fallback is explicitly allowed
+    authorObj = {
+      name: "Camille Hernandez",
+      role: "Global Command Center Lead",
+      bio: "Camille Hernandez leads the Global Command Center at Air Medical 24x7, coordinating international and domestic medical transfers, air ambulance services, and patient repatriation.",
+      image: "img/authors/camille-hernandez.png",
+      expertise: [
+        "Medical Transfer Coordination",
+        "Air Ambulance Operations",
+        "Patient Repatriation"
+      ],
+      linkedin: "https://linkedin.com"
+    };
+  }
+
+  let exp = Array.isArray(authorObj.expertise) ? authorObj.expertise.filter(Boolean) : [];
+  if (exp.length === 0) {
+    exp = ["Medical Transfer Coordination", "Air Ambulance Operations", "Patient Repatriation"];
+  }
+  const exp1 = window.sanitize24X7(exp[0] || "Medical Transfer Coordination");
+  const exp2 = window.sanitize24X7(exp[1] || "Air Ambulance Operations");
+  const exp3 = window.sanitize24X7(exp[2] || "Patient Repatriation");
+
+  const author = authorObj;
+  const name = window.sanitize24X7(author.name || "");
+  const role = window.sanitize24X7(author.role || "");
+  const bio = window.sanitize24X7(author.bio || "");
+  
+  let imgSrc = author.image || "/img/air-medical-logo.webp";
+  if (!imgSrc.startsWith("http") && !imgSrc.startsWith("data:") && !imgSrc.startsWith("/")) {
+    imgSrc = "/" + imgSrc;
+  }
+  const logoSrc = "/img/air-medical-logo.webp";
+
+  let linkedinHtml = "";
+  if (author.linkedin) {
+    linkedinHtml = `
+      <div class="author-linkedin-wrap">
+        <a href="${author.linkedin}" target="_blank" rel="noopener noreferrer" class="author-linkedin-link">
+          <span class="author-linkedin-icon">in</span>
+          <span>Connect on LinkedIn</span>
+          <i class="fas fa-arrow-right ms-1 small"></i>
+        </a>
+      </div>
+    `;
+  }
+
+  return `
+    <div class="author-card-widget">
+      <div class="author-card-header">
+        <div class="author-card-header-top">
+          <div class="author-card-logo-wrap">
+            <img src="${logoSrc}" alt="Air Medical 24X7" class="author-card-logo">
+            <span class="author-card-subbrand">Global Medical Transfers</span>
+          </div>
+          <div class="author-card-header-right">
+            <svg class="author-flight-trail" viewBox="0 0 60 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 24 C 20 24, 35 15, 52 4" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3 3"/>
+              <path d="M52 4 L57 3 L55 8 Z" fill="#0284c7"/>
+            </svg>
+            <div class="author-header-slogan">
+              PEOPLE<br>CARE<br>BORDERS<br>DON'T<br>MATTER
+            </div>
+            <div class="author-header-slogan-line"></div>
+          </div>
+        </div>
+        <div class="author-card-image-wrap">
+          <img src="${imgSrc}" alt="${name}" class="author-card-avatar" onerror="this.src='${(sitePrefix || "")}img/airmedicallogo.webp'">
+        </div>
+      </div>
+      <div class="author-card-body">
+        <div class="author-tag-row">
+          <span class="author-tag-label">Author</span>
+          <span class="author-tag-rule"></span>
+        </div>
+        <div class="author-name-row">
+          <h4 class="author-name">${name}</h4>
+          ${author.linkedin ? `
+            <a href="${author.linkedin}" target="_blank" rel="noopener noreferrer" class="author-name-linkedin" title="Connect with ${name} on LinkedIn" aria-label="LinkedIn profile of ${name}">
+              <span class="author-linkedin-badge"><i class="fab fa-linkedin-in"></i></span>
+            </a>
+          ` : ''}
+        </div>
+        <div class="author-role">${role}</div>
+        <p class="author-bio">${bio}</p>
+        
+        <div class="author-divider"></div>
+        <div class="author-expertise-heading">Areas of Expertise</div>
+        <div class="author-expertise-list">
+          <div class="author-expertise-item">
+            <span class="author-expertise-icon"><i class="fas fa-plane"></i></span>
+            <span>${exp1}</span>
+          </div>
+          <div class="author-expertise-item">
+            <span class="author-expertise-icon"><i class="fas fa-procedures"></i></span>
+            <span>${exp2}</span>
+          </div>
+          <div class="author-expertise-item">
+            <span class="author-expertise-icon"><i class="fas fa-users"></i></span>
+            <span>${exp3}</span>
+          </div>
+        </div>
+
+        ${linkedinHtml}
+      </div>
+      <div class="author-card-footer">
+        <div class="author-footer-line"></div>
+        <div class="author-card-motto">
+          ANYWHERE. ANYTIME.<br>FOR A HIGHER TOMORROW.
+        </div>
+      </div>
+    </div>
+  `;
+};
+

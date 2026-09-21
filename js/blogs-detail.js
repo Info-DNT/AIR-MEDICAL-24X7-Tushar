@@ -113,10 +113,46 @@ async function loadBlog() {
     canonicalEl.setAttribute("href", `https://airmedical24x7.com/blogs/${slug}`);
   }
 
+  // Render Author Card & update byline
+  renderAuthorInfo(data.author);
+
   currentBlogId = data.id;
 
   updateViews(data.id, data.views || 0);
   loadComments(data.id);
+}
+
+/***************** AUTHOR CARD RENDER *****************/
+function renderAuthorInfo(rawAuthor) {
+  const container = document.getElementById("blog-author-card-container");
+  if (container && window.generateAuthorCardHTML) {
+    const cardHtml = window.generateAuthorCardHTML(rawAuthor, sitePrefix, false);
+    container.innerHTML = cardHtml;
+    container.style.display = cardHtml ? "block" : "none";
+  }
+
+  // Update inline byline stamp under post
+  let authorObj = null;
+  if (rawAuthor) {
+    if (typeof rawAuthor === "object") {
+      authorObj = rawAuthor;
+    } else if (typeof rawAuthor === "string" && rawAuthor.trim().startsWith("{")) {
+      try { authorObj = JSON.parse(rawAuthor); } catch(e) {}
+    }
+  }
+  const authorName = authorObj ? authorObj.name : (rawAuthor || "Air Medical 24X7");
+  const authorImg = (authorObj && authorObj.image) ? authorObj.image : "img/airmedicallogo.webp";
+  const resolvedImg = (!authorImg.startsWith("http") && !authorImg.startsWith("data:") && !authorImg.startsWith("/") && sitePrefix)
+    ? sitePrefix + authorImg
+    : authorImg;
+
+  const inlineName = document.getElementById("blog-inline-author-name");
+  if (inlineName) inlineName.innerText = window.sanitize24X7(authorName);
+
+  const inlineAvatar = document.getElementById("blog-inline-author-avatar");
+  if (inlineAvatar && authorObj && authorObj.image) {
+    inlineAvatar.src = resolvedImg;
+  }
 }
 
 /***************** VIEWS *****************/

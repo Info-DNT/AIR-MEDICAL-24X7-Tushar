@@ -183,19 +183,18 @@
 
           <!-- Meta info -->
           <div class="d-flex align-items-center mt-4">
-            <img class="rounded-circle me-2" src="img/airmedicallogo.webp" width="60" height="60" alt="Author" / loading="eager">
-            <span>Air Medical 24X7</span>
+            <img id="blog-inline-author-avatar" class="rounded-circle me-2" src="img/airmedicallogo.webp" width="50" height="50" alt="Author" style="object-fit: cover; object-position: top center;" loading="eager">
+            <span id="blog-inline-author-name" class="fw-bold text-dark">Air Medical 24X7</span>
 
             <span class="ms-4">
               <i class="far fa-eye text-primary me-1"></i>
               <span id="view-count">0</span>
 
-
               <span class="ms-3">
                 <i class="far fa-comment text-primary me-1"></i>
                 <span id="comment-count">0</span>
-
               </span>
+            </span>
           </div>
 
         </div>
@@ -328,6 +327,12 @@
           </form>
         </div>
         <!-- Quotation Form End -->
+
+        <!-- Author Card Start -->
+        <div id="blog-author-card-container" class="mb-5">
+          <!-- Populated dynamically by blogs-detail.js -->
+        </div>
+        <!-- Author Card End -->
 
         <!-- Category Start -->
         <div class="mb-5">

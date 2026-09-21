@@ -417,25 +417,126 @@
                       <textarea id="blog-excerpt-input" class="form-control form-control-admin" rows="3" placeholder="A brief 2-3 sentence summary of the post to show on the blogs card listing page..." required></textarea>
                     </div>
 
-                    <div class="row g-3 mb-3">
+                    <div class="mb-3">
                       <!-- Category -->
-                      <div class="col-md-6">
-                        <label class="form-label fw-bold small text-muted">Category <span class="text-danger">*</span></label>
-                        <select id="blog-category-input" class="form-select form-control-admin" required>
-                          <option value="General" selected>General</option>
-                          <option value="Air Ambulance">Air Ambulance</option>
-                          <option value="Medical Escort">Medical Escort</option>
-                          <option value="Airline Stretcher">Airline Stretcher</option>
-                          <option value="Case Study">Case Study</option>
-                          <option value="Pediatric Transport">Pediatric Transport</option>
-                          <option value="ECMO Transfer">ECMO Transfer</option>
-                        </select>
-                      </div>
+                      <label class="form-label fw-bold small text-muted">Category <span class="text-danger">*</span></label>
+                      <select id="blog-category-input" class="form-select form-control-admin" required>
+                        <option value="General" selected>General</option>
+                        <option value="Air Ambulance">Air Ambulance</option>
+                        <option value="Medical Escort">Medical Escort</option>
+                        <option value="Airline Stretcher">Airline Stretcher</option>
+                        <option value="Case Study">Case Study</option>
+                        <option value="Pediatric Transport">Pediatric Transport</option>
+                        <option value="ECMO Transfer">ECMO Transfer</option>
+                      </select>
+                    </div>
 
-                      <!-- Author -->
-                      <div class="col-md-6">
-                        <label class="form-label fw-bold small text-muted">Author</label>
-                        <input type="text" id="blog-author-input" class="form-control form-control-admin" value="Air Medical 24X7">
+                    <!-- Author Section Card -->
+                    <div class="card border-0 rounded-3 mb-4 shadow-sm" style="background: #f8fafc; border: 1.5px solid #e2e8f0 !important;">
+                      <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 fw-bold" style="color: #1A346B;">
+                          <i class="fas fa-user-tie me-2 text-primary"></i>Blog Author Details <span class="text-danger">*</span>
+                        </h6>
+                        <div class="d-flex align-items-center gap-2">
+                          <label class="small text-muted mb-0 fw-bold" for="author-preset-select">Preset:</label>
+                          <select id="author-preset-select" class="form-select form-select-sm" style="max-width: 210px; font-size: 12px; font-weight: 600;">
+                            <option value="camille" selected>Camille Hernandez (Command Center)</option>
+                            <option value="paulina">Dr. Paulina Villa Diaz (Medical Expert)</option>
+                            <option value="editorial">Air Medical 24X7 Editorial Team</option>
+                            <option value="custom">-- Custom / New Author --</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="card-body p-3">
+                        <div class="row g-3">
+                          <!-- Author Name -->
+                          <div class="col-md-6">
+                            <label class="form-label fw-bold small text-muted">Author Name <span class="text-danger">*</span></label>
+                            <input type="text" id="author-name-input" class="form-control form-control-admin" placeholder="e.g. Camille Hernandez" value="Camille Hernandez" required>
+                          </div>
+
+                          <!-- Author Role / Designation -->
+                          <div class="col-md-6">
+                            <label class="form-label fw-bold small text-muted">Role / Title <span class="text-danger">*</span></label>
+                            <input type="text" id="author-role-input" class="form-control form-control-admin" placeholder="e.g. Global Command Center Lead" value="Global Command Center Lead" required>
+                          </div>
+
+                          <!-- Author Bio -->
+                          <div class="col-12">
+                            <label class="form-label fw-bold small text-muted">Author Bio / Summary <span class="text-danger">*</span></label>
+                            <textarea id="author-bio-input" class="form-control form-control-admin" rows="3" placeholder="Brief 2-3 sentence bio of the author..." required>Camille Hernandez leads the Global Command Center at Air Medical 24x7, coordinating international and domestic medical transfers, air ambulance services, and patient repatriation.</textarea>
+                          </div>
+
+                          <!-- Author Photo -->
+                          <div class="col-12">
+                            <label class="form-label fw-bold small text-muted">Author Portrait Photo</label>
+                            
+                            <ul class="nav nav-tabs mb-2" id="authorImageTabs" role="tablist">
+                              <li class="nav-item" role="presentation">
+                                <button class="nav-link active py-1 px-3 small fw-bold" id="author-img-upload-tab" data-bs-toggle="tab" data-bs-target="#author-img-upload-panel" type="button" role="tab">Upload File</button>
+                              </li>
+                              <li class="nav-item" role="presentation">
+                                <button class="nav-link py-1 px-3 small fw-bold" id="author-img-url-tab" data-bs-toggle="tab" data-bs-target="#author-img-url-panel" type="button" role="tab">Image URL / Path</button>
+                              </li>
+                            </ul>
+
+                            <div class="tab-content border p-3 rounded bg-white">
+                              <div class="tab-pane fade show active" id="author-img-upload-panel" role="tabpanel">
+                                <div id="author-img-drop-zone" class="img-upload-box py-3">
+                                  <i class="fas fa-camera text-primary fs-4 mb-1"></i>
+                                  <p class="small text-muted m-0">Click or drag & drop author photo here (PNG/JPG)</p>
+                                  <input type="file" id="author-image-file" class="d-none" accept="image/png, image/jpeg, image/jpg, image/webp">
+                                </div>
+                              </div>
+                              <div class="tab-pane fade" id="author-img-url-panel" role="tabpanel">
+                                <input type="text" id="author-image-url" class="form-control form-control-admin" placeholder="e.g. img/authors/camille-hernandez.png or https://..." value="img/authors/camille-hernandez.png">
+                              </div>
+                            </div>
+
+                            <!-- Thumbnail preview -->
+                            <div id="author-image-preview-container" class="mt-2 d-flex align-items-center gap-3">
+                              <img id="author-image-preview-thumb" src="img/authors/camille-hernandez.png" class="rounded border shadow-sm" style="width: 60px; height: 60px; object-fit: cover; object-position: top center;">
+                              <div>
+                                <span class="badge bg-success mb-1">Photo Configured</span><br>
+                                <button type="button" id="btn-remove-author-image" class="btn btn-outline-danger btn-sm py-0 px-2" style="font-size: 11px;"><i class="fas fa-trash-alt me-1"></i>Remove</button>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Areas of Expertise (3 items) -->
+                          <div class="col-12">
+                            <label class="form-label fw-bold small text-muted mb-1">Areas of Expertise (3 Focus Areas)</label>
+                            <div class="row g-2">
+                              <div class="col-md-4">
+                                <div class="input-group input-group-sm">
+                                  <span class="input-group-text bg-light"><i class="fas fa-plane text-primary"></i></span>
+                                  <input type="text" id="author-exp-1" class="form-control" placeholder="Expertise 1" value="Medical Transfer Coordination">
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="input-group input-group-sm">
+                                  <span class="input-group-text bg-light"><i class="fas fa-procedures text-primary"></i></span>
+                                  <input type="text" id="author-exp-2" class="form-control" placeholder="Expertise 2" value="Air Ambulance Operations">
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="input-group input-group-sm">
+                                  <span class="input-group-text bg-light"><i class="fas fa-users text-primary"></i></span>
+                                  <input type="text" id="author-exp-3" class="form-control" placeholder="Expertise 3" value="Patient Repatriation">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- LinkedIn Link -->
+                          <div class="col-12">
+                            <label class="form-label fw-bold small text-muted">LinkedIn Profile URL</label>
+                            <div class="input-group input-group-sm">
+                              <span class="input-group-text" style="background: #0A66C2; color: #fff;"><i class="fab fa-linkedin-in"></i></span>
+                              <input type="url" id="author-linkedin-input" class="form-control" placeholder="https://linkedin.com/in/..." value="https://linkedin.com">
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -532,8 +633,16 @@
                     </div>
 
                     <!-- Preview Content Render -->
-                    <div id="preview-blog-content" style="font-size: 15.5px; line-height: 1.7; color: #444; max-height: 480px; overflow-y: auto; padding-right: 8px;">
+                    <div id="preview-blog-content" style="font-size: 15.5px; line-height: 1.7; color: #444; max-height: 380px; overflow-y: auto; padding-right: 8px;">
                       <p class="text-muted">Start typing in the editor on the left to see the live rendering...</p>
+                    </div>
+
+                    <!-- Live Author Card Component Preview -->
+                    <div class="mt-4 pt-3 border-top">
+                      <h6 class="fw-bold mb-3" style="color: #1A346B; font-size: 12px; letter-spacing: 0.8px; text-transform: uppercase;">
+                        <i class="fas fa-id-card me-2 text-primary"></i>Sidebar Author Card Preview
+                      </h6>
+                      <div id="admin-live-author-card"></div>
                     </div>
                   </div>
                 </div>

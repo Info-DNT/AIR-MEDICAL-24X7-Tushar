@@ -4,8 +4,44 @@ const getSupabaseClient = () => window.blogsSupabaseClient;
 /***************** STATE MANAGEMENT *****************/
 let currentSession = null;
 let featuredImageBase64 = null;
+let authorPhotoBase64 = null;
 let blogsList = [];
 let deleteTargetId = null;
+
+const AUTHOR_PRESETS = {
+  camille: {
+    name: "Camille Hernandez",
+    role: "Global Command Center Lead",
+    bio: "Camille Hernandez leads the Global Command Center at Air Medical 24x7, coordinating international and domestic medical transfers, air ambulance services, and patient repatriation.",
+    image: "img/authors/camille-hernandez.png",
+    expertise: ["Medical Transfer Coordination", "Air Ambulance Operations", "Patient Repatriation"],
+    linkedin: "https://linkedin.com"
+  },
+  paulina: {
+    name: "Dr. Paulina Villa Diaz",
+    role: "Medical Expert & Flight Physician",
+    bio: "Dr. Paulina Villa Diaz is a critical care flight physician at Air Medical 24x7 with over 1,000 hours of intensive aeromedical transport experience across pediatric, trauma, and adult patient missions.",
+    image: "img/authors/camille-hernandez.png",
+    expertise: ["Critical Aeromedical Transport", "In-Flight Intensive Care", "International Repatriation"],
+    linkedin: "https://linkedin.com"
+  },
+  editorial: {
+    name: "Air Medical 24X7 Editorial Team",
+    role: "Aeromedical Communications & Patient Care Board",
+    bio: "The Air Medical 24X7 Editorial Team comprises flight doctors, paramedics, and aviation coordinators dedicated to publishing accurate, life-saving information on global medical transfers.",
+    image: "img/airmedicallogo.webp",
+    expertise: ["Worldwide Air Ambulance", "Commercial Airline Stretcher", "Bed-to-Bed Transfer"],
+    linkedin: "https://linkedin.com"
+  },
+  custom: {
+    name: "",
+    role: "",
+    bio: "",
+    image: "",
+    expertise: ["", "", ""],
+    linkedin: ""
+  }
+};
 
 let reviewImageBase64 = null;
 let reviewsList = [];
@@ -240,22 +276,127 @@ function initListeners() {
     }
   });
 
+  // --- AUTHOR LISTENERS ---
+  const presetSelect = document.getElementById("author-preset-select");
+  if (presetSelect) {
+    presetSelect.addEventListener("change", (e) => {
+      const p = AUTHOR_PRESETS[e.target.value];
+      if (p && e.target.value !== "custom") {
+        document.getElementById("author-name-input").value = p.name;
+        document.getElementById("author-role-input").value = p.role;
+        document.getElementById("author-bio-input").value = p.bio;
+        document.getElementById("author-image-url").value = p.image;
+        authorPhotoBase64 = null;
+        const fileIn = document.getElementById("author-image-file");
+        if (fileIn) fileIn.value = "";
+        document.getElementById("author-exp-1").value = p.expertise[0] || "";
+        document.getElementById("author-exp-2").value = p.expertise[1] || "";
+        document.getElementById("author-exp-3").value = p.expertise[2] || "";
+        document.getElementById("author-linkedin-input").value = p.linkedin || "";
+        
+        const thumb = document.getElementById("author-image-preview-thumb");
+        const thumbContainer = document.getElementById("author-image-preview-container");
+        if (p.image) {
+          thumb.src = p.image;
+          thumbContainer.classList.remove("d-none");
+        } else {
+          thumbContainer.classList.add("d-none");
+        }
+        updateAuthorLivePreview();
+      }
+    });
+  }
+
+  const authorDropZone = document.getElementById("author-img-drop-zone");
+  const authorFileInput = document.getElementById("author-image-file");
+  if (authorDropZone && authorFileInput) {
+    authorDropZone.addEventListener("click", () => authorFileInput.click());
+    authorDropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      authorDropZone.style.borderColor = "#1A346B";
+      authorDropZone.style.background = "#e2e8f0";
+    });
+    authorDropZone.addEventListener("dragleave", () => {
+      authorDropZone.style.borderColor = "#cbd5e1";
+      authorDropZone.style.background = "#f8fafc";
+    });
+    authorDropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      authorDropZone.style.borderColor = "#cbd5e1";
+      authorDropZone.style.background = "#f8fafc";
+      if (e.dataTransfer.files.length > 0) {
+        handleAuthorImageFile(e.dataTransfer.files[0]);
+      }
+    });
+    authorFileInput.addEventListener("change", (e) => {
+      if (e.target.files.length > 0) {
+        handleAuthorImageFile(e.target.files[0]);
+      }
+    });
+  }
+
+  const btnRemoveAuthorImg = document.getElementById("btn-remove-author-image");
+  if (btnRemoveAuthorImg) {
+    btnRemoveAuthorImg.addEventListener("click", () => {
+      authorPhotoBase64 = null;
+      if (authorFileInput) authorFileInput.value = "";
+      document.getElementById("author-image-url").value = "";
+      document.getElementById("author-image-preview-container").classList.add("d-none");
+      updateAuthorLivePreview();
+    });
+  }
+
+  const authorUrlInput = document.getElementById("author-image-url");
+  if (authorUrlInput) {
+    authorUrlInput.addEventListener("input", (e) => {
+      const url = e.target.value.trim();
+      const thumb = document.getElementById("author-image-preview-thumb");
+      const thumbContainer = document.getElementById("author-image-preview-container");
+      if (url) {
+        authorPhotoBase64 = null;
+        thumb.src = url;
+        thumbContainer.classList.remove("d-none");
+      } else if (!authorPhotoBase64) {
+        thumbContainer.classList.add("d-none");
+      }
+      updateAuthorLivePreview();
+    });
+  }
+
+  [
+    "author-name-input",
+    "author-role-input",
+    "author-bio-input",
+    "author-exp-1",
+    "author-exp-2",
+    "author-exp-3",
+    "author-linkedin-input"
+  ].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", updateAuthorLivePreview);
+  });
+
   // Form Fields binding to Live Preview
   const liveBindings = [
     { inputId: "blog-title-input", previewId: "preview-blog-title", defaultValue: "Blog Title Preview" },
-    { inputId: "blog-author-input", previewId: "preview-blog-author", defaultValue: "Air Medical 24X7" },
+    { inputId: "author-name-input", previewId: "preview-blog-author", defaultValue: "Camille Hernandez" },
     { inputId: "blog-category-input", previewId: "preview-blog-category", defaultValue: "General" }
   ];
 
   liveBindings.forEach(binding => {
     const el = document.getElementById(binding.inputId);
+    if (!el) return;
     el.addEventListener("input", () => {
       const val = el.value.trim();
       // Apply 24X7 casing standardizer
       const displayVal = val ? window.sanitize24X7(val) : binding.defaultValue;
-      document.getElementById(binding.previewId).innerText = displayVal;
+      const target = document.getElementById(binding.previewId);
+      if (target) target.innerText = displayVal;
     });
   });
+
+  // Initialize live author preview on page load
+  updateAuthorLivePreview();
 
   // Draft & Publish buttons
   document.getElementById("btn-save-draft").addEventListener("click", () => submitBlogPost("draft"));
@@ -488,6 +629,69 @@ function handleImageFile(file) {
   };
 }
 
+/***************** AUTHOR IMAGE HANDLER & FORM DATA *****************/
+function handleAuthorImageFile(file) {
+  if (!file.type.startsWith("image/")) {
+    alert("Please select a valid image file (PNG, JPG, JPEG, or WebP).");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = () => {
+    authorPhotoBase64 = reader.result;
+    document.getElementById("author-image-url").value = "";
+    document.getElementById("author-image-preview-thumb").src = reader.result;
+    document.getElementById("author-image-preview-container").classList.remove("d-none");
+    updateAuthorLivePreview();
+  };
+  reader.onerror = (error) => {
+    console.error("FileReader Error:", error);
+    alert("Error reading author image file.");
+  };
+}
+
+function getAuthorFormData() {
+  const nameInput = document.getElementById("author-name-input");
+  const roleInput = document.getElementById("author-role-input");
+  const bioInput = document.getElementById("author-bio-input");
+  const urlInput = document.getElementById("author-image-url");
+  const exp1Input = document.getElementById("author-exp-1");
+  const exp2Input = document.getElementById("author-exp-2");
+  const exp3Input = document.getElementById("author-exp-3");
+  const linkedinInput = document.getElementById("author-linkedin-input");
+
+  const name = nameInput ? nameInput.value.trim() : "Camille Hernandez";
+  const role = roleInput ? roleInput.value.trim() : "Global Command Center Lead";
+  const bio = bioInput ? bioInput.value.trim() : "";
+  const image = authorPhotoBase64 || (urlInput ? urlInput.value.trim() : "") || "img/authors/camille-hernandez.png";
+  const exp1 = exp1Input ? exp1Input.value.trim() : "";
+  const exp2 = exp2Input ? exp2Input.value.trim() : "";
+  const exp3 = exp3Input ? exp3Input.value.trim() : "";
+  const linkedin = linkedinInput ? linkedinInput.value.trim() : "";
+
+  return {
+    name,
+    role,
+    bio,
+    image,
+    expertise: [exp1, exp2, exp3].filter(Boolean),
+    linkedin
+  };
+}
+
+function updateAuthorLivePreview() {
+  const container = document.getElementById("admin-live-author-card");
+  if (!container || !window.generateAuthorCardHTML) return;
+  const authorData = getAuthorFormData();
+  container.innerHTML = window.generateAuthorCardHTML(authorData, "", true);
+
+  const previewAuthorByline = document.getElementById("preview-blog-author");
+  if (previewAuthorByline) {
+    previewAuthorByline.innerText = authorData.name || "Air Medical 24X7";
+  }
+}
+
 /***************** SLUGIFY *****************/
 function slugify(text) {
   return text
@@ -508,12 +712,34 @@ function clearEditorForm() {
   document.getElementById("blog-slug-input").value = "";
   document.getElementById("blog-excerpt-input").value = "";
   document.getElementById("blog-category-input").value = "General";
-  document.getElementById("blog-author-input").value = "Air Medical 24X7";
   document.getElementById("blog-image-url").value = "";
   document.getElementById("blog-image-file").value = "";
   document.getElementById("blog-meta-title").value = "";
   document.getElementById("blog-meta-desc").value = "";
   
+  // Reset author fields to Camille Hernandez preset
+  const presetSelect = document.getElementById("author-preset-select");
+  if (presetSelect) presetSelect.value = "camille";
+  const p = AUTHOR_PRESETS.camille;
+  if (document.getElementById("author-name-input")) document.getElementById("author-name-input").value = p.name;
+  if (document.getElementById("author-role-input")) document.getElementById("author-role-input").value = p.role;
+  if (document.getElementById("author-bio-input")) document.getElementById("author-bio-input").value = p.bio;
+  if (document.getElementById("author-image-url")) document.getElementById("author-image-url").value = p.image;
+  authorPhotoBase64 = null;
+  const authorFileIn = document.getElementById("author-image-file");
+  if (authorFileIn) authorFileIn.value = "";
+  if (document.getElementById("author-exp-1")) document.getElementById("author-exp-1").value = p.expertise[0] || "";
+  if (document.getElementById("author-exp-2")) document.getElementById("author-exp-2").value = p.expertise[1] || "";
+  if (document.getElementById("author-exp-3")) document.getElementById("author-exp-3").value = p.expertise[2] || "";
+  if (document.getElementById("author-linkedin-input")) document.getElementById("author-linkedin-input").value = p.linkedin || "";
+
+  const authorThumb = document.getElementById("author-image-preview-thumb");
+  const authorThumbWrap = document.getElementById("author-image-preview-container");
+  if (authorThumb && authorThumbWrap) {
+    authorThumb.src = p.image;
+    authorThumbWrap.classList.remove("d-none");
+  }
+
   if (quillEditor) {
     quillEditor.setText("");
   }
@@ -523,10 +749,10 @@ function clearEditorForm() {
   document.getElementById("preview-blog-image").style.display = "none";
   
   document.getElementById("preview-blog-title").innerText = "Blog Title Preview";
-  document.getElementById("preview-blog-author").innerText = "Air Medical 24X7";
   document.getElementById("preview-blog-category").innerText = "General";
   document.getElementById("preview-blog-content").innerHTML = '<p class="text-muted">Start typing in the editor on the left to see the live rendering...</p>';
   
+  updateAuthorLivePreview();
   document.getElementById("editor-tab-title").innerText = "Create New Blog Post";
 }
 
@@ -536,17 +762,22 @@ async function submitBlogPost(status) {
   const slug = document.getElementById("blog-slug-input").value.trim();
   const excerpt = document.getElementById("blog-excerpt-input").value.trim();
   const category = document.getElementById("blog-category-input").value;
-  const author = document.getElementById("blog-author-input").value.trim() || "Air Medical 24X7";
   const metaTitle = document.getElementById("blog-meta-title").value.trim();
   const metaDesc = document.getElementById("blog-meta-desc").value.trim();
   
   const content = quillEditor ? quillEditor.root.innerHTML : "";
   const textContent = quillEditor ? quillEditor.getText().trim() : "";
 
+  // Author details
+  const authorData = getAuthorFormData();
+
   // Validation
   if (!title) { alert("Blog Title is required!"); return; }
   if (!slug) { alert("URL Slug is required!"); return; }
   if (!excerpt) { alert("Excerpt is required!"); return; }
+  if (!authorData.name) { alert("Author Name is required!"); return; }
+  if (!authorData.role) { alert("Author Role / Title is required!"); return; }
+  if (!authorData.bio) { alert("Author Bio / Summary is required!"); return; }
   if (!textContent || content === "<p><br></p>") { alert("Article content body is required!"); return; }
 
   // Check Featured Image (either uploaded base64 or raw URL)
@@ -558,14 +789,14 @@ async function submitBlogPost(status) {
     return;
   }
 
-  // Compile payload and apply standardization function to preserve '24X7' brand casing in the database
+  // Compile payload with structured author JSON
   const payload = {
     title: window.sanitize24X7(title),
     slug: slugify(slug),
     excerpt: window.sanitize24X7(excerpt),
     content: window.sanitize24X7(content),
     featured_image: featuredImage,
-    author: window.sanitize24X7(author),
+    author: JSON.stringify(authorData),
     status: status,
     category: category,
     meta_title: window.sanitize24X7(metaTitle || title),
@@ -744,9 +975,45 @@ function loadPostToEditor(blogId) {
   document.getElementById("blog-slug-input").value = blog.slug;
   document.getElementById("blog-excerpt-input").value = blog.excerpt;
   document.getElementById("blog-category-input").value = blog.category || "General";
-  document.getElementById("blog-author-input").value = blog.author || "Air Medical 24X7";
   document.getElementById("blog-meta-title").value = blog.meta_title || "";
   document.getElementById("blog-meta-desc").value = blog.meta_description || "";
+
+  // Author details population
+  let authorObj = null;
+  if (blog.author) {
+    if (typeof blog.author === "string" && blog.author.trim().startsWith("{")) {
+      try { authorObj = JSON.parse(blog.author); } catch(e) {}
+    }
+    if (!authorObj) {
+      authorObj = { name: blog.author };
+    }
+  } else {
+    authorObj = AUTHOR_PRESETS.camille;
+  }
+
+  if (document.getElementById("author-name-input")) document.getElementById("author-name-input").value = authorObj.name || "Camille Hernandez";
+  if (document.getElementById("author-role-input")) document.getElementById("author-role-input").value = authorObj.role || "Global Command Center Lead";
+  if (document.getElementById("author-bio-input")) document.getElementById("author-bio-input").value = authorObj.bio || "";
+  if (document.getElementById("author-image-url")) document.getElementById("author-image-url").value = authorObj.image || "img/authors/camille-hernandez.png";
+  authorPhotoBase64 = null;
+  const authorFileIn = document.getElementById("author-image-file");
+  if (authorFileIn) authorFileIn.value = "";
+
+  const exp = Array.isArray(authorObj.expertise) ? authorObj.expertise : [];
+  if (document.getElementById("author-exp-1")) document.getElementById("author-exp-1").value = exp[0] || "";
+  if (document.getElementById("author-exp-2")) document.getElementById("author-exp-2").value = exp[1] || "";
+  if (document.getElementById("author-exp-3")) document.getElementById("author-exp-3").value = exp[2] || "";
+  if (document.getElementById("author-linkedin-input")) document.getElementById("author-linkedin-input").value = authorObj.linkedin || "";
+
+  const authorThumb = document.getElementById("author-image-preview-thumb");
+  const authorThumbWrap = document.getElementById("author-image-preview-container");
+  if (authorThumb && authorThumbWrap) {
+    authorThumb.src = authorObj.image || "img/authors/camille-hernandez.png";
+    authorThumbWrap.classList.remove("d-none");
+  }
+  const presetSelect = document.getElementById("author-preset-select");
+  if (presetSelect) presetSelect.value = "custom";
+  updateAuthorLivePreview();
 
   // Image handling
   const previewContainer = document.getElementById("image-preview-container");
