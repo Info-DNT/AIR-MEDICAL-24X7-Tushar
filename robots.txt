@@ -5,7 +5,6 @@ Disallow: /scratch/
 Disallow: /sw.js
 Disallow: /medical-tourism-india$
 Disallow: /air-ambulance-to-india$
-Disallow: /air-ambulance-india$
 
 Sitemap: https://airmedical24x7.com/sitemap.xml
 
