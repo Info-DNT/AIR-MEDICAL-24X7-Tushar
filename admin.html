@@ -440,10 +440,10 @@
                         <div class="d-flex align-items-center gap-2">
                           <label class="small text-muted mb-0 fw-bold" for="author-preset-select">Preset:</label>
                           <select id="author-preset-select" class="form-select form-select-sm" style="max-width: 210px; font-size: 12px; font-weight: 600;">
-                            <option value="camille" selected>Camille Hernandez (Command Center)</option>
+                            <option value="custom" selected>-- Custom / Enter Manually --</option>
+                            <option value="camille">Camille Hernandez (Command Center)</option>
                             <option value="paulina">Dr. Paulina Villa Diaz (Medical Expert)</option>
                             <option value="editorial">Air Medical 24X7 Editorial Team</option>
-                            <option value="custom">-- Custom / New Author --</option>
                           </select>
                         </div>
                       </div>
@@ -451,20 +451,20 @@
                         <div class="row g-3">
                           <!-- Author Name -->
                           <div class="col-md-6">
-                            <label class="form-label fw-bold small text-muted">Author Name <span class="text-danger">*</span></label>
-                            <input type="text" id="author-name-input" class="form-control form-control-admin" placeholder="e.g. Camille Hernandez" value="Camille Hernandez" required>
+                            <label class="form-label fw-bold small text-muted">Author Name</label>
+                            <input type="text" id="author-name-input" class="form-control form-control-admin" placeholder="e.g. Dr. Paulina Villa Diaz">
                           </div>
 
                           <!-- Author Role / Designation -->
                           <div class="col-md-6">
-                            <label class="form-label fw-bold small text-muted">Role / Title <span class="text-danger">*</span></label>
-                            <input type="text" id="author-role-input" class="form-control form-control-admin" placeholder="e.g. Global Command Center Lead" value="Global Command Center Lead" required>
+                            <label class="form-label fw-bold small text-muted">Role / Title</label>
+                            <input type="text" id="author-role-input" class="form-control form-control-admin" placeholder="e.g. Flight Physician / Medical Director">
                           </div>
 
                           <!-- Author Bio -->
                           <div class="col-12">
-                            <label class="form-label fw-bold small text-muted">Author Bio / Summary <span class="text-danger">*</span></label>
-                            <textarea id="author-bio-input" class="form-control form-control-admin" rows="3" placeholder="Brief 2-3 sentence bio of the author..." required>Camille Hernandez leads the Global Command Center at Air Medical 24x7, coordinating international and domestic medical transfers, air ambulance services, and patient repatriation.</textarea>
+                            <label class="form-label fw-bold small text-muted">Author Bio / Summary</label>
+                            <textarea id="author-bio-input" class="form-control form-control-admin" rows="3" placeholder="Brief 2-3 sentence bio of the author..."></textarea>
                           </div>
 
                           <!-- Author Photo -->
@@ -489,13 +489,13 @@
                                 </div>
                               </div>
                               <div class="tab-pane fade" id="author-img-url-panel" role="tabpanel">
-                                <input type="text" id="author-image-url" class="form-control form-control-admin" placeholder="e.g. img/authors/camille-hernandez.png or https://..." value="img/authors/camille-hernandez.png">
+                                <input type="text" id="author-image-url" class="form-control form-control-admin" placeholder="e.g. https://... or img/authors/...">
                               </div>
                             </div>
 
                             <!-- Thumbnail preview -->
-                            <div id="author-image-preview-container" class="mt-2 d-flex align-items-center gap-3">
-                              <img id="author-image-preview-thumb" src="img/authors/camille-hernandez.png" class="rounded border shadow-sm" style="width: 60px; height: 60px; object-fit: cover; object-position: top center;">
+                            <div id="author-image-preview-container" class="mt-2 d-flex align-items-center gap-3 d-none">
+                              <img id="author-image-preview-thumb" src="" class="rounded border shadow-sm" style="width: 60px; height: 60px; object-fit: cover; object-position: top center;">
                               <div>
                                 <span class="badge bg-success mb-1">Photo Configured</span><br>
                                 <button type="button" id="btn-remove-author-image" class="btn btn-outline-danger btn-sm py-0 px-2" style="font-size: 11px;"><i class="fas fa-trash-alt me-1"></i>Remove</button>
@@ -510,19 +510,19 @@
                               <div class="col-md-4">
                                 <div class="input-group input-group-sm">
                                   <span class="input-group-text bg-light"><i class="fas fa-plane text-primary"></i></span>
-                                  <input type="text" id="author-exp-1" class="form-control" placeholder="Expertise 1" value="Medical Transfer Coordination">
+                                  <input type="text" id="author-exp-1" class="form-control" placeholder="Expertise 1">
                                 </div>
                               </div>
                               <div class="col-md-4">
                                 <div class="input-group input-group-sm">
                                   <span class="input-group-text bg-light"><i class="fas fa-procedures text-primary"></i></span>
-                                  <input type="text" id="author-exp-2" class="form-control" placeholder="Expertise 2" value="Air Ambulance Operations">
+                                  <input type="text" id="author-exp-2" class="form-control" placeholder="Expertise 2">
                                 </div>
                               </div>
                               <div class="col-md-4">
                                 <div class="input-group input-group-sm">
                                   <span class="input-group-text bg-light"><i class="fas fa-users text-primary"></i></span>
-                                  <input type="text" id="author-exp-3" class="form-control" placeholder="Expertise 3" value="Patient Repatriation">
+                                  <input type="text" id="author-exp-3" class="form-control" placeholder="Expertise 3">
                                 </div>
                               </div>
                             </div>
@@ -533,7 +533,7 @@
                             <label class="form-label fw-bold small text-muted">LinkedIn Profile URL</label>
                             <div class="input-group input-group-sm">
                               <span class="input-group-text" style="background: #0A66C2; color: #fff;"><i class="fab fa-linkedin-in"></i></span>
-                              <input type="url" id="author-linkedin-input" class="form-control" placeholder="https://linkedin.com/in/..." value="https://linkedin.com">
+                              <input type="url" id="author-linkedin-input" class="form-control" placeholder="https://linkedin.com/in/...">
                             </div>
                           </div>
                         </div>

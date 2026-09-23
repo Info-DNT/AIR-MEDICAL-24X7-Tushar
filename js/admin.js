@@ -249,32 +249,43 @@ function initListeners() {
   });
 
   // Remove featured image button
-  document.getElementById("btn-remove-image").addEventListener("click", () => {
-    featuredImageBase64 = null;
-    fileInput.value = "";
-    document.getElementById("blog-image-url").value = "";
-    document.getElementById("image-preview-container").classList.add("d-none");
-    document.getElementById("preview-blog-image").style.display = "none";
-  });
+  const btnRemoveImg = document.getElementById("btn-remove-image");
+  if (btnRemoveImg) {
+    btnRemoveImg.addEventListener("click", () => {
+      featuredImageBase64 = null;
+      if (fileInput) fileInput.value = "";
+      const urlInput = document.getElementById("blog-image-url");
+      if (urlInput) urlInput.value = "";
+      const prevCont = document.getElementById("image-preview-container");
+      if (prevCont) prevCont.classList.add("d-none");
+      const livePrev = document.getElementById("preview-blog-image");
+      if (livePrev) livePrev.style.display = "none";
+    });
+  }
 
   // Image URL input field changes
-  document.getElementById("blog-image-url").addEventListener("input", (e) => {
-    const url = e.target.value.trim();
-    const previewContainer = document.getElementById("image-preview-container");
-    const previewThumb = document.getElementById("image-preview-thumb");
-    const livePreviewImg = document.getElementById("preview-blog-image");
+  const blogUrlInput = document.getElementById("blog-image-url");
+  if (blogUrlInput) {
+    blogUrlInput.addEventListener("input", (e) => {
+      const url = e.target.value.trim();
+      const previewContainer = document.getElementById("image-preview-container");
+      const previewThumb = document.getElementById("image-preview-thumb");
+      const livePreviewImg = document.getElementById("preview-blog-image");
 
-    if (url) {
-      featuredImageBase64 = null; // clear base64 selection if URL is supplied
-      previewThumb.src = url;
-      previewContainer.classList.remove("d-none");
-      livePreviewImg.src = url;
-      livePreviewImg.style.display = "block";
-    } else {
-      previewContainer.classList.add("d-none");
-      livePreviewImg.style.display = "none";
-    }
-  });
+      if (url) {
+        featuredImageBase64 = null; // clear base64 selection if URL is supplied
+        if (previewThumb) previewThumb.src = url;
+        if (previewContainer) previewContainer.classList.remove("d-none");
+        if (livePreviewImg) {
+          livePreviewImg.src = url;
+          livePreviewImg.style.display = "block";
+        }
+      } else {
+        if (previewContainer) previewContainer.classList.add("d-none");
+        if (livePreviewImg) livePreviewImg.style.display = "none";
+      }
+    });
+  }
 
   // --- AUTHOR LISTENERS ---
   const presetSelect = document.getElementById("author-preset-select");
@@ -282,28 +293,46 @@ function initListeners() {
     presetSelect.addEventListener("change", (e) => {
       const p = AUTHOR_PRESETS[e.target.value];
       if (p && e.target.value !== "custom") {
-        document.getElementById("author-name-input").value = p.name;
-        document.getElementById("author-role-input").value = p.role;
-        document.getElementById("author-bio-input").value = p.bio;
-        document.getElementById("author-image-url").value = p.image;
+        if (document.getElementById("author-name-input")) document.getElementById("author-name-input").value = p.name;
+        if (document.getElementById("author-role-input")) document.getElementById("author-role-input").value = p.role;
+        if (document.getElementById("author-bio-input")) document.getElementById("author-bio-input").value = p.bio;
+        if (document.getElementById("author-image-url")) document.getElementById("author-image-url").value = p.image;
         authorPhotoBase64 = null;
         const fileIn = document.getElementById("author-image-file");
         if (fileIn) fileIn.value = "";
-        document.getElementById("author-exp-1").value = p.expertise[0] || "";
-        document.getElementById("author-exp-2").value = p.expertise[1] || "";
-        document.getElementById("author-exp-3").value = p.expertise[2] || "";
-        document.getElementById("author-linkedin-input").value = p.linkedin || "";
+        if (document.getElementById("author-exp-1")) document.getElementById("author-exp-1").value = p.expertise[0] || "";
+        if (document.getElementById("author-exp-2")) document.getElementById("author-exp-2").value = p.expertise[1] || "";
+        if (document.getElementById("author-exp-3")) document.getElementById("author-exp-3").value = p.expertise[2] || "";
+        if (document.getElementById("author-linkedin-input")) document.getElementById("author-linkedin-input").value = p.linkedin || "";
         
         const thumb = document.getElementById("author-image-preview-thumb");
         const thumbContainer = document.getElementById("author-image-preview-container");
         if (p.image) {
-          thumb.src = p.image;
-          thumbContainer.classList.remove("d-none");
+          if (thumb) thumb.src = p.image;
+          if (thumbContainer) thumbContainer.classList.remove("d-none");
         } else {
-          thumbContainer.classList.add("d-none");
+          if (thumb) thumb.src = "";
+          if (thumbContainer) thumbContainer.classList.add("d-none");
         }
-        updateAuthorLivePreview();
+      } else if (e.target.value === "custom") {
+        if (document.getElementById("author-name-input")) document.getElementById("author-name-input").value = "";
+        if (document.getElementById("author-role-input")) document.getElementById("author-role-input").value = "";
+        if (document.getElementById("author-bio-input")) document.getElementById("author-bio-input").value = "";
+        if (document.getElementById("author-image-url")) document.getElementById("author-image-url").value = "";
+        authorPhotoBase64 = null;
+        const fileIn = document.getElementById("author-image-file");
+        if (fileIn) fileIn.value = "";
+        if (document.getElementById("author-exp-1")) document.getElementById("author-exp-1").value = "";
+        if (document.getElementById("author-exp-2")) document.getElementById("author-exp-2").value = "";
+        if (document.getElementById("author-exp-3")) document.getElementById("author-exp-3").value = "";
+        if (document.getElementById("author-linkedin-input")) document.getElementById("author-linkedin-input").value = "";
+        
+        const thumb = document.getElementById("author-image-preview-thumb");
+        const thumbContainer = document.getElementById("author-image-preview-container");
+        if (thumb) thumb.src = "";
+        if (thumbContainer) thumbContainer.classList.add("d-none");
       }
+      updateAuthorLivePreview();
     });
   }
 
@@ -340,8 +369,12 @@ function initListeners() {
     btnRemoveAuthorImg.addEventListener("click", () => {
       authorPhotoBase64 = null;
       if (authorFileInput) authorFileInput.value = "";
-      document.getElementById("author-image-url").value = "";
-      document.getElementById("author-image-preview-container").classList.add("d-none");
+      const urlInput = document.getElementById("author-image-url");
+      if (urlInput) urlInput.value = "";
+      const thumb = document.getElementById("author-image-preview-thumb");
+      if (thumb) thumb.src = "";
+      const previewCont = document.getElementById("author-image-preview-container");
+      if (previewCont) previewCont.classList.add("d-none");
       updateAuthorLivePreview();
     });
   }
@@ -354,10 +387,11 @@ function initListeners() {
       const thumbContainer = document.getElementById("author-image-preview-container");
       if (url) {
         authorPhotoBase64 = null;
-        thumb.src = url;
-        thumbContainer.classList.remove("d-none");
+        if (thumb) thumb.src = url;
+        if (thumbContainer) thumbContainer.classList.remove("d-none");
       } else if (!authorPhotoBase64) {
-        thumbContainer.classList.add("d-none");
+        if (thumb) thumb.src = "";
+        if (thumbContainer) thumbContainer.classList.add("d-none");
       }
       updateAuthorLivePreview();
     });
@@ -684,7 +718,12 @@ function updateAuthorLivePreview() {
   const container = document.getElementById("admin-live-author-card");
   if (!container || !window.generateAuthorCardHTML) return;
   const authorData = getAuthorFormData();
-  container.innerHTML = window.generateAuthorCardHTML(authorData, "", true);
+  
+  if (authorData.name && authorData.name.trim()) {
+    container.innerHTML = window.generateAuthorCardHTML(authorData, "", true);
+  } else {
+    container.innerHTML = '<div class="p-3 text-center text-muted small border rounded" style="background:#f8fafc;"><strong>Author Card Live Preview</strong><br><span style="font-size:11.5px;">Will display here dynamically as you enter an author or select a preset.</span></div>';
+  }
 
   const previewAuthorByline = document.getElementById("preview-blog-author");
   if (previewAuthorByline) {
@@ -717,28 +756,25 @@ function clearEditorForm() {
   document.getElementById("blog-meta-title").value = "";
   document.getElementById("blog-meta-desc").value = "";
   
-  // Reset author fields to Camille Hernandez preset
+  // Reset author fields to empty/custom
   const presetSelect = document.getElementById("author-preset-select");
-  if (presetSelect) presetSelect.value = "camille";
-  const p = AUTHOR_PRESETS.camille;
-  if (document.getElementById("author-name-input")) document.getElementById("author-name-input").value = p.name;
-  if (document.getElementById("author-role-input")) document.getElementById("author-role-input").value = p.role;
-  if (document.getElementById("author-bio-input")) document.getElementById("author-bio-input").value = p.bio;
-  if (document.getElementById("author-image-url")) document.getElementById("author-image-url").value = p.image;
+  if (presetSelect) presetSelect.value = "custom";
+  if (document.getElementById("author-name-input")) document.getElementById("author-name-input").value = "";
+  if (document.getElementById("author-role-input")) document.getElementById("author-role-input").value = "";
+  if (document.getElementById("author-bio-input")) document.getElementById("author-bio-input").value = "";
+  if (document.getElementById("author-image-url")) document.getElementById("author-image-url").value = "";
   authorPhotoBase64 = null;
   const authorFileIn = document.getElementById("author-image-file");
   if (authorFileIn) authorFileIn.value = "";
-  if (document.getElementById("author-exp-1")) document.getElementById("author-exp-1").value = p.expertise[0] || "";
-  if (document.getElementById("author-exp-2")) document.getElementById("author-exp-2").value = p.expertise[1] || "";
-  if (document.getElementById("author-exp-3")) document.getElementById("author-exp-3").value = p.expertise[2] || "";
-  if (document.getElementById("author-linkedin-input")) document.getElementById("author-linkedin-input").value = p.linkedin || "";
+  if (document.getElementById("author-exp-1")) document.getElementById("author-exp-1").value = "";
+  if (document.getElementById("author-exp-2")) document.getElementById("author-exp-2").value = "";
+  if (document.getElementById("author-exp-3")) document.getElementById("author-exp-3").value = "";
+  if (document.getElementById("author-linkedin-input")) document.getElementById("author-linkedin-input").value = "";
 
   const authorThumb = document.getElementById("author-image-preview-thumb");
   const authorThumbWrap = document.getElementById("author-image-preview-container");
-  if (authorThumb && authorThumbWrap) {
-    authorThumb.src = p.image;
-    authorThumbWrap.classList.remove("d-none");
-  }
+  if (authorThumb) authorThumb.src = "";
+  if (authorThumbWrap) authorThumbWrap.classList.add("d-none");
 
   if (quillEditor) {
     quillEditor.setText("");
@@ -768,16 +804,17 @@ async function submitBlogPost(status) {
   const content = quillEditor ? quillEditor.root.innerHTML : "";
   const textContent = quillEditor ? quillEditor.getText().trim() : "";
 
-  // Author details
+  // Dynamic Author details
   const authorData = getAuthorFormData();
+  let authorPayload = "Air Medical 24X7";
+  if (authorData && authorData.name && authorData.name.trim()) {
+    authorPayload = JSON.stringify(authorData);
+  }
 
   // Validation
   if (!title) { alert("Blog Title is required!"); return; }
   if (!slug) { alert("URL Slug is required!"); return; }
   if (!excerpt) { alert("Excerpt is required!"); return; }
-  if (!authorData.name) { alert("Author Name is required!"); return; }
-  if (!authorData.role) { alert("Author Role / Title is required!"); return; }
-  if (!authorData.bio) { alert("Author Bio / Summary is required!"); return; }
   if (!textContent || content === "<p><br></p>") { alert("Article content body is required!"); return; }
 
   // Check Featured Image (either uploaded base64 or raw URL)
@@ -789,14 +826,14 @@ async function submitBlogPost(status) {
     return;
   }
 
-  // Compile payload with structured author JSON
+  // Compile payload with dynamic author
   const payload = {
     title: window.sanitize24X7(title),
     slug: slugify(slug),
     excerpt: window.sanitize24X7(excerpt),
     content: window.sanitize24X7(content),
     featured_image: featuredImage,
-    author: JSON.stringify(authorData),
+    author: authorPayload,
     status: status,
     category: category,
     meta_title: window.sanitize24X7(metaTitle || title),
@@ -983,34 +1020,57 @@ function loadPostToEditor(blogId) {
   if (blog.author) {
     if (typeof blog.author === "string" && blog.author.trim().startsWith("{")) {
       try { authorObj = JSON.parse(blog.author); } catch(e) {}
+    } else if (typeof blog.author === "object") {
+      authorObj = blog.author;
     }
-    if (!authorObj) {
-      authorObj = { name: blog.author };
+  }
+
+  if (authorObj && authorObj.name && authorObj.name !== "Air Medical 24X7") {
+    if (document.getElementById("author-name-input")) document.getElementById("author-name-input").value = authorObj.name || "";
+    if (document.getElementById("author-role-input")) document.getElementById("author-role-input").value = authorObj.role || "";
+    if (document.getElementById("author-bio-input")) document.getElementById("author-bio-input").value = authorObj.bio || "";
+    if (document.getElementById("author-image-url")) document.getElementById("author-image-url").value = authorObj.image || "";
+    authorPhotoBase64 = null;
+    const authorFileIn = document.getElementById("author-image-file");
+    if (authorFileIn) authorFileIn.value = "";
+
+    const exp = Array.isArray(authorObj.expertise) ? authorObj.expertise : [];
+    if (document.getElementById("author-exp-1")) document.getElementById("author-exp-1").value = exp[0] || "";
+    if (document.getElementById("author-exp-2")) document.getElementById("author-exp-2").value = exp[1] || "";
+    if (document.getElementById("author-exp-3")) document.getElementById("author-exp-3").value = exp[2] || "";
+    if (document.getElementById("author-linkedin-input")) document.getElementById("author-linkedin-input").value = authorObj.linkedin || "";
+
+    const authorThumb = document.getElementById("author-image-preview-thumb");
+    const authorThumbWrap = document.getElementById("author-image-preview-container");
+    if (authorThumb && authorThumbWrap) {
+      if (authorObj.image) {
+        authorThumb.src = authorObj.image;
+        authorThumbWrap.classList.remove("d-none");
+      } else {
+        authorThumb.src = "";
+        authorThumbWrap.classList.add("d-none");
+      }
     }
   } else {
-    authorObj = AUTHOR_PRESETS.camille;
+    // Clear author fields for posts without an assigned author
+    if (document.getElementById("author-name-input")) document.getElementById("author-name-input").value = "";
+    if (document.getElementById("author-role-input")) document.getElementById("author-role-input").value = "";
+    if (document.getElementById("author-bio-input")) document.getElementById("author-bio-input").value = "";
+    if (document.getElementById("author-image-url")) document.getElementById("author-image-url").value = "";
+    authorPhotoBase64 = null;
+    const authorFileIn = document.getElementById("author-image-file");
+    if (authorFileIn) authorFileIn.value = "";
+    if (document.getElementById("author-exp-1")) document.getElementById("author-exp-1").value = "";
+    if (document.getElementById("author-exp-2")) document.getElementById("author-exp-2").value = "";
+    if (document.getElementById("author-exp-3")) document.getElementById("author-exp-3").value = "";
+    if (document.getElementById("author-linkedin-input")) document.getElementById("author-linkedin-input").value = "";
+
+    const authorThumb = document.getElementById("author-image-preview-thumb");
+    const authorThumbWrap = document.getElementById("author-image-preview-container");
+    if (authorThumb) authorThumb.src = "";
+    if (authorThumbWrap) authorThumbWrap.classList.add("d-none");
   }
 
-  if (document.getElementById("author-name-input")) document.getElementById("author-name-input").value = authorObj.name || "Camille Hernandez";
-  if (document.getElementById("author-role-input")) document.getElementById("author-role-input").value = authorObj.role || "Global Command Center Lead";
-  if (document.getElementById("author-bio-input")) document.getElementById("author-bio-input").value = authorObj.bio || "";
-  if (document.getElementById("author-image-url")) document.getElementById("author-image-url").value = authorObj.image || "img/authors/camille-hernandez.png";
-  authorPhotoBase64 = null;
-  const authorFileIn = document.getElementById("author-image-file");
-  if (authorFileIn) authorFileIn.value = "";
-
-  const exp = Array.isArray(authorObj.expertise) ? authorObj.expertise : [];
-  if (document.getElementById("author-exp-1")) document.getElementById("author-exp-1").value = exp[0] || "";
-  if (document.getElementById("author-exp-2")) document.getElementById("author-exp-2").value = exp[1] || "";
-  if (document.getElementById("author-exp-3")) document.getElementById("author-exp-3").value = exp[2] || "";
-  if (document.getElementById("author-linkedin-input")) document.getElementById("author-linkedin-input").value = authorObj.linkedin || "";
-
-  const authorThumb = document.getElementById("author-image-preview-thumb");
-  const authorThumbWrap = document.getElementById("author-image-preview-container");
-  if (authorThumb && authorThumbWrap) {
-    authorThumb.src = authorObj.image || "img/authors/camille-hernandez.png";
-    authorThumbWrap.classList.remove("d-none");
-  }
   const presetSelect = document.getElementById("author-preset-select");
   if (presetSelect) presetSelect.value = "custom";
   updateAuthorLivePreview();
