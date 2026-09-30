@@ -456,7 +456,10 @@ window.generateAuthorCardHTML = function (rawAuthor, sitePrefix = "", allowDemoF
   if (!imgSrc.startsWith("http") && !imgSrc.startsWith("data:") && !imgSrc.startsWith("/")) {
     imgSrc = "/" + imgSrc;
   }
-  imgSrc = esc(window.safeUrl(imgSrc, "/img/air-medical-logo.webp"));
+  // A photo uploaded in the admin panel is stored as a base64 data:image URI, which
+  // safeUrl rejects (it only allows web links) — let raster image data through.
+  const isUploadedImage = /^data:image\/(png|jpe?g|webp|gif);base64,/i.test(imgSrc);
+  imgSrc = esc(isUploadedImage ? imgSrc : window.safeUrl(imgSrc, "/img/air-medical-logo.webp"));
   const fallbackSrc = esc((sitePrefix || "") + "img/airmedicallogo.webp");
 
   const tags = exp.map(e => `<span class="author-tag">${esc(window.sanitize24X7(e))}</span>`).join("");
