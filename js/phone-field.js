@@ -222,6 +222,7 @@
     hiddenSel.name  = origName;
     hiddenSel.style.cssText = "position:absolute;opacity:0;pointer-events:none;width:0;height:0;";
     hiddenSel.setAttribute("aria-hidden", "true");
+    hiddenSel.tabIndex = -1; /* aria-hidden but still Tab-focusable is an a11y failure */
     COUNTRIES.forEach(function(c) {
       var opt = document.createElement("option");
       opt.value          = c.code;
@@ -242,7 +243,9 @@
     trigger.className = "pf-cc-trigger form-control border-0 fw-bold";
     trigger.setAttribute("aria-haspopup", "listbox");
     trigger.setAttribute("aria-expanded", "false");
-    trigger.setAttribute("aria-label", "Country calling code");
+    /* No aria-label: it replaced the visible "+91", so screen readers and voice
+       control could not match the button to what is on screen. The name now comes
+       from the code itself plus visually hidden text (see innerHTML below). */
     trigger.style.cssText =
       "height:100%;cursor:pointer;text-align:center;" +
       "padding:0 12px;font-size:0.88rem;white-space:nowrap;" +
@@ -251,7 +254,9 @@
       "color:" + (isHeader ? "#1d2a4d" : "#1D2A4D") + ";font-weight:600;" +
       "border-radius:6px 0 0 6px;border:none;border-right:1px solid rgba(0,0,0,0.08);outline:none;" +
       "display:flex;align-items:center;justify-content:center;gap:5px;flex-shrink:0;";
-    trigger.innerHTML = '<span class="pf-cc-code">+91</span><span style="font-size:0.65rem;opacity:0.6;">▼</span>';
+    trigger.innerHTML = '<span class="pf-cc-code">+91</span>' +
+      '<span class="visually-hidden"> country calling code</span>' +
+      '<span aria-hidden="true" style="font-size:0.65rem;opacity:0.6;">▼</span>';
 
     /* ── Floating panel ── */
     var panel = document.createElement("div");
@@ -394,6 +399,13 @@
     var raw     = phoneEl ? phoneEl.value.replace(/[^0-9]/g, "") : "";
     var entered = raw.length;
 
+    /* Stay hidden until the visitor reaches the phone field. Shown at page load, the
+       hint (two lines on a phone) pushed the hero down after first paint — a layout
+       shift — and it did so again when the IP lookup changed the country code. */
+    var engaged = isBlur || entered > 0 ||
+      (phoneEl && (phoneEl.dataset.pfTouched === "1" || document.activeElement === phoneEl));
+    if (!engaged) { hint.style.display = "none"; return; }
+
     /* Hide once the user has typed the right number of digits */
     if (digits > 0 && entered === digits) {
       hint.style.display = "none";
@@ -499,6 +511,7 @@
         });
         /* Clear red state when user re-focuses the field */
         phoneEl.addEventListener("focus", function() {
+          phoneEl.dataset.pfTouched = "1";
           updateHint(hint, hiddenSel, phoneEl, false);
         });
       }

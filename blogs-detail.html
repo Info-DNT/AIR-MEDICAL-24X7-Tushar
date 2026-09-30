@@ -4,15 +4,6 @@
 
 <head>
   <meta charset="utf-8">
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "y8ut5a17d8");
-  </script>
-  <!-- End Microsoft Clarity -->
 
   <title>Medical Blog Detail | Air Medical 24X7</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -49,6 +40,14 @@
       function loadAnalyticsScripts() {
         if (scriptsLoaded) return;
         scriptsLoaded = true;
+
+        // Microsoft Clarity loads with the other analytics rather than in <head>:
+        // at the top of the page it added ~0.6 s of main-thread work during load on mobile.
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "y8ut5a17d8");
 
         // container first, so tags inside GTM fire before the Ads configs
         if (window.loadGTM) window.loadGTM();
@@ -577,7 +576,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="lib/purify.min.js" defer></script>
-  <script src="js/form-validate.js" defer></script>
+  <script src="js/form-validate.js?v=2.5" defer></script>
 <script src="js/config.js?v=2.4" defer></script>
   <script src="js/blogs-detail.js" defer></script>
 
@@ -657,7 +656,7 @@
     </div>
   </div>
 
-<script src="js/phone-field.js" defer></script>
+<script src="js/phone-field.js?v=2.5" defer></script>
 </body>
 
 

@@ -1,18 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 
 <head>
   <meta charset="utf-8">
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "y8ut5a17d8");
-  </script>
-  <!-- End Microsoft Clarity -->
 
   <title>Medical Evacuation Services | International Patient Transport UAE</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -32,8 +23,12 @@
   <link href="../css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Template Stylesheet -->
-  <link href="../css/style.css" rel="stylesheet">
+  <link href="../css/style.css?v=2.2" rel="stylesheet">
   <link rel="canonical" href="https://airmedical24x7.com/blogs/medical-evacuation-bringing-your-loved-ones-home-safely" id="page-canonical">
+  
+  <!-- DNS prefetch for analytics (non-blocking hints) -->
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
+  <link rel="dns-prefetch" href="//ipapi.co">
   <!-- Optimized Google Analytics and GTM Lazy Loader -->
   <script>
     (function() {
@@ -45,6 +40,14 @@
       function loadAnalyticsScripts() {
         if (scriptsLoaded) return;
         scriptsLoaded = true;
+
+        // Microsoft Clarity loads with the other analytics rather than in <head>:
+        // at the top of the page it added ~0.6 s of main-thread work during load on mobile.
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "y8ut5a17d8");
 
         // container first, so tags inside GTM fire before the Ads configs
         if (window.loadGTM) window.loadGTM();
@@ -386,24 +389,23 @@
 <p>Medical evacuation&nbsp;can&#39;t wait. Our team is available <strong>24 hours a day, 7 days a week</strong> to assist with emergencies worldwide.</p>
 
 <p>📞 <strong>Emergency Hotline:</strong> +971 56 554 2001<br />
-📧 <strong>Email:</strong> <a href="mailto:gcc@airmedical24x7.com" target="_blank">gcc@airmedical24x7.com</a> / <a href="mailto:info@airmedical24x7.com" target="_blank">info@airmedical24x7.com</a></p>
+📧 <strong>Email:</strong> <a href="mailto:info@airmedical24x7.com" target="_blank">info@airmedical24x7.com</a></p>
 </div>
 
           <!-- Meta info -->
           <div class="d-flex align-items-center mt-4">
-            <img class="rounded-circle me-2" src="../img/airmedicallogo.webp" width="60" height="60" alt="Author" / loading="eager">
-            <span>Air Medical 24X7</span>
+            <img id="blog-inline-author-avatar" class="rounded-circle me-2" src="../img/airmedicallogo.webp" width="50" height="50" alt="Author" style="object-fit: cover; object-position: top center;" loading="eager">
+            <span id="blog-inline-author-name" class="fw-bold text-dark">Air Medical 24X7</span>
 
             <span class="ms-4">
               <i class="far fa-eye text-primary me-1"></i>
               <span id="view-count">0</span>
 
-
               <span class="ms-3">
                 <i class="far fa-comment text-primary me-1"></i>
                 <span id="comment-count">0</span>
-
               </span>
+            </span>
           </div>
 
         </div>
@@ -482,9 +484,10 @@
                 <label class="fw-bold mb-1 small" style="color: #1d2a4d;">Phone Number</label>
                 <div class="input-group">
                   <input type="text" id="countryCode" class="form-control bg-light border-0"
-                    style="max-width: 80px; height: 48px;" aria-label="Country dialling code">
+                    style="max-width: 110px; height: 48px;" aria-label="Country dialling code">
                   <input type="tel" id="phone" name="phone" class="form-control bg-light border-0"
-                    placeholder="Enter phone number"  style="height: 48px;" required aria-label="Phone number">
+                    placeholder="Enter phone number" inputmode="numeric" pattern="[0-9\s\-\(\)]*"
+                    style="height: 48px;" required aria-label="Phone number">
                 </div>
               </div>
 
@@ -765,14 +768,15 @@
 
 
   <!-- JavaScript Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="../js/bootstrap.bundle.min.js" defer></script>
 
   <!-- Template Javascript -->
   <script src="../js/main.js" defer></script>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="../lib/purify.min.js" defer></script>
-  <script src="../js/config.js?v=2.4" defer></script>
+  <script src="../js/form-validate.js?v=2.5" defer></script>
+<script src="../js/config.js?v=2.4" defer></script>
   <script src="../js/blogs-detail.js" defer></script>
 
 
@@ -851,6 +855,7 @@
     </div>
   </div>
 
+<script src="../js/phone-field.js?v=2.5" defer></script>
 </body>
 
 
