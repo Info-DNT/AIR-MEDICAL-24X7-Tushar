@@ -398,6 +398,20 @@ window.rebindBlogsSupabaseClient = function (serviceKey) {
   }
 };
 
+// The blogs.author column holds either a plain name (older posts) or a JSON string
+// {name, role, bio, image, ...} saved by the admin author section. Lists and bylines
+// need only the name — printing the column as-is showed the raw JSON.
+window.authorDisplayName = function (rawAuthor, fallback) {
+  fallback = fallback || "Air Medical 24X7";
+  if (!rawAuthor) return fallback;
+  if (typeof rawAuthor === "object") return (rawAuthor.name || "").trim() || fallback;
+  const s = String(rawAuthor).trim();
+  if (s.startsWith("{")) {
+    try { return (JSON.parse(s).name || "").trim() || fallback; } catch (e) { return fallback; }
+  }
+  return s || fallback;
+};
+
 // Generates the Author Card component HTML matching Image 2 reference
 window.generateAuthorCardHTML = function (rawAuthor, sitePrefix = "", allowDemoFallback = false) {
   let authorObj = null;

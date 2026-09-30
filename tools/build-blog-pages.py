@@ -62,6 +62,32 @@ def fetch_posts():
     return json.load(urllib.request.urlopen(req, timeout=60))
 
 
+def author_schema(raw):
+    """schema.org author for the post.
+
+    blogs.author is a plain name on older posts and a JSON string {name, role, ...}
+    on posts saved with the admin author section. Dropping the raw column into the
+    schema put the whole JSON blob in as the author's name.
+    """
+    data = None
+    if isinstance(raw, dict):
+        data = raw
+    elif isinstance(raw, str) and raw.strip().startswith("{"):
+        try:
+            data = json.loads(raw)
+        except ValueError:
+            data = None
+    if data and (data.get("name") or "").strip():
+        person = {"@type": "Person", "name": brand(data["name"].strip())}
+        if (data.get("role") or "").strip():
+            person["jobTitle"] = brand(data["role"].strip())
+        if str(data.get("linkedin") or "").startswith("https://"):
+            person["sameAs"] = data["linkedin"]
+        return person
+    name = raw.strip() if isinstance(raw, str) and raw.strip() and not raw.strip().startswith("{") else "Air Medical 24X7"
+    return {"@type": "Organization", "name": brand(name)}
+
+
 def brand(text):
     """Mirror sanitize24X7() so pre-rendered copy matches what the client would render."""
     if not text:
@@ -139,7 +165,7 @@ def build_page(template, post):
         "description": desc,
         "image": image,
         "datePublished": post.get("created_at"),
-        "author": {"@type": "Organization", "name": brand(post.get("author") or "Air Medical 24X7")},
+        "author": author_schema(post.get("author")),
         "publisher": {"@id": SITE + "/#organization"},
         "mainEntityOfPage": {"@type": "WebPage", "@id": url},
     }

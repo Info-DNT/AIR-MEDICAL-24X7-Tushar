@@ -78,7 +78,7 @@ async function loadBlogs(reset = false) {
 
     const title = window.sanitize24X7(blog.title);
     const excerpt = window.sanitize24X7(blog.excerpt || "");
-    const author = window.sanitize24X7(blog.author || "Air Medical 24X7");
+    const author = window.sanitize24X7(window.authorDisplayName(blog.author));
 
     // Markup first, with no database values in it, then the values via textContent
     // and setAttribute. These fields are plain text — a title or an author name is

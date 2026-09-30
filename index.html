@@ -1170,7 +1170,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         container.innerHTML = data.map(b => {
           const title = window.sanitize24X7(b.title);
           const excerpt = window.sanitize24X7(b.excerpt || "");
-          const author = window.sanitize24X7(b.author || "Air Medical 24X7");
+          const author = window.sanitize24X7(window.authorDisplayName(b.author))
+            .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
           return `
       <div class="col-xl-4 col-lg-6">
         <div class="premium-card p-0 overflow-hidden h-100">
@@ -2172,7 +2173,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   </div>
 
 <script src="js/form-validate.js?v=2.5" defer></script>
-<script src="js/config.js?v=2.4" defer></script>
+<script src="js/config.js?v=2.5" defer></script>
 <script src="js/phone-field.js?v=2.5" defer></script>
 </body>
 
