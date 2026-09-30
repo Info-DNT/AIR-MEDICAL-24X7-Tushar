@@ -4,6 +4,15 @@
 
 <head>
   <meta charset="utf-8">
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "y8ut5a17d8");
+  </script>
+  <!-- End Microsoft Clarity -->
 
   <script type="application/ld+json">
 {
@@ -171,7 +180,11 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Template Stylesheet -->
-  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style.css?v=2.2" rel="stylesheet">
+  
+  <!-- DNS prefetch for analytics (non-blocking hints) -->
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
+  <link rel="dns-prefetch" href="//ipapi.co">
   <!-- Optimized Google Analytics and GTM Lazy Loader -->
   <script>
     (function () {
@@ -313,7 +326,7 @@
           <div class="position-relative h-100">
             <img class="position-absolute w-100 h-100 rounded" src="img/about-us.jpeg"
               alt="Air Medical 24X7 global air ambulance and medical evacuation company" style="object-fit: cover;"
-              loading="lazy" width="1448" height="1086">
+              loading="lazy" decoding="async" width="1448" height="1086">
           </div>
         </div>
         <div class="col-lg-7">
@@ -737,7 +750,8 @@
     });
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
-  <script src="js/config.js" defer></script>
+  <script src="js/form-validate.js" defer></script>
+<script src="js/config.js?v=2.3" defer></script>
 
   <script>
     window.addEventListener("load", function () {
@@ -787,7 +801,7 @@
           .insert([payload]);
 
         if (error) {
-          console.error("âŒ Supabase error:", error);
+          console.error("❌ Supabase error:", error);
           alert("Error: " + error.message);
         } else {
           alert("✅ Thank you! Our team will contact you soon.");
@@ -1015,7 +1029,7 @@
 
   <!-- JavaScript Libraries -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="js/bootstrap.bundle.min.js" defer></script>
   <script src="lib/owlcarousel/owl.carousel.min.js" defer></script>
   <script>
     // Team carousel (the only carousel on the site). Guarded: if Owl fails to load,
@@ -1114,6 +1128,7 @@
     </div>
   </div>
 
+<script src="js/phone-field.js" defer></script>
 </body>
 
 

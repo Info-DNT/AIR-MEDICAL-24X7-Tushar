@@ -1,9 +1,18 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 
 <head>
   <meta charset="utf-8">
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "y8ut5a17d8");
+  </script>
+  <!-- End Microsoft Clarity -->
 
 
 
@@ -197,7 +206,12 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Template Stylesheet -->
-  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style.css?v=2.2" rel="stylesheet">
+
+  <!-- DNS prefetch for analytics/CDN (non-blocking hints) -->
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
+  <link rel="dns-prefetch" href="//ipapi.co">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <!-- Optimized Google Analytics and GTM Lazy Loader -->
   <script>
     (function () {
@@ -316,7 +330,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 400px;">
           <div class="position-relative h-100">
             <img class="position-absolute w-100 h-100 rounded" src="img/contact-us.jpeg"
-              alt="Contact Air Medical 24X7 24X7 Emergency Support Team" style="object-fit: cover;" loading="lazy" width="1197" height="1314">
+              alt="Contact Air Medical 24X7 24X7 Emergency Support Team" style="object-fit: cover;"
+              loading="lazy" decoding="async" width="1197" height="1314">
           </div>
         </div>
         <div class="col-lg-7">
@@ -419,79 +434,65 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         <form id="quoteForm">
           <div class="row g-4">
             <!-- Transport Options -->
-            <div class="col-12 mb-4">
-              <label class="fw-bold fs-5 mb-3 text-primary text-start d-block"> Service</label>
+            <div class="col-12 mb-2">
+              <label class="fw-bold fs-5 mb-3 text-primary text-start d-block">Select Service</label>
               <div class="transport-options">
                 <label class="transport-card">
-                  <input type="radio" name="transport" value="Air Ambulance" aria-label="Transport: Air Ambulance">
+                  <input type="radio" name="service" value="Air Ambulance" aria-label="Air Ambulance">
                   <img src="img/air-ambulance-charter.webp" alt="Air Ambulance" loading="lazy">
                   <span>Air Ambulance</span>
                 </label>
-
-
-
                 <label class="transport-card">
-                  <input type="radio" name="transport" value="Airline Stretcher Services" aria-label="Transport: Airline Stretcher Services">
-                  <img src="img/commercial-airlines-medical-transfer-services.webp" alt="Airline Stretcher Services"
-                    loading="lazy">
-                  <span>Airline Stretcher Services</span>
+                  <input type="radio" name="service" value="Airline Stretcher Services" aria-label="Airline Stretcher Services">
+                  <img src="img/commercial-airlines-medical-transfer-services.webp" alt="Airline Stretcher Services" loading="lazy">
+                  <span>Airline Stretcher</span>
                 </label>
-
                 <label class="transport-card">
-                  <input type="radio" name="transport" value="Flight Medical Escort Services" aria-label="Transport: Flight Medical Escort Services">
+                  <input type="radio" name="service" value="Flight Medical Escort Services" aria-label="Flight Medical Escort Services">
                   <img src="img/flight-medical-escort-services.webp" alt="Flight Medical Escort Services" loading="lazy">
-                  <span>Flight Medical Escort Services</span>
+                  <span>Medical Escort</span>
                 </label>
               </div>
             </div>
 
-            <!-- Full Name -->
+            <!-- Full Name + Email (Row 1) -->
             <div class="col-md-6 text-start">
-              <label class="fw-bold mb-2">Full Name</label>
-              <input type="text" id="name" class="form-control bg-light border-0" placeholder="Enter your name"
-                style="height: 55px;" required aria-label="Your name">
+              <label class="fw-bold mb-2" for="cu-name">Full Name <span class="text-danger">*</span></label>
+              <input type="text" id="cu-name" name="name" class="form-control bg-light border-0" placeholder="Enter your full name"
+                style="height: 55px;" pattern="[A-Za-z ]+" required aria-label="Your name">
             </div>
-
-            <!-- Email -->
             <div class="col-md-6 text-start">
-              <label class="fw-bold mb-2">Email Address</label>
-              <input type="email" id="email" class="form-control bg-light border-0" placeholder="Enter your email"
+              <label class="fw-bold mb-2" for="cu-email">Email Address</label>
+              <input type="email" id="cu-email" name="email" class="form-control bg-light border-0" placeholder="Enter your email (optional)"
                 style="height: 55px;" aria-label="Email address">
             </div>
 
-            <!-- Patient Location -->
+            <!-- Phone + From Location (Row 2) -->
             <div class="col-md-6 text-start">
-              <label class="fw-bold mb-2">Patient Location</label>
-              <input type="text" id="patientLocation" class="form-control bg-light border-0"
-                placeholder="City / Country" style="height: 55px;" required aria-label="Patient location, city or country">
-            </div>
-
-            <!-- Destination -->
-            <div class="col-md-6 text-start">
-              <label class="fw-bold mb-2">Destination</label>
-              <input type="text" id="destination" class="form-control bg-light border-0" placeholder="City / Country"
-                style="height: 55px;" required aria-label="Destination, city or country">
-            </div>
-
-            <!-- Phone -->
-            <div class="col-md-6 text-start">
-              <label class="fw-bold mb-2">Phone Number</label>
+              <label class="fw-bold mb-2">Phone Number <span class="text-danger">*</span></label>
               <div class="input-group">
-                <input type="text" id="countryCode" class="form-control bg-light border-0" placeholder="+1"
+                <input type="text" id="countryCode" class="form-control bg-light border-0" placeholder="+91"
                   style="max-width:90px; height:55px;" aria-label="Country dialling code">
-                <input type="tel" id="phone" class="form-control bg-light border-0" placeholder="Enter phone number"
-                  style="height: 55px;" required aria-label="Phone number">
+                <input type="tel" id="phone" name="phone" class="form-control bg-light border-0" placeholder="Enter phone number"
+                  style="height: 55px;" required inputmode="numeric" pattern="[0-9\s\-\(\)]*" aria-label="Phone number">
               </div>
             </div>
-
-            <!-- Service Dropdown -->
             <div class="col-md-6 text-start">
-              <label class="fw-bold mb-2">Select Service</label>
-              <select id="service" name="service" class="form-select bg-light border-0" style="height: 55px;" required aria-label="Service required">
-                <option value="">Select a Service</option>
-                <option value="Air Ambulance">Air Ambulance</option>
-                <option value="Airline Stretcher Services">Airline Stretcher Services</option>
-                <option value="Flight Medical Escort Services">Flight Medical Escort Services</option>
+              <label class="fw-bold mb-2" for="cu-from">From (Location) <span class="text-danger">*</span></label>
+              <input type="text" id="cu-from" name="patientLocation" class="form-control bg-light border-0"
+                placeholder="e.g. London, Birmingham" style="height: 55px;" required aria-label="Patient location, city or country">
+            </div>
+
+            <!-- Destination + Other Service (Row 3) -->
+            <div class="col-md-6 text-start">
+              <label class="fw-bold mb-2" for="cu-destination">To (Destination) <span class="text-danger">*</span></label>
+              <input type="text" id="cu-destination" name="destination" class="form-control bg-light border-0" placeholder="e.g. Delhi, Mumbai, Dubai"
+                style="height: 55px;" required aria-label="Destination, city or country">
+            </div>
+            <div class="col-md-6 text-start">
+              <label class="fw-bold mb-2" for="cu-service">Other Service (Optional)</label>
+              <select id="cu-service" name="service_other" class="form-select bg-light border-0" style="height: 55px;" aria-label="Other service">
+                <option value="">Select a service</option>
                 <option value="ECMO Transfer Services">ECMO Transfer Services</option>
                 <option value="Organ Transplant Assistance">Organ Transplant Assistance</option>
                 <option value="Medical Tourism">Medical Tourism</option>
@@ -501,7 +502,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             </div>
 
             <!-- Submit -->
-            <div class="col-12 text-center mt-4">
+            <div class="col-12 text-center mt-2">
               <button class="btn btn-primary btn-lg px-5 py-3 w-100" type="submit">
                 REQUEST CALLBACK
               </button>
@@ -512,42 +513,11 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     </div>
   </div>
 
-  <!-- Country Code Auto Detect -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const countryInput = document.getElementById("countryCode");
-      if (!countryInput) return;
-
-      // Default fallback
-      countryInput.value = "+1";
-
-      // Try ipapi first
-      fetch("https://ipapi.co/json/")
-        .then(res => res.json())
-        .then(data => {
-          if (data && data.country_calling_code) {
-            countryInput.value = data.country_calling_code;
-          }
-        })
-        .catch(() => {
-          // Try ipwho.is as backup
-          fetch("https://ipwho.is/")
-            .then(res => res.json())
-            .then(data => {
-              if (data && data.calling_code) {
-                countryInput.value = "+" + data.calling_code;
-              }
-            })
-            .catch(() => {
-              // Keep +1 fallback
-              countryInput.value = "+1";
-            });
-        });
-    });
-  </script>
+  <!-- Phone field upgrade & geo-IP detection handled by phone-field.js (loaded at page bottom) -->
 
   <!-- Supabase Library & Config -->
-  <script src="js/config.js" defer></script>
+  <script src="js/form-validate.js" defer></script>
+<script src="js/config.js?v=2.3" defer></script>
 
 
 
@@ -753,8 +723,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   <button type="button" class="btn btn-lg btn-primary btn-lg-square back-to-top" aria-label="Back to top"><svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"/></svg></button>
 
 
-  <!-- JavaScript Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" defer></script>
+  <!-- JavaScript Libraries (locally hosted for zero CDN round-trip) -->
+  <script src="js/bootstrap.bundle.min.js" defer></script>
 
   <!-- Template Javascript -->
   <script src="js/main.js" defer></script>
@@ -836,6 +806,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     </div>
   </div>
 
+<script src="js/phone-field.js" defer></script>
 </body>
 
 

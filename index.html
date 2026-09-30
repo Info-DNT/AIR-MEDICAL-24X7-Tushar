@@ -1,8 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "y8ut5a17d8");
+  </script>
+  <!-- End Microsoft Clarity -->
 
   <!-- Google Tag Manager -->
   <script>// GTM container — deferred. dataLayer is created synchronously so any early
@@ -364,7 +373,12 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Template Stylesheet -->
-  <link href="css/style.css?v=1.9" rel="stylesheet">
+  <link href="css/style.css?v=2.2" rel="stylesheet">
+
+  <!-- DNS prefetch for analytics/CDN (non-blocking hints) -->
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
+  <link rel="dns-prefetch" href="//ipapi.co">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <!-- Optimized Google Analytics and GTM Lazy Loader -->
   <script>
     (function () {
@@ -549,14 +563,13 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                 <!-- Phone Number & Email Address Side by Side -->
                 <div class="col-6">
                   <label class="hero-form-label mb-1">PHONE NUMBER</label>
-                  <div class="input-group hero-input-group bg-light rounded">
+                  <div class="input-group hero-input-group bg-light rounded" style="overflow:visible;">
                     <input type="text" id="headerCountryCode"
-                      class="form-control bg-transparent border-0 text-center fw-bold p-0" value="+91"
-                      style="max-width: 40px; font-size: 0.85rem; color: #1d2a4d;" aria-label="Country dialling code">
-                    <span class="d-flex align-items-center text-muted"
-                      style="opacity: 0.3; font-size: 0.85rem;">|</span>
+                      class="form-control" value="+91"
+                      style="max-width:45px;" aria-label="Country dialling code">
                     <input type="tel" id="headerPhone" name="phone" class="form-control bg-transparent border-0"
-                      placeholder="Phone Number" required style="font-size: 0.85rem; padding: 4px 10px;" aria-label="Phone number">
+                      placeholder="Phone Number" required inputmode="numeric" pattern="[0-9\s\-\(\)]*"
+                      style="font-size:0.85rem;" aria-label="Phone number">
                   </div>
                 </div>
 
@@ -659,7 +672,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
           <div class="cert-card faa">
             <div class="cert-header">
               <div class="cert-icon-container">
-                <img src="img/faa-logo.webp" alt="FAA" class="cert-icon-img" loading="eager" width="120" height="120">
+                <img src="img/faa-approved-logo.webp" alt="FAA" class="cert-icon-img" loading="eager" width="120" height="120">
               </div>
               <h4 class="cert-title">FAA-APPROVED MEDICAL EQUIPMENT</h4>
             </div>
@@ -1039,7 +1052,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                     <input type="text" id="countryCode" class="form-control bg-light border-0" placeholder="+1"
                       style="max-width:90px; height:55px;" aria-label="Country dialling code">
                     <input type="tel" id="phone" name="phone" class="form-control bg-light border-0"
-                      placeholder="Enter your phone number" style="height:55px" required aria-label="Phone number">
+                      placeholder="Enter your phone number" style="height:55px" required inputmode="numeric"
+                      pattern="[0-9\s\-\(\)]*" aria-label="Phone number">
                   </div>
                 </div>
 
@@ -1067,45 +1081,29 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                     placeholder="City / Country" style="height:55px" required aria-label="Destination, city or country">
                 </div>
 
-                <!-- Transport (Optional) -->
+                <!-- Service Selection -->
                 <div class="col-12">
-                  <label class="fw-bold mb-2">Services</label>
-
+                  <label class="fw-bold mb-2">Select Service</label>
                   <div class="transport-options">
                     <label class="transport-card">
-                      <input type="radio" name="transport" value="Air Ambulance" aria-label="Transport: Air Ambulance">
-                      <img src="img/air-ambulance-charter.webp" alt="Air Ambulance" loading="lazy" width="1080"
-                        height="1080">
+                      <input type="radio" name="service" value="Air Ambulance" aria-label="Air Ambulance">
+                      <img src="img/air-ambulance-charter.webp" alt="Air Ambulance" loading="lazy" width="1080" height="1080">
                       <span>Air Ambulance</span>
                     </label>
-
                     <label class="transport-card">
-                      <input type="radio" name="transport" value="Airline Stretcher Services" aria-label="Transport: Airline Stretcher Services">
-                      <img src="img/commercial-airlines-medical-transfer-services.webp" alt="Airline Stretcher Services"
-                        loading="lazy" width="2000" height="1125">
-                      <span>Airline Stretcher Services</span>
+                      <input type="radio" name="service" value="Airline Stretcher Services" aria-label="Airline Stretcher Services">
+                      <img src="img/commercial-airlines-medical-transfer-services.webp" alt="Airline Stretcher Services" loading="lazy" width="2000" height="1125">
+                      <span>Airline Stretcher</span>
                     </label>
-
                     <label class="transport-card">
-                      <input type="radio" name="transport" value="Flight Medical Escort Services" aria-label="Transport: Flight Medical Escort Services">
-                      <img src="img/flight-medical-escort-services.webp" alt="Flight Medical Escort Services"
-                        loading="lazy" width="2048" height="2048">
-                      <span>Flight Medical Escort Services</span>
+                      <input type="radio" name="service" value="Flight Medical Escort Services" aria-label="Flight Medical Escort Services">
+                      <img src="img/flight-medical-escort-services.webp" alt="Flight Medical Escort" loading="lazy" width="2048" height="2048">
+                      <span>Medical Escort</span>
                     </label>
                   </div>
-                </div>
-
-
-
-                <!-- Services -->
-                <div class="col-12 col-sm-12">
-                  <label class="fw-bold mb-1">More Services</label>
-                  <select id="service" name="service" class="form-select bg-light border-0" style="height:55px"
-                    required aria-label="Service required">
-                    <option value="">Select a Service</option>
-                    <option value="Air Ambulance">Air Ambulance</option>
-                    <option value="Airline Stretcher Services">Airline Stretcher Services</option>
-                    <option value="Flight Medical Escort Services">Flight Medical Escort Services</option>
+                  <!-- Other services dropdown -->
+                  <select id="service" name="service_other" class="form-select bg-light border-0 mt-2" style="height:48px" aria-label="Other service">
+                    <option value="">Other service (optional)</option>
                     <option value="ECMO Transfer Services">ECMO Transfer Services</option>
                     <option value="Organ Transplant Assistance">Organ Transplant Assistance</option>
                     <option value="Medical Tourism">Medical Tourism</option>
@@ -1114,7 +1112,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
                   </select>
                 </div>
 
-                <div class="col-12">
+                <div class="col-12 mt-1">
                   <button class="btn btn-primary w-100 py-3" type="submit">
                     REQUEST CALLBACK
                   </button>
@@ -1129,27 +1127,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
       </div>
     </div>
   </div>
-  <script>
-    // Auto-detect country code via IP
-    document.addEventListener("DOMContentLoaded", function () {
-      fetch("https://ipapi.co/json/")
-        .then(res => res.json())
-        .then(data => {
-          const code = data.country_calling_code || "+1";
-          const cc1 = document.getElementById("countryCode");
-          if (cc1) cc1.value = code;
-          const cc2 = document.getElementById("headerCountryCode");
-          if (cc2) cc2.value = code;
-        })
-        .catch(() => {
-          const cc1 = document.getElementById("countryCode");
-          if (cc1) cc1.value = "+1";
-          const cc2 = document.getElementById("headerCountryCode");
-          if (cc2) cc2.value = "+1";
-        });
-    });
-  </script>
-  <script src="js/config.js" defer></script>
+  <!-- Phone field upgrade & geo-IP detection handled by phone-field.js (loaded at page bottom) -->
 
 
 
@@ -2111,8 +2089,8 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     </svg></button>
 
 
-  <!-- JavaScript Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" defer></script>
+  <!-- JavaScript Libraries (locally hosted for zero CDN round-trip) -->
+  <script src="js/bootstrap.bundle.min.js" defer></script>
 
   <!-- Template Javascript -->
   <script src="js/main.js" defer></script>
@@ -2194,6 +2172,9 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     </div>
   </div>
 
+<script src="js/form-validate.js" defer></script>
+<script src="js/config.js?v=2.3" defer></script>
+<script src="js/phone-field.js" defer></script>
 </body>
 
 </html>

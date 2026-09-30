@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -22,7 +22,7 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Template Stylesheet -->
-  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style.css?v=2.2" rel="stylesheet">
 
   <!-- Custom Admin Styles -->
   <style>
@@ -60,7 +60,8 @@
 
     .login-logo {
       display: block;
-      max-width: 150px;
+      width: 150px;
+      height: auto;
       margin: 0 auto 20px;
     }
 
@@ -89,8 +90,13 @@
       border-bottom: 3px solid #FB0F0C;
     }
 
+    /* Height set, width auto — the img's width/height attributes are only there to
+       reserve space; letting them size the logo stretched it sideways. */
     .admin-nav-logo {
-      max-height: 45px;
+      height: 48px;
+      width: auto;
+      padding: 4px 10px;
+      object-fit: contain;
     }
 
     /* Sidebar Navigation */
@@ -261,7 +267,7 @@
   <!-- ==================== LOGIN SCREEN ==================== -->
   <div id="login-view" class="login-container">
     <div class="login-card">
-      <img src="img/air-medical-logo.webp" alt="Air Medical 24X7" class="login-logo" width="220" height="110">
+      <img src="img/air-medical-logo.webp" alt="Air Medical 24X7" class="login-logo" width="707" height="353">
       <h3 class="text-center fw-bold mb-4" style="color: #1d2a4d;">Admin Panel Login</h3>
 
       <div id="login-alert" class="alert alert-danger d-none" role="alert"></div>
@@ -291,7 +297,7 @@
     <header class="admin-header py-3 px-4 text-white d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center gap-3">
         <a href="./">
-          <img src="img/air-medical-logo.webp" alt="Air Medical 24X7" class="admin-nav-logo bg-white p-1.5 rounded" width="220" height="110">
+          <img src="img/air-medical-logo.webp" alt="Air Medical 24X7" class="admin-nav-logo bg-white rounded" width="707" height="353">
         </a>
         <span class="fs-5 fw-bold d-none d-sm-inline">Blog Editor Dashboard</span>
       </div>
@@ -442,7 +448,12 @@
                           <select id="author-preset-select" class="form-select form-select-sm" style="max-width: 210px; font-size: 12px; font-weight: 600;">
                             <option value="custom" selected>-- Custom / Enter Manually --</option>
                             <option value="camille">Camille Hernandez (Command Center)</option>
-                            <option value="paulina">Dr. Paulina Villa Diaz (Medical Expert)</option>
+                            <option value="diego">Diego Munoz</option>
+                            <option value="mariyan">Mariyan</option>
+                            <option value="meera">Meera Rathore</option>
+                            <option value="abeer">Abeer Ali</option>
+                            <option value="saif">Saif</option>
+                            <option value="hamadh">Hamadh</option>
                             <option value="editorial">Air Medical 24X7 Editorial Team</option>
                           </select>
                         </div>
@@ -452,7 +463,7 @@
                           <!-- Author Name -->
                           <div class="col-md-6">
                             <label class="form-label fw-bold small text-muted">Author Name</label>
-                            <input type="text" id="author-name-input" class="form-control form-control-admin" placeholder="e.g. Dr. Paulina Villa Diaz">
+                            <input type="text" id="author-name-input" class="form-control form-control-admin" placeholder="e.g. Camille Hernandez">
                           </div>
 
                           <!-- Author Role / Designation -->
@@ -965,17 +976,18 @@
   </div>
 
   <!-- JavaScript Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
 
   <!-- Supabase client and Config scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/config.js"></script>
+  <script src="js/form-validate.js" defer></script>
+<script src="js/config.js?v=2.3"></script>
 
   <!-- Quill Rich Text Editor JS -->
   <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
   <!-- Admin JS logic -->
-  <script src="js/admin.js"></script>
+  <script src="js/admin.js?v=2.4"></script>
 </body>
 
 </html>

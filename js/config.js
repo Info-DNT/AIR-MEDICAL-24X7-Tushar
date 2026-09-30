@@ -234,58 +234,57 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
           const isPopup = form.id === "quoteFormPopup";
           const isHeader = form.id === "quoteFormHeader";
-          const nameId = isPopup ? "popupName" : (isHeader ? "headerName" : "name");
-          const emailId = isPopup ? "popupEmail" : (isHeader ? "headerEmail" : "email");
-          const codeId = isPopup ? "popupCountryCode" : (isHeader ? "headerCountryCode" : "countryCode");
-          const phoneId = isPopup ? "popupPhone" : (isHeader ? "headerPhone" : "phone");
-          const serviceId = isPopup ? "popupService" : (isHeader ? "headerService" : "service");
 
-          const rawCode = document.getElementById(codeId)?.value?.trim() || "";
-          const phoneVal = document.getElementById(phoneId)?.value?.trim() || "";
-          // BUG-09 FIX: Normalize country code to always include + prefix
+          // ROBUST field lookup: use name attribute first (works regardless of element id),
+          // fall back to getElementById for backward compatibility.
+          // This fixes contact-us.html which uses id="cu-name" / id="cu-email" etc.
+          function formVal(nameAttr, fallbackId) {
+            const byName = form.querySelector(`[name="${nameAttr}"]`);
+            if (byName) return byName.value || "";
+            const byId = fallbackId ? document.getElementById(fallbackId) : null;
+            return byId ? (byId.value || "") : "";
+          }
+
+          const nameVal  = formVal("name",  isPopup ? "popupName"        : isHeader ? "headerName"        : "name");
+          const emailVal = formVal("email", isPopup ? "popupEmail"       : isHeader ? "headerEmail"       : "email");
+
+          // Country code: read from the hidden select that phone-field.js creates (name attr preserved)
+          const codeId = isPopup ? "popupCountryCode" : (isHeader ? "headerCountryCode" : "countryCode");
+          const rawCode = document.getElementById(codeId)?.value?.trim() || formVal("countryCode", null);
           const codeVal = rawCode && !rawCode.startsWith("+") ? "+" + rawCode : rawCode;
-          // BUG-02: Warn user if phone is empty (soft validation — field is optional per design)
+
+          const phoneVal = formVal("phone", isPopup ? "popupPhone" : isHeader ? "headerPhone" : "phone");
           const fullPhone = phoneVal ? (codeVal + phoneVal) : "";
 
-          // Combine transport radio option and service dropdown value
+          // Service: try transport radio first, then any [name=service] or [name=service_other] select
           const transportInput = form.querySelector('input[name="transport"]:checked');
-          let serviceVal = document.getElementById(serviceId)?.value || "";
-          
+          const serviceEl = form.querySelector('[name="service"],[name="service_other"]');
+          const serviceId = isPopup ? "popupService" : (isHeader ? "headerService" : "service");
+          let serviceVal = serviceEl?.value || document.getElementById(serviceId)?.value || "";
+
           if (transportInput) {
-            if (serviceVal) {
-              serviceVal = `${transportInput.value} (${serviceVal})`;
-            } else {
-              serviceVal = transportInput.value;
-            }
+            serviceVal = serviceVal
+              ? `${transportInput.value} (${serviceVal})`
+              : transportInput.value;
           }
 
           const payload = {
-            name: document.getElementById(nameId)?.value || "",
-            email: document.getElementById(emailId)?.value || "",
-            full_phone: fullPhone,
-            service: serviceVal,
-            token: response,
-            // Which page the lead came from, e.g. "Air Ambulance India" — the
-            // Edge Function must also be updated to persist this into the new
-            // Supabase column; until then it's simply ignored, harmlessly.
+            name:        nameVal,
+            email:       emailVal,
+            full_phone:  fullPhone,
+            service:     serviceVal,
+            token:       response,
             source_page: getPageIdentifier()
           };
 
-          // Capture new patient location and destination fields
-          const patientLocEl = form.querySelector('[name="patientLocation"]') || document.getElementById(isHeader ? "headerPatientLocation" : "patientLocation");
-          const destEl = form.querySelector('[name="destination"]') || document.getElementById(isHeader ? "headerDestination" : "destination");
+          // Patient location and destination — already using name attr so these are fine
+          const patientLocEl = form.querySelector('[name="patientLocation"]');
+          const destEl       = form.querySelector('[name="destination"]');
 
-          if (patientLocEl) {
-            payload.patient_location = patientLocEl.value;
-          }
-          if (destEl) {
-            payload.destination = destEl.value;
-          }
+          if (patientLocEl) payload.patient_location = patientLocEl.value;
+          if (destEl)       payload.destination      = destEl.value;
 
-          // Also keep transport inside payload if backend requires it
-          if (transportInput) {
-            payload.transport = transportInput.value;
-          }
+          if (transportInput) payload.transport = transportInput.value;
 
           const res = await fetch(
             'https://dtiirdimtbmkvryvqten.supabase.co/functions/v1/submit-main-page',
@@ -429,7 +428,7 @@ window.generateAuthorCardHTML = function (rawAuthor, sitePrefix = "", allowDemoF
       name: "Camille Hernandez",
       role: "Global Command Center Lead",
       bio: "Camille Hernandez leads the Global Command Center at Air Medical 24x7, coordinating international and domestic medical transfers, air ambulance services, and patient repatriation.",
-      image: "img/authors/camille-hernandez.png",
+      image: "img/authors/camille-hernandez.webp",
       expertise: [
         "Medical Transfer Coordination",
         "Air Ambulance Operations",
@@ -439,103 +438,46 @@ window.generateAuthorCardHTML = function (rawAuthor, sitePrefix = "", allowDemoF
     };
   }
 
-  let exp = Array.isArray(authorObj.expertise) ? authorObj.expertise.filter(Boolean) : [];
-  if (exp.length === 0) {
-    exp = ["Medical Transfer Coordination", "Air Ambulance Operations", "Patient Repatriation"];
-  }
-  const exp1 = window.sanitize24X7(exp[0] || "Medical Transfer Coordination");
-  const exp2 = window.sanitize24X7(exp[1] || "Air Ambulance Operations");
-  const exp3 = window.sanitize24X7(exp[2] || "Patient Repatriation");
+  let exp = Array.isArray(authorObj.expertise) ? authorObj.expertise.filter(Boolean).slice(0, 3) : [];
 
-  const author = authorObj;
-  const name = window.sanitize24X7(author.name || "");
-  const role = window.sanitize24X7(author.role || "");
-  const bio = window.sanitize24X7(author.bio || "");
-  
-  let imgSrc = author.image || "/img/air-medical-logo.webp";
+  // Author fields come from the database, so escape them before they go into innerHTML.
+  const esc = (s) => String(s || "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+
+  const name = esc(window.sanitize24X7(authorObj.name || ""));
+  const role = esc(window.sanitize24X7(authorObj.role || ""));
+  const bio = esc(window.sanitize24X7(authorObj.bio || ""));
+  // safeUrl returns "#" for a missing or unsafe link — hide the badge rather than link nowhere.
+  const safeLinkedin = window.safeUrl(authorObj.linkedin, "#");
+  const linkedin = safeLinkedin !== "#" ? esc(safeLinkedin) : "";
+
+  let imgSrc = authorObj.image || "/img/air-medical-logo.webp";
   if (!imgSrc.startsWith("http") && !imgSrc.startsWith("data:") && !imgSrc.startsWith("/")) {
     imgSrc = "/" + imgSrc;
   }
-  const logoSrc = "/img/air-medical-logo.webp";
+  imgSrc = esc(window.safeUrl(imgSrc, "/img/air-medical-logo.webp"));
+  const fallbackSrc = esc((sitePrefix || "") + "img/airmedicallogo.webp");
 
-  let linkedinHtml = "";
-  if (author.linkedin) {
-    linkedinHtml = `
-      <div class="author-linkedin-wrap">
-        <a href="${author.linkedin}" target="_blank" rel="noopener noreferrer" class="author-linkedin-link">
-          <span class="author-linkedin-icon">in</span>
-          <span>Connect on LinkedIn</span>
-          <i class="fas fa-arrow-right ms-1 small"></i>
-        </a>
-      </div>
-    `;
-  }
+  const tags = exp.map(e => `<span class="author-tag">${esc(window.sanitize24X7(e))}</span>`).join("");
 
   return `
     <div class="author-card-widget">
-      <div class="author-card-header">
-        <div class="author-card-header-top">
-          <div class="author-card-logo-wrap">
-            <img src="${logoSrc}" alt="Air Medical 24X7" class="author-card-logo">
-            <span class="author-card-subbrand">Global Medical Transfers</span>
-          </div>
-          <div class="author-card-header-right">
-            <svg class="author-flight-trail" viewBox="0 0 60 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 24 C 20 24, 35 15, 52 4" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3 3"/>
-              <path d="M52 4 L57 3 L55 8 Z" fill="#0284c7"/>
-            </svg>
-            <div class="author-header-slogan">
-              PEOPLE<br>CARE<br>BORDERS<br>DON'T<br>MATTER
-            </div>
-            <div class="author-header-slogan-line"></div>
-          </div>
-        </div>
-        <div class="author-card-image-wrap">
-          <img src="${imgSrc}" alt="${name}" class="author-card-avatar" onerror="this.src='${(sitePrefix || "")}img/airmedicallogo.webp'">
-        </div>
-      </div>
-      <div class="author-card-body">
-        <div class="author-tag-row">
-          <span class="author-tag-label">Author</span>
-          <span class="author-tag-rule"></span>
-        </div>
-        <div class="author-name-row">
+      <div class="author-card-label">Author</div>
+      <div class="author-card-head">
+        <img src="${imgSrc}" alt="${name}" class="author-card-avatar" width="56" height="56" loading="lazy"
+             onerror="this.onerror=null;this.src='${fallbackSrc}'">
+        <div class="author-card-id">
           <h4 class="author-name">${name}</h4>
-          ${author.linkedin ? `
-            <a href="${author.linkedin}" target="_blank" rel="noopener noreferrer" class="author-name-linkedin" title="Connect with ${name} on LinkedIn" aria-label="LinkedIn profile of ${name}">
-              <span class="author-linkedin-badge"><i class="fab fa-linkedin-in"></i></span>
-            </a>
-          ` : ''}
+          ${role ? `<div class="author-role">${role}</div>` : ""}
         </div>
-        <div class="author-role">${role}</div>
-        <p class="author-bio">${bio}</p>
-        
-        <div class="author-divider"></div>
-        <div class="author-expertise-heading">Areas of Expertise</div>
-        <div class="author-expertise-list">
-          <div class="author-expertise-item">
-            <span class="author-expertise-icon"><i class="fas fa-plane"></i></span>
-            <span>${exp1}</span>
-          </div>
-          <div class="author-expertise-item">
-            <span class="author-expertise-icon"><i class="fas fa-procedures"></i></span>
-            <span>${exp2}</span>
-          </div>
-          <div class="author-expertise-item">
-            <span class="author-expertise-icon"><i class="fas fa-users"></i></span>
-            <span>${exp3}</span>
-          </div>
-        </div>
-
-        ${linkedinHtml}
+        ${linkedin ? `
+          <a href="${linkedin}" target="_blank" rel="noopener noreferrer" class="author-linkedin-badge"
+             title="${name} on LinkedIn" aria-label="LinkedIn profile of ${name}">in</a>
+        ` : ""}
       </div>
-      <div class="author-card-footer">
-        <div class="author-footer-line"></div>
-        <div class="author-card-motto">
-          ANYWHERE. ANYTIME.<br>FOR A HIGHER TOMORROW.
-        </div>
-      </div>
+      ${bio ? `<p class="author-bio">${bio}</p>` : ""}
+      ${tags ? `<div class="author-tags">${tags}</div>` : ""}
     </div>
   `;
 };
-

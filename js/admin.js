@@ -13,17 +13,59 @@ const AUTHOR_PRESETS = {
     name: "Camille Hernandez",
     role: "Global Command Center Lead",
     bio: "Camille Hernandez leads the Global Command Center at Air Medical 24x7, coordinating international and domestic medical transfers, air ambulance services, and patient repatriation.",
-    image: "img/authors/camille-hernandez.png",
+    image: "img/authors/camille-hernandez.webp",
     expertise: ["Medical Transfer Coordination", "Air Ambulance Operations", "Patient Repatriation"],
     linkedin: "https://linkedin.com"
   },
-  paulina: {
-    name: "Dr. Paulina Villa Diaz",
-    role: "Medical Expert & Flight Physician",
-    bio: "Dr. Paulina Villa Diaz is a critical care flight physician at Air Medical 24x7 with over 1,000 hours of intensive aeromedical transport experience across pediatric, trauma, and adult patient missions.",
-    image: "img/authors/camille-hernandez.png",
-    expertise: ["Critical Aeromedical Transport", "In-Flight Intensive Care", "International Repatriation"],
-    linkedin: "https://linkedin.com"
+  // Role, bio, photo and expertise still to come for these — the company logo stands in
+  // for the photo until each person's headshot is added under img/authors/.
+  diego: {
+    name: "Diego Munoz",
+    role: "",
+    bio: "",
+    image: "img/airmedicallogo.webp",
+    expertise: [],
+    linkedin: "https://www.linkedin.com/in/diego-munoz-56166b429/"
+  },
+  mariyan: {
+    name: "Mariyan",
+    role: "",
+    bio: "",
+    image: "img/airmedicallogo.webp",
+    expertise: [],
+    linkedin: ""
+  },
+  meera: {
+    name: "Meera Rathore",
+    role: "",
+    bio: "",
+    image: "img/airmedicallogo.webp",
+    expertise: [],
+    linkedin: ""
+  },
+  abeer: {
+    name: "Abeer Ali",
+    role: "",
+    bio: "",
+    image: "img/airmedicallogo.webp",
+    expertise: [],
+    linkedin: ""
+  },
+  saif: {
+    name: "Saif",
+    role: "",
+    bio: "",
+    image: "img/airmedicallogo.webp",
+    expertise: [],
+    linkedin: ""
+  },
+  hamadh: {
+    name: "Hamadh",
+    role: "",
+    bio: "",
+    image: "img/airmedicallogo.webp",
+    expertise: [],
+    linkedin: ""
   },
   editorial: {
     name: "Air Medical 24X7 Editorial Team",
@@ -698,7 +740,7 @@ function getAuthorFormData() {
   const name = nameInput ? nameInput.value.trim() : "Camille Hernandez";
   const role = roleInput ? roleInput.value.trim() : "Global Command Center Lead";
   const bio = bioInput ? bioInput.value.trim() : "";
-  const image = authorPhotoBase64 || (urlInput ? urlInput.value.trim() : "") || "img/authors/camille-hernandez.png";
+  const image = authorPhotoBase64 || (urlInput ? urlInput.value.trim() : "") || "img/airmedicallogo.webp";
   const exp1 = exp1Input ? exp1Input.value.trim() : "";
   const exp2 = exp2Input ? exp2Input.value.trim() : "";
   const exp3 = exp3Input ? exp3Input.value.trim() : "";
