@@ -201,9 +201,13 @@ document.addEventListener("DOMContentLoaded", () => {
   forms.forEach(form => {
     form.addEventListener("submit", async function (e) {
       // Route quotation forms to secure Edge Function instead of direct DB insertion
-      if (form.id === "quoteForm" || form.id === "quoteFormPopup") {
+      if (form.id === "quoteForm" || form.id === "quoteFormPopup" || form.id === "quoteFormHeader") {
         e.preventDefault();
         e.stopImmediatePropagation();
+
+        // The stopImmediatePropagation above also skips form-validate.js's own submit
+        // listener, so run its checks (junk text, honeypot, too-fast submit) here.
+        if (typeof window.validateQuoteForm === "function" && !window.validateQuoteForm(form)) return;
 
         const btn = form.querySelector('button[type="submit"]');
         if (btn) {
@@ -274,7 +278,11 @@ document.addEventListener("DOMContentLoaded", () => {
             full_phone:  fullPhone,
             service:     serviceVal,
             token:       response,
-            source_page: getPageIdentifier()
+            source_page: getPageIdentifier(),
+            // Bot signals the Edge Function checks server-side: the hidden honeypot
+            // field added by form-validate.js, and how long the page was open.
+            website:     form.querySelector('input[name="website"]')?.value || "",
+            form_age_ms: typeof window.formAgeMs === "function" ? window.formAgeMs() : undefined
           };
 
           // Patient location and destination — already using name attr so these are fine

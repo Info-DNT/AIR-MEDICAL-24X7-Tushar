@@ -18,17 +18,27 @@
   var PAGE_LOAD_TIME = Date.now();
 
   /* ── Spam patterns ── */
+  /* Keyboard mash — matched anywhere in the text. */
   var KEYBOARD_RUNS = [
     "qwerty","qwert","werty","asdfg","sdfgh","zxcvb","xcvbn",
     "qazwsx","asdfgh","zxcvbn","qwertyu","asdfghj","zxcvbnm",
-    "1234","2345","3456","4567","5678","6789","7890",
     "abcde","bcdef","cdefg","defgh","efghi","fghij","ghijk",
-    "aaaaa","bbbbb","ccccc","ddddd","eeeee","sssss","ttttt",
-    "test","demo","fake","null","none","unknown","asdf","junk","random",
-    "xyz","abc123","hello","world","sample","location","place","city"
+    "aaaaa","bbbbb","ccccc","ddddd","eeeee","sssss","ttttt"
   ];
+  /* Filler words — matched as whole words only, so "Celeste" (test) and
+     "Simone Neal" (none) pass. */
+  var JUNK_WORDS = [
+    "test","demo","fake","null","none","unknown","asdf","junk","random",
+    "xyz","abc","hello","world","sample"
+  ];
+  /* Placeholder entries — rejected only when they are the whole value, so
+     "Kuwait City" and "Mexico City" pass. */
+  var PLACEHOLDERS = ["location","place","city","country","name"];
 
-  function stripToLetters(str) { return (str||"").toLowerCase().replace(/[^a-z]/g,""); }
+  /* Keeps letters from any script, so Arabic or Devanagari names count as letters.
+     Falls back to a–z in browsers without Unicode property escapes. */
+  var NON_LETTER = (function(){ try { return new RegExp("[^\\p{L}]","gu"); } catch(e) { return /[^a-z]/g; } })();
+  function stripToLetters(str) { return (str||"").toLowerCase().replace(NON_LETTER,""); }
 
   function uniqueRatio(str) {
     var c = stripToLetters(str); if (!c.length) return 0;
@@ -39,7 +49,9 @@
   function hasKeyboardRun(str) {
     var l = stripToLetters(str);
     for(var i=0;i<KEYBOARD_RUNS.length;i++) if(l.indexOf(KEYBOARD_RUNS[i])!==-1) return true;
-    return false;
+    var words = (str||"").toLowerCase().split(/[^a-z]+/);
+    for(var j=0;j<words.length;j++) if(JUNK_WORDS.indexOf(words[j])!==-1) return true;
+    return PLACEHOLDERS.indexOf(l)!==-1;
   }
 
   function hasLongRepeat(str) { return /(.)\1{3,}/.test((str||"").toLowerCase()); }
@@ -360,6 +372,11 @@
       },false);
     });
   }
+
+  /* config.js submits the quote forms from a capture-phase listener that stops the
+     listener above from running, so it calls this directly before sending. */
+  window.validateQuoteForm=validateForm;
+  window.formAgeMs=function(){ return Date.now()-PAGE_LOAD_TIME; };
 
   if(document.readyState==="loading"){ document.addEventListener("DOMContentLoaded",init); }
   else { init(); }
