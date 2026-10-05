@@ -211,8 +211,11 @@ def build_page(template, post):
     s = re.sub(r'\b(href|src)="([^"]*)"', deepen, s)
 
     s = re.sub(r"<title>.*?</title>", f"<title>{esc(title)}</title>", s, flags=re.S)
-    s = re.sub(r'(<meta name="description" content=")[^"]*(")',
-               lambda m: m.group(1) + esc(desc) + m.group(2), s)
+    # blogs-detail.html writes this tag content-first (<meta content="..." name="description">),
+    # which a name-first pattern never matched — every post shipped the template's generic
+    # description. Replace the whole tag, whatever its attribute order.
+    s = re.sub(r'<meta\b(?=[^>]*\bname="description")[^>]*>',
+               lambda m: f'<meta name="description" content="{esc(desc)}">', s, count=1)
     # blogs-detail.html carries no Open Graph tags, so shares of a post render as a bare
     # URL. Inject a full set — this is the main reason to pre-render social metadata:
     # crawlers for Facebook, LinkedIn and WhatsApp do not execute JavaScript.
@@ -279,6 +282,39 @@ def build_page(template, post):
     return s
 
 
+def check_seo(page, post, template):
+    """Problems with a built page's title, meta description or H1; empty when it is fine.
+
+    Guards the two regressions this script has shipped: the meta description pattern
+    silently not matching (every post kept the template's generic text), and a second,
+    hidden H1 in the template appearing on every post.
+    """
+    problems = []
+    titles = re.findall(r"<title>(.*?)</title>", page, re.S)
+    descs = re.findall(r'<meta\b[^>]*\bname="description"[^>]*>', page)
+    h1s = re.findall(r"<h1\b[^>]*>(.*?)</h1>", page, re.S)
+    template_desc = re.search(r'<meta\b[^>]*\bname="description"[^>]*\bcontent="([^"]*)"'
+                              r'|<meta\b[^>]*\bcontent="([^"]*)"[^>]*\bname="description"', template)
+    template_desc = template_desc and (template_desc.group(1) or template_desc.group(2))
+
+    if len(titles) != 1 or not titles[0].strip():
+        problems.append(f"expected 1 non-empty <title>, found {len(titles)}")
+    if len(descs) != 1:
+        problems.append(f"expected 1 meta description, found {len(descs)}")
+    else:
+        content = re.search(r'\bcontent="([^"]*)"', descs[0])
+        content = content.group(1).strip() if content else ""
+        if not content:
+            problems.append("meta description is empty (fill SEO Description or Excerpt in admin)")
+        elif content == template_desc:
+            problems.append("meta description is still the template's generic text")
+    if len(h1s) != 1:
+        problems.append(f"expected 1 <h1>, found {len(h1s)}")
+    elif html.unescape(re.sub(r"<[^>]+>", "", h1s[0])).strip() != brand(post.get("title") or "").strip():
+        problems.append("<h1> is not the post title")
+    return problems
+
+
 def main():
     if not os.path.isfile(TEMPLATE):
         sys.exit("template not found: " + TEMPLATE)
@@ -295,9 +331,16 @@ def main():
             os.remove(os.path.join(OUT_DIR, f))
             print("     removed stale %s" % f)
 
+    pages = {p["slug"]: build_page(template, p) for p in posts}
+    problems = [f"blogs/{p['slug']}.html: {msg}"
+                for p in posts for msg in check_seo(pages[p["slug"]], p, template)]
+    if problems:
+        # Nothing is written, so a bad build can never replace good pages.
+        sys.exit("SEO check failed, no pages written:\n  " + "\n  ".join(problems))
+
     for p in posts:
         out = os.path.join(OUT_DIR, p["slug"] + ".html")
-        open(out, "w", encoding="utf-8", errors="surrogateescape").write(build_page(template, p))
+        open(out, "w", encoding="utf-8", errors="surrogateescape").write(pages[p["slug"]])
         print("     %-64s %6.1f KB" % ("blogs/" + p["slug"] + ".html",
                                        os.path.getsize(out) / 1024))
     print("  done — re-run after publishing or editing a post")
