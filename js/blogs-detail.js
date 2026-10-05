@@ -67,6 +67,65 @@ function renderPostBody(el, raw) {
   el.textContent = branded;
 }
 
+/***************** FAQ SCHEMA *****************/
+// Question/answer pairs from the post's FAQ section. Mirrors extract_faq() in
+// tools/build-blog-pages.py — keep the two rules in step. The section starts at an H2/H3
+// titled "FAQ", "FAQs" or "Frequently Asked Questions" and ends at the next H1/H2; a
+// question is an all-bold paragraph ending in "?" (or an H3/H4 ending in "?").
+function faqFromContent(el) {
+  const squash = (t) => (t || "").replace(/\s+/g, " ").trim();
+  const pairs = [];
+  let inFaq = false, question = null, answer = [];
+  const flush = () => { if (question && answer.length) pairs.push([question, answer.join(" ")]); };
+
+  for (const block of el.children) {
+    const tag = block.tagName.toLowerCase();
+    const level = /^h[1-6]$/.test(tag) ? Number(tag[1]) : 0;
+    const text = squash(block.textContent);
+    if (!inFaq) {
+      inFaq = (level === 2 || level === 3) && /^(faqs?|frequently asked questions)\b/i.test(text);
+      continue;
+    }
+    if (level && level <= 2) break;
+    const boldText = squash(Array.from(block.querySelectorAll("strong, b"))
+      .filter((b) => !b.parentElement.closest("strong, b"))
+      .map((b) => b.textContent).join(""));
+    const isQuestion = text.endsWith("?") && (level === 3 || level === 4 || (tag === "p" && boldText === text));
+    if (isQuestion) {
+      flush();
+      question = text;
+      answer = [];
+    } else if (question && text) {
+      answer.push(text);
+    }
+  }
+  flush();
+  return pairs.length >= 2 ? pairs : [];
+}
+
+// Pre-rendered pages already carry this schema (id="faq-schema"); only posts served by
+// the dynamic blogs-detail page need it added here.
+function addFaqSchema(el, slug) {
+  if (document.getElementById("faq-schema")) return;
+  const faq = faqFromContent(el);
+  if (!faq.length) return;
+  const url = `https://airmedical24x7.com/blogs/${slug}`;
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.id = "faq-schema";
+  script.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": url + "#faq",
+    "mainEntity": faq.map(([q, a]) => ({
+      "@type": "Question",
+      "name": q,
+      "acceptedAnswer": { "@type": "Answer", "text": a }
+    }))
+  });
+  document.head.appendChild(script);
+}
+
 /***************** BLOG LOAD *****************/
 async function loadBlog() {
   if (!slug) {
@@ -94,6 +153,7 @@ async function loadBlog() {
   imageEl.alt = sanitizedTitle;
 
   renderPostBody(contentEl, data.content);
+  addFaqSchema(contentEl, slug);
 
   document.title = window.sanitize24X7(data.meta_title || data.title);
   document

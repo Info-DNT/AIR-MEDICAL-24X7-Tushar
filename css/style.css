@@ -2809,3 +2809,46 @@ h2.mt-5 {
     padding: 4px 10px;
     line-height: 1.3;
 }
+
+/* Blog article tables and alignment. Posts are written in the admin Quill editor, whose
+   table borders and alignment classes come from quill.snow.css — a stylesheet only the
+   admin page loads, so tables rendered as borderless columns on the live blog. */
+#blog-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.5rem;
+    font-size: 0.95rem;
+}
+
+#blog-content th,
+#blog-content td {
+    border: 1px solid #cbd5e1;
+    padding: 10px 12px;
+    vertical-align: middle;
+}
+
+/* Quill has no header-cell option, so the first row is the header. */
+#blog-content tr:first-child th,
+#blog-content tr:first-child td {
+    background: var(--light);
+    color: var(--dark);
+    font-weight: 700;
+}
+
+#blog-content .ql-align-center { text-align: center; }
+#blog-content .ql-align-right { text-align: right; }
+#blog-content .ql-align-justify { text-align: justify; }
+
+/* Scroll a wide table sideways on phones instead of crushing its columns. */
+@media (max-width: 767.98px) {
+    #blog-content table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #blog-content th,
+    #blog-content td {
+        min-width: 160px;
+    }
+}

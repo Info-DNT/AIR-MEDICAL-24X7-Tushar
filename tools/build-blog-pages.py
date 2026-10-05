@@ -30,6 +30,7 @@ import os
 import re
 import sys
 import urllib.request
+from html.parser import HTMLParser
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = "https://airmedical24x7.com"
@@ -97,6 +98,89 @@ def brand(text):
 
 def esc(t):
     return html.escape(t or "", quote=True)
+
+
+FAQ_HEADING = re.compile(r"^(faqs?|frequently asked questions)\b", re.I)
+VOID_TAGS = {"br", "img", "hr", "input", "meta", "link", "source", "wbr", "col"}
+
+
+class _Blocks(HTMLParser):
+    """Splits Quill's flat post HTML into top-level blocks: (tag, text, bold_text)."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.blocks, self.depth, self.bold = [], 0, 0
+        self.tag, self.text, self.bold_text = None, [], []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("strong", "b"):
+            self.bold += 1
+        if tag in VOID_TAGS:
+            if self.tag and tag == "br":
+                self.text.append(" ")
+            return
+        if self.depth == 0:
+            self.tag, self.text, self.bold_text = tag, [], []
+        elif tag == "li":
+            self.text.append(" ")
+        self.depth += 1
+
+    def handle_endtag(self, tag):
+        if tag in ("strong", "b"):
+            self.bold = max(0, self.bold - 1)
+        if tag in VOID_TAGS or self.depth == 0:
+            return
+        self.depth -= 1
+        if self.depth == 0 and self.tag:
+            self.blocks.append((self.tag, _squash("".join(self.text)), _squash("".join(self.bold_text))))
+            self.tag = None
+
+    def handle_data(self, data):
+        if self.tag:
+            self.text.append(data)
+            if self.bold:
+                self.bold_text.append(data)
+
+
+def _squash(text):
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def extract_faq(body):
+    """Question/answer pairs from the post's FAQ section, for FAQPage schema.
+
+    Mirrors faqFromContent() in js/blogs-detail.js. The section starts at an H2/H3 titled
+    "FAQ", "FAQs" or "Frequently Asked Questions" and ends at the next H1/H2. Inside it,
+    a question is a paragraph that is entirely bold and ends in "?" (or an H3/H4 ending in
+    "?"); everything up to the next question is its answer. Text is taken verbatim, since
+    Google requires FAQ schema to match what is visible on the page.
+    """
+    parser = _Blocks()
+    parser.feed(body or "")
+    parser.close()
+
+    pairs, in_faq, question, answer = [], False, None, []
+
+    def flush():
+        if question and answer:
+            pairs.append((question, " ".join(answer)))
+
+    for tag, text, bold in parser.blocks:
+        heading = re.fullmatch(r"h([1-6])", tag)
+        level = int(heading.group(1)) if heading else 0
+        if not in_faq:
+            in_faq = level in (2, 3) and bool(FAQ_HEADING.match(text))
+            continue
+        if level and level <= 2:
+            break
+        is_question = text.endswith("?") and (level in (3, 4) or (tag == "p" and bold == text))
+        if is_question:
+            flush()
+            question, answer = text, []
+        elif question and text:
+            answer.append(text)
+    flush()
+    return pairs if len(pairs) >= 2 else []
 
 
 def build_page(template, post):
@@ -173,6 +257,25 @@ def build_page(template, post):
                   '  <script type="application/ld+json">\n'
                   + json.dumps(article, indent=2, ensure_ascii=False)
                   + "\n</script>\n</head>")
+
+    faq = extract_faq(body)
+    if faq:
+        faq_schema = {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "@id": url + "#faq",
+            "mainEntity": [
+                {"@type": "Question", "name": q,
+                 "acceptedAnswer": {"@type": "Answer", "text": a}}
+                for q, a in faq
+            ],
+        }
+        # The id tells js/blogs-detail.js the schema is already here, so it adds no copy.
+        # "</" is escaped so answer text can never close the script tag early.
+        s = s.replace("</head>",
+                      '  <script type="application/ld+json" id="faq-schema">\n'
+                      + json.dumps(faq_schema, indent=2, ensure_ascii=False).replace("</", "<\\/")
+                      + "\n</script>\n</head>")
     return s
 
 
