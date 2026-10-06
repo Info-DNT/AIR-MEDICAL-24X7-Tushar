@@ -67,11 +67,40 @@ function renderPostBody(el, raw) {
   el.textContent = branded;
 }
 
+/***************** HEADINGS *****************/
+// Keep the page to one H1, the post title. Mirrors fix_headings() in
+// tools/build-blog-pages.py: a leading H1 that repeats the title is dropped, and any
+// other H1 in the article becomes an H2.
+function fixHeadings(el, title) {
+  const norm = (t) => (t || "").replace(/\s+/g, " ").trim().toLowerCase();
+  const first = el.firstElementChild;
+  if (first && first.tagName === "H1" && norm(first.textContent) === norm(title)) first.remove();
+  el.querySelectorAll("h1").forEach((h1) => {
+    const h2 = document.createElement("h2");
+    if (h1.className) h2.className = h1.className;
+    h2.append(...h1.childNodes);
+    h1.replaceWith(h2);
+  });
+}
+
 /***************** FAQ SCHEMA *****************/
 // Question/answer pairs from the post's FAQ section. Mirrors extract_faq() in
 // tools/build-blog-pages.py — keep the two rules in step. The section starts at an H2/H3
 // titled "FAQ", "FAQs" or "Frequently Asked Questions" and ends at the next H1/H2; a
-// question is an all-bold paragraph ending in "?" (or an H3/H4 ending in "?").
+// question is an all-bold paragraph ending in "?" (or an H3/H4 ending in "?"), or a
+// paragraph that opens with a bold question and continues with its answer.
+
+// The bold text a block opens with, up to its first non-bold, non-blank text.
+function leadingBold(block) {
+  const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT);
+  let lead = "";
+  for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+    if (node.parentElement.closest("strong, b")) lead += node.textContent;
+    else if (node.textContent.trim()) break;
+  }
+  return lead.replace(/\s+/g, " ").trim();
+}
+
 function faqFromContent(el) {
   const squash = (t) => (t || "").replace(/\s+/g, " ").trim();
   const pairs = [];
@@ -83,7 +112,7 @@ function faqFromContent(el) {
     const level = /^h[1-6]$/.test(tag) ? Number(tag[1]) : 0;
     const text = squash(block.textContent);
     if (!inFaq) {
-      inFaq = (level === 2 || level === 3) && /^(faqs?|frequently asked questions)\b/i.test(text);
+      inFaq = (level === 2 || level === 3) && /^(\d+[.)]\s*)?(faqs?|frequently asked questions)\b/i.test(text);
       continue;
     }
     if (level && level <= 2) break;
@@ -91,10 +120,16 @@ function faqFromContent(el) {
       .filter((b) => !b.parentElement.closest("strong, b"))
       .map((b) => b.textContent).join(""));
     const isQuestion = text.endsWith("?") && (level === 3 || level === 4 || (tag === "p" && boldText === text));
+    const lead = tag === "p" ? leadingBold(block) : "";
+    const inline = lead.endsWith("?") && text.length > lead.length && text.startsWith(lead);
     if (isQuestion) {
       flush();
       question = text;
       answer = [];
+    } else if (inline) {
+      flush();
+      question = lead;
+      answer = [text.slice(lead.length).trim()];
     } else if (question && text) {
       answer.push(text);
     }
@@ -153,6 +188,7 @@ async function loadBlog() {
   imageEl.alt = sanitizedTitle;
 
   renderPostBody(contentEl, data.content);
+  fixHeadings(contentEl, sanitizedTitle);
   addFaqSchema(contentEl, slug);
 
   document.title = window.sanitize24X7(data.meta_title || data.title);

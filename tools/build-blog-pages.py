@@ -100,17 +100,35 @@ def esc(t):
     return html.escape(t or "", quote=True)
 
 
-FAQ_HEADING = re.compile(r"^(faqs?|frequently asked questions)\b", re.I)
+FAQ_HEADING = re.compile(r"^(\d+[.)]\s*)?(faqs?|frequently asked questions)\b", re.I)
+
+
+def fix_headings(body, title):
+    """Keep the page to one H1, the post title. Mirrors fixHeadings() in js/blogs-detail.js.
+
+    Writers sometimes open the article with the title again as Heading 1, or use Heading 1
+    for sections. A leading H1 that repeats the title is dropped; any other H1 becomes H2.
+    """
+    norm = lambda t: re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", t))).strip().lower()
+    lead = re.match(r"\s*<h1\b[^>]*>(.*?)</h1>", body, re.S)
+    if lead and norm(lead.group(1)) == norm(title):
+        body = body[lead.end():]
+    return re.sub(r"<(/?)h1\b", r"<\1h2", body)
 VOID_TAGS = {"br", "img", "hr", "input", "meta", "link", "source", "wbr", "col"}
 
 
 class _Blocks(HTMLParser):
-    """Splits Quill's flat post HTML into top-level blocks: (tag, text, bold_text)."""
+    """Splits Quill's flat post HTML into top-level blocks: (tag, text, bold_text, lead_bold).
+
+    lead_bold is the bold text a block opens with, for "<strong>Question?</strong> Answer"
+    paragraphs that keep a FAQ question and its answer on one line.
+    """
 
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.blocks, self.depth, self.bold = [], 0, 0
         self.tag, self.text, self.bold_text = None, [], []
+        self.lead, self.lead_open = [], False
 
     def handle_starttag(self, tag, attrs):
         if tag in ("strong", "b"):
@@ -121,6 +139,7 @@ class _Blocks(HTMLParser):
             return
         if self.depth == 0:
             self.tag, self.text, self.bold_text = tag, [], []
+            self.lead, self.lead_open = [], True
         elif tag == "li":
             self.text.append(" ")
         self.depth += 1
@@ -132,7 +151,8 @@ class _Blocks(HTMLParser):
             return
         self.depth -= 1
         if self.depth == 0 and self.tag:
-            self.blocks.append((self.tag, _squash("".join(self.text)), _squash("".join(self.bold_text))))
+            self.blocks.append((self.tag, _squash("".join(self.text)), _squash("".join(self.bold_text)),
+                                _squash("".join(self.lead))))
             self.tag = None
 
     def handle_data(self, data):
@@ -140,6 +160,11 @@ class _Blocks(HTMLParser):
             self.text.append(data)
             if self.bold:
                 self.bold_text.append(data)
+            if self.lead_open:
+                if self.bold:
+                    self.lead.append(data)
+                elif data.strip():
+                    self.lead_open = False
 
 
 def _squash(text):
@@ -152,7 +177,8 @@ def extract_faq(body):
     Mirrors faqFromContent() in js/blogs-detail.js. The section starts at an H2/H3 titled
     "FAQ", "FAQs" or "Frequently Asked Questions" and ends at the next H1/H2. Inside it,
     a question is a paragraph that is entirely bold and ends in "?" (or an H3/H4 ending in
-    "?"); everything up to the next question is its answer. Text is taken verbatim, since
+    "?"), and everything up to the next question is its answer; or a paragraph that opens
+    with a bold question followed by its answer on the same line. Text is taken verbatim, since
     Google requires FAQ schema to match what is visible on the page.
     """
     parser = _Blocks()
@@ -165,7 +191,7 @@ def extract_faq(body):
         if question and answer:
             pairs.append((question, " ".join(answer)))
 
-    for tag, text, bold in parser.blocks:
+    for tag, text, bold, lead in parser.blocks:
         heading = re.fullmatch(r"h([1-6])", tag)
         level = int(heading.group(1)) if heading else 0
         if not in_faq:
@@ -174,9 +200,14 @@ def extract_faq(body):
         if level and level <= 2:
             break
         is_question = text.endswith("?") and (level in (3, 4) or (tag == "p" and bold == text))
+        inline = (tag == "p" and lead.endswith("?") and len(text) > len(lead)
+                  and text.startswith(lead))
         if is_question:
             flush()
             question, answer = text, []
+        elif inline:
+            flush()
+            question, answer = lead, [text[len(lead):].strip()]
         elif question and text:
             answer.append(text)
     flush()
@@ -187,7 +218,7 @@ def build_page(template, post):
     slug = post["slug"]
     title = brand(post.get("meta_title") or post.get("title") or "")
     desc = brand(post.get("meta_description") or post.get("excerpt") or "")
-    body = brand(post.get("content") or "")
+    body = fix_headings(brand(post.get("content") or ""), brand(post.get("title") or ""))
     image = post.get("featured_image") or f"{SITE}/img/flight-medical.webp"
     if image.startswith("/"):
         image = SITE + image
