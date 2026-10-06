@@ -423,7 +423,8 @@
                       <textarea id="blog-excerpt-input" class="form-control form-control-admin" rows="3" placeholder="A brief 2-3 sentence summary of the post to show on the blogs card listing page..." required></textarea>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="row g-3 mb-3">
+                    <div class="col-md-7">
                       <!-- Category -->
                       <label class="form-label fw-bold small text-muted">Category <span class="text-danger">*</span></label>
                       <select id="blog-category-input" class="form-select form-control-admin" required>
@@ -435,6 +436,12 @@
                         <option value="Pediatric Transport">Pediatric Transport</option>
                         <option value="ECMO Transfer">ECMO Transfer</option>
                       </select>
+                    </div>
+                    <div class="col-md-5">
+                      <!-- Publish Date: saved to blogs.created_at, shown on the card and under the title -->
+                      <label class="form-label fw-bold small text-muted" for="blog-date-input">Publish Date <span class="text-danger">*</span></label>
+                      <input type="date" id="blog-date-input" class="form-control form-control-admin" required>
+                    </div>
                     </div>
 
                     <!-- Author Section Card -->
@@ -635,7 +642,8 @@
                   <div class="preview-card bg-white">
                     <img id="preview-blog-image" class="img-fluid w-100 rounded mb-4 shadow-sm" src="img/airmedicallogo.webp" alt="Featured Image Preview" style="height: 240px; object-fit: cover; display: none;">
                     
-                    <h1 id="preview-blog-title" class="mb-4 fw-bold" style="color: #1d2a4d; font-size: 28px; line-height: 1.3;">Blog Title Preview</h1>
+                    <h1 id="preview-blog-title" class="mb-2 fw-bold" style="color: #1d2a4d; font-size: 28px; line-height: 1.3;">Blog Title Preview</h1>
+                    <p class="text-muted small mb-4"><svg class="text-primary me-2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span id="preview-blog-date"></span></p>
                     
                     <div class="d-flex align-items-center border-bottom pb-3 mb-4 text-muted small">
                       <img class="rounded-circle me-2" src="img/airmedicallogo.webp" width="40" height="40" alt="Author">
@@ -982,13 +990,13 @@
   <!-- Supabase client and Config scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/form-validate.js?v=2.6" defer></script>
-<script src="js/config.js?v=2.6"></script>
+<script src="js/config.js?v=2.7"></script>
 
   <!-- Quill Rich Text Editor JS -->
   <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
 
   <!-- Admin JS logic -->
-  <script src="js/admin.js?v=2.4"></script>
+  <script src="js/admin.js?v=2.5"></script>
 </body>
 
 </html>

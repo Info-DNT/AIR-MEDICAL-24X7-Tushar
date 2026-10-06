@@ -92,6 +92,7 @@ async function loadBlogs(reset = false) {
                style="height: 220px; object-fit: cover;">
         </a>
         <div class="p-4">
+          <small class="d-block text-muted mb-2 js-card-date"><svg class="text-primary me-2" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-2px"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><time></time></small>
           <a class="h4 d-block mb-3 text-dark fw-bold js-card-title"
              style="text-decoration: none; line-height: 1.4;"></a>
           <p class="m-0 text-muted js-card-excerpt" style="font-size: 14px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;"></p>
@@ -112,6 +113,15 @@ async function loadBlogs(reset = false) {
     const titleEl = blogCard.querySelector(".js-card-title");
     titleEl.href = href;
     titleEl.textContent = title || "";
+
+    const dateText = window.formatBlogDate ? window.formatBlogDate(blog.created_at) : "";
+    const dateEl = blogCard.querySelector(".js-card-date");
+    if (dateText) {
+      dateEl.querySelector("time").dateTime = window.blogDateISO(blog.created_at);
+      dateEl.querySelector("time").textContent = dateText;
+    } else {
+      dateEl.remove();
+    }
 
     blogCard.querySelector(".js-card-excerpt").textContent = excerpt;
     blogCard.querySelector(".js-card-author").textContent = author;

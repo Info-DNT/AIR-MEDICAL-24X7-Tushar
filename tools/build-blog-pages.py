@@ -96,6 +96,22 @@ def brand(text):
     return re.sub(r"(?<!airmedical)(24/7|24[xX]7)", "24X7", text, flags=re.I)
 
 
+MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+          "August", "September", "October", "November", "December"]
+
+
+def blog_date(created_at):
+    """("2026-10-10", "October 10, 2026") from blogs.created_at; ("", "") when missing.
+
+    Mirrors window.formatBlogDate() in js/config.js: the UTC date is read straight from
+    the string, never shifted into a local time zone.
+    """
+    m = re.match(r"(\d{4})-(\d{2})-(\d{2})", str(created_at or ""))
+    if not m:
+        return "", ""
+    return m.group(0), f"{MONTHS[int(m.group(2)) - 1]} {int(m.group(3))}, {m.group(1)}"
+
+
 def esc(t):
     return html.escape(t or "", quote=True)
 
@@ -270,6 +286,11 @@ def build_page(template, post):
     # the real content, so a crawler sees the post without running JavaScript
     s = re.sub(r'(<h1[^>]*id="blog-title"[^>]*>).*?(</h1>)',
                lambda m: m.group(1) + esc(brand(post.get("title") or "")) + m.group(2), s, flags=re.S)
+    iso_date, shown_date = blog_date(post.get("created_at"))
+    if shown_date:
+        s = re.sub(r'(<p[^>]*id="blog-date"[^>]*?)\s+hidden(>.*?<time id="blog-date-time")[^>]*>[^<]*(</time>)',
+                   lambda m: m.group(1) + m.group(2) + f' datetime="{iso_date}">{shown_date}' + m.group(3),
+                   s, count=1, flags=re.S)
     s = re.sub(r'(<img[^>]*id="blog-image"[^>]*)src="[^"]*"',
                lambda m: m.group(1) + f'src="{esc(image)}"', s)
     s = re.sub(r'(<div[^>]*id="blog-content"[^>]*>).*?(</div>)',

@@ -406,6 +406,25 @@ window.rebindBlogsSupabaseClient = function (serviceKey) {
   }
 };
 
+// Blog post date as "October 10, 2026", from blogs.created_at (or a "2026-10-10" string).
+// Reads the UTC date straight from the string rather than through Date and the viewer's
+// time zone, which would show a post dated 10 Oct as 9 Oct in the Americas. The admin
+// date picker stores the chosen day at 12:00 UTC. Mirrored by blog_date() in
+// tools/build-blog-pages.py.
+window.formatBlogDate = function (value) {
+  const m = String(value || "").match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return "";
+  const MONTHS = ["January", "February", "March", "April", "May", "June", "July",
+                  "August", "September", "October", "November", "December"];
+  return `${MONTHS[Number(m[2]) - 1]} ${Number(m[3])}, ${m[1]}`;
+};
+
+// The same date as "2026-10-10", for a <time datetime> attribute or a date input.
+window.blogDateISO = function (value) {
+  const m = String(value || "").match(/^\d{4}-\d{2}-\d{2}/);
+  return m ? m[0] : "";
+};
+
 // The blogs.author column holds either a plain name (older posts) or a JSON string
 // {name, role, bio, image, ...} saved by the admin author section. Lists and bylines
 // need only the name — printing the column as-is showed the raw JSON.

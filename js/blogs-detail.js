@@ -184,6 +184,15 @@ async function loadBlog() {
   const sanitizedTitle = window.sanitize24X7(data.title);
   titleEl.innerText = sanitizedTitle;
 
+  const dateText = window.formatBlogDate ? window.formatBlogDate(data.created_at) : "";
+  const dateEl = document.getElementById("blog-date");
+  const dateTimeEl = document.getElementById("blog-date-time");
+  if (dateEl && dateTimeEl && dateText) {
+    dateTimeEl.dateTime = window.blogDateISO(data.created_at);
+    dateTimeEl.textContent = dateText;
+    dateEl.hidden = false;
+  }
+
   imageEl.src = window.safeUrl(data.featured_image, "img/airmedicallogo.webp");
   imageEl.alt = sanitizedTitle;
 

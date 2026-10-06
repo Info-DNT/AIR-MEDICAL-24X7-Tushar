@@ -474,6 +474,10 @@ function initListeners() {
   // Initialize live author preview on page load
   updateAuthorLivePreview();
 
+  // Publish date feeds the live preview
+  document.getElementById("blog-date-input").addEventListener("input", updatePreviewDate);
+  setPublishDate(todayISO());
+
   // Draft & Publish buttons
   document.getElementById("btn-save-draft").addEventListener("click", () => submitBlogPost("draft"));
   document.getElementById("btn-publish").addEventListener("click", () => submitBlogPost("published"));
@@ -773,6 +777,27 @@ function updateAuthorLivePreview() {
   }
 }
 
+/***************** PUBLISH DATE *****************/
+// The publish date is stored in blogs.created_at, at 12:00 UTC on the chosen day, so it
+// reads as the same calendar day in every time zone. window.formatBlogDate (config.js)
+// turns it into "October 10, 2026" on the cards and under the post title.
+function todayISO() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function setPublishDate(isoDate) {
+  const input = document.getElementById("blog-date-input");
+  input.max = todayISO();
+  input.value = isoDate || todayISO();
+  updatePreviewDate();
+}
+
+function updatePreviewDate() {
+  const value = document.getElementById("blog-date-input").value;
+  document.getElementById("preview-blog-date").textContent = window.formatBlogDate(value) || "Publish date";
+}
+
 /***************** SLUGIFY *****************/
 function slugify(text) {
   return text
@@ -793,6 +818,7 @@ function clearEditorForm() {
   document.getElementById("blog-slug-input").value = "";
   document.getElementById("blog-excerpt-input").value = "";
   document.getElementById("blog-category-input").value = "General";
+  setPublishDate(todayISO());
   document.getElementById("blog-image-url").value = "";
   document.getElementById("blog-image-file").value = "";
   document.getElementById("blog-meta-title").value = "";
@@ -859,6 +885,10 @@ async function submitBlogPost(status) {
   if (!excerpt) { alert("Excerpt is required!"); return; }
   if (!textContent || content === "<p><br></p>") { alert("Article content body is required!"); return; }
 
+  const publishDate = document.getElementById("blog-date-input").value;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(publishDate)) { alert("Publish Date is required!"); return; }
+  if (publishDate > todayISO()) { alert("Publish Date cannot be in the future."); return; }
+
   // Check Featured Image (either uploaded base64 or raw URL)
   const imageUrl = document.getElementById("blog-image-url").value.trim();
   const featuredImage = featuredImageBase64 || imageUrl;
@@ -884,7 +914,14 @@ async function submitBlogPost(status) {
 
   const editId = document.getElementById("edit-blog-id").value;
   const client = getSupabaseClient();
-  
+
+  // Keep the stored time when an edit leaves the date as it was; a new or changed date
+  // is saved at 12:00 UTC so it is the same calendar day in every time zone.
+  const original = editId ? blogsList.find(b => b.id === editId) : null;
+  if (!original || window.blogDateISO(original.created_at) !== publishDate) {
+    payload.created_at = `${publishDate}T12:00:00Z`;
+  }
+
   // Disable buttons while submitting
   document.getElementById("btn-save-draft").disabled = true;
   document.getElementById("btn-publish").disabled = true;
@@ -982,9 +1019,7 @@ function renderBlogsTable(list) {
     const tr = document.createElement("tr");
     
     const statusClass = blog.status === 'published' ? 'status-badge-published' : 'status-badge-draft';
-    const dateStr = new Date(blog.created_at).toLocaleDateString(undefined, {
-      year: 'numeric', month: 'short', day: 'numeric'
-    });
+    const dateStr = window.formatBlogDate(blog.created_at);
 
     tr.innerHTML = `
       <td>
@@ -1054,6 +1089,7 @@ function loadPostToEditor(blogId) {
   document.getElementById("blog-slug-input").value = blog.slug;
   document.getElementById("blog-excerpt-input").value = blog.excerpt;
   document.getElementById("blog-category-input").value = blog.category || "General";
+  setPublishDate(window.blogDateISO(blog.created_at));
   document.getElementById("blog-meta-title").value = blog.meta_title || "";
   document.getElementById("blog-meta-desc").value = blog.meta_description || "";
 
