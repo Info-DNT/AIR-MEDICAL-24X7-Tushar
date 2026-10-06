@@ -96,6 +96,19 @@ def brand(text):
     return re.sub(r"(?<!airmedical)(24/7|24[xX]7)", "24X7", text, flags=re.I)
 
 
+# alt and title for a post's featured image, by slug. There is no column for these in
+# the blogs table, so they live here; posts not listed get the post title as alt text.
+FEATURED_IMAGE_TAGS = {
+    "air-ambulance-in-manila-international-medical-evacuation-and-repatriation-guide": {
+        "title": "Air ambulance in Manila",
+        "alt": "International Medical Evacuation and Repatriation Guide",
+    },
+    "medical-repatriation-for-ofws-how-to-bring-a-sick-or-injured-worker-home-safely": {
+        "title": "Medical repatriation in Philippines",
+        "alt": "how to bring a sick or injured worker home safely",
+    },
+}
+
 MONTHS = ["January", "February", "March", "April", "May", "June", "July",
           "August", "September", "October", "November", "December"]
 
@@ -266,16 +279,20 @@ def build_page(template, post):
     # blogs-detail.html carries no Open Graph tags, so shares of a post render as a bare
     # URL. Inject a full set — this is the main reason to pre-render social metadata:
     # crawlers for Facebook, LinkedIn and WhatsApp do not execute JavaScript.
+    image_tags = FEATURED_IMAGE_TAGS.get(slug, {})
+    image_alt = image_tags.get("alt") or brand(post.get("title") or "")
     og_tags = [
         ('property', 'og:type', 'article'),
         ('property', 'og:title', title),
         ('property', 'og:description', desc),
         ('property', 'og:url', url),
         ('property', 'og:image', image),
+        ('property', 'og:image:alt', image_alt),
         ('name', 'twitter:card', 'summary_large_image'),
         ('name', 'twitter:title', title),
         ('name', 'twitter:description', desc),
         ('name', 'twitter:image', image),
+        ('name', 'twitter:image:alt', image_alt),
     ]
     og = "".join('  <meta %s="%s" content="%s">\n' % (kind, key, esc(val))
                  for kind, key, val in og_tags)
@@ -293,6 +310,9 @@ def build_page(template, post):
                    s, count=1, flags=re.S)
     s = re.sub(r'(<img[^>]*id="blog-image"[^>]*)src="[^"]*"',
                lambda m: m.group(1) + f'src="{esc(image)}"', s)
+    img_attrs = f'alt="{esc(image_alt)}"' + (f' title="{esc(image_tags["title"])}"' if image_tags.get("title") else "")
+    s = re.sub(r'(<img[^>]*id="blog-image"[^>]*?)\balt="[^"]*"',
+               lambda m: m.group(1) + img_attrs, s, count=1)
     s = re.sub(r'(<div[^>]*id="blog-content"[^>]*>).*?(</div>)',
                lambda m: m.group(1) + body + m.group(2), s, count=1, flags=re.S)
 

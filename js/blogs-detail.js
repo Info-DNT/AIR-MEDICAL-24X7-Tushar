@@ -194,7 +194,9 @@ async function loadBlog() {
   }
 
   imageEl.src = window.safeUrl(data.featured_image, "img/airmedicallogo.webp");
-  imageEl.alt = sanitizedTitle;
+  // Pre-rendered pages carry the image's own alt (FEATURED_IMAGE_TAGS in
+  // tools/build-blog-pages.py); only fill it in where the page has none.
+  if (!imageEl.getAttribute("alt")) imageEl.alt = sanitizedTitle;
 
   renderPostBody(contentEl, data.content);
   fixHeadings(contentEl, sanitizedTitle);
