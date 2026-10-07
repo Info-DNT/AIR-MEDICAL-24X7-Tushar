@@ -86,7 +86,40 @@ def author_schema(raw):
             person["sameAs"] = data["linkedin"]
         return person
     name = raw.strip() if isinstance(raw, str) and raw.strip() and not raw.strip().startswith("{") else "Air Medical 24X7"
+    if brand(name).lower() == "air medical 24x7":
+        # The company itself: point at the full organization node on the page.
+        return {"@id": ORG_ID}
     return {"@type": "Organization", "name": brand(name)}
+
+
+ORG_ID = SITE + "/#organization"
+_org_cache = []
+
+
+def site_organization():
+    """The site's organization schema, read from index.html so there is one copy to edit.
+
+    Every post's BlogPosting names it as publisher by @id. Google resolves an @id only
+    within the same page, so a reference to a node defined on the homepage left each
+    post's publisher without a name or logo. Each post page now carries the node itself.
+    """
+    if not _org_cache:
+        home = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
+        for blk in re.findall(r'<script type="application/ld\+json"[^>]*>(.*?)</script>', home, re.S):
+            try:
+                data = json.loads(blk)
+            except ValueError:
+                continue
+            for node in (data.get("@graph", [data]) if isinstance(data, dict) else data):
+                if isinstance(node, dict) and node.get("@id") == ORG_ID:
+                    _org_cache.append({"@context": "https://schema.org",
+                                       **{k: v for k, v in node.items() if k != "@context"}})
+                    break
+            if _org_cache:
+                break
+        if not _org_cache:
+            sys.exit(f"index.html has no schema node with @id {ORG_ID}; blog publisher would not resolve")
+    return _org_cache[0]
 
 
 def brand(text):
@@ -325,9 +358,14 @@ def build_page(template, post):
         "image": image,
         "datePublished": post.get("created_at"),
         "author": author_schema(post.get("author")),
-        "publisher": {"@id": SITE + "/#organization"},
+        "publisher": {"@id": ORG_ID},
         "mainEntityOfPage": {"@type": "WebPage", "@id": url},
     }
+    # The organization node first, so the publisher/author @id resolves on this page.
+    s = s.replace("</head>",
+                  '  <script type="application/ld+json" id="organization-schema">\n'
+                  + json.dumps(site_organization(), indent=2, ensure_ascii=False).replace("</", "<\\/")
+                  + "\n</script>\n</head>")
     s = s.replace("</head>",
                   '  <script type="application/ld+json">\n'
                   + json.dumps(article, indent=2, ensure_ascii=False)
@@ -380,6 +418,9 @@ def check_seo(page, post, template):
             problems.append("meta description is empty (fill SEO Description or Excerpt in admin)")
         elif content == template_desc:
             problems.append("meta description is still the template's generic text")
+    org_nodes = re.findall(r'"@id": "' + re.escape(ORG_ID) + r'",\s*"name": "[^"]+"', page)
+    if len(org_nodes) != 1:
+        problems.append(f"expected 1 organization schema node (publisher), found {len(org_nodes)}")
     if len(h1s) != 1:
         problems.append(f"expected 1 <h1>, found {len(h1s)}")
     elif html.unescape(re.sub(r"<[^>]+>", "", h1s[0])).strip() != brand(post.get("title") or "").strip():
