@@ -276,12 +276,45 @@ def extract_faq(body):
     return pairs if len(pairs) >= 2 else []
 
 
+IMAGE_DIR = os.path.join(ROOT, "img", "blogs")
+
+
+def save_uploaded_image(data_url, slug):
+    """Write a featured image uploaded in admin (stored as a base64 data: URL) to
+    img/blogs/<slug>.webp and return its site URL.
+
+    The public blog pages reject data: URLs (window.safeUrl), so an uploaded image showed
+    as the logo; inlined, it also made the page hundreds of KB heavier and is not a valid
+    og:image. Re-encoded as WebP at most 1200px wide. Needs Pillow (pip install pillow).
+    """
+    import base64
+    import io
+    try:
+        from PIL import Image
+    except ImportError:
+        sys.exit("A featured image was uploaded as a file: install Pillow to extract it "
+                 "(pip install pillow), or set an Image URL for the post in admin.")
+    name = f"{slug}.webp"
+    out = os.path.join(IMAGE_DIR, name)
+    if not os.path.isfile(out):
+        raw = base64.b64decode(data_url.split(",", 1)[1])
+        im = Image.open(io.BytesIO(raw)).convert("RGB")
+        if im.width > 1200:
+            im = im.resize((1200, round(im.height * 1200 / im.width)), Image.LANCZOS)
+        os.makedirs(IMAGE_DIR, exist_ok=True)
+        im.save(out, "WEBP", quality=82, method=6)
+        print(f"     extracted uploaded image -> img/blogs/{name} ({os.path.getsize(out) // 1024} KB)")
+    return f"{SITE}/img/blogs/{name}"
+
+
 def build_page(template, post):
     slug = post["slug"]
     title = brand(post.get("meta_title") or post.get("title") or "")
     desc = brand(post.get("meta_description") or post.get("excerpt") or "")
     body = fix_headings(brand(post.get("content") or ""), brand(post.get("title") or ""))
     image = post.get("featured_image") or f"{SITE}/img/flight-medical.webp"
+    if image.startswith("data:"):
+        image = save_uploaded_image(image, slug)
     if image.startswith("/"):
         image = SITE + image
     url = f"{SITE}/blogs/{slug}"
@@ -418,6 +451,8 @@ def check_seo(page, post, template):
             problems.append("meta description is empty (fill SEO Description or Excerpt in admin)")
         elif content == template_desc:
             problems.append("meta description is still the template's generic text")
+    if re.search(r'(src|content)="data:', page):
+        problems.append("an image is embedded as a data: URL instead of a file link")
     org_nodes = re.findall(r'"@id": "' + re.escape(ORG_ID) + r'",\s*"name": "[^"]+"', page)
     if len(org_nodes) != 1:
         problems.append(f"expected 1 organization schema node (publisher), found {len(org_nodes)}")
