@@ -136,6 +136,10 @@ FEATURED_IMAGE_TAGS = {
         "title": "Air ambulance in Manila",
         "alt": "International Medical Evacuation and Repatriation Guide",
     },
+    "philippines-to-india-air-ambulance-medical-transfer-process-explained": {
+        "title": "Philippines to India Air Ambulance: Medical Transfer Process",
+        "alt": "Philippines to India Air Ambulance",
+    },
     "medical-repatriation-for-ofws-how-to-bring-a-sick-or-injured-worker-home-safely": {
         "title": "Medical repatriation in Philippines",
         "alt": "how to bring a sick or injured worker home safely",
