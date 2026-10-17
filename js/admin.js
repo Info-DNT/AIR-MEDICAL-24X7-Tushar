@@ -28,7 +28,7 @@ const AUTHOR_PRESETS = {
     linkedin: "https://www.linkedin.com/in/diego-munoz-56166b429/"
   },
   mariyan: {
-    name: "Mariyan",
+    name: "Marianne Sacluti",
     role: "",
     bio: "",
     image: "img/airmedicallogo.webp",
@@ -36,7 +36,7 @@ const AUTHOR_PRESETS = {
     linkedin: ""
   },
   meera: {
-    name: "Meera Rathore",
+    name: "Meera Rathod",
     role: "",
     bio: "",
     image: "img/airmedicallogo.webp",
@@ -44,7 +44,7 @@ const AUTHOR_PRESETS = {
     linkedin: ""
   },
   abeer: {
-    name: "Abeer Ali",
+    name: "Abeer Najib Ali",
     role: "",
     bio: "",
     image: "img/airmedicallogo.webp",
@@ -52,7 +52,7 @@ const AUTHOR_PRESETS = {
     linkedin: ""
   },
   saif: {
-    name: "Saif",
+    name: "Saif Al Deen Arafatibadh",
     role: "",
     bio: "",
     image: "img/airmedicallogo.webp",
@@ -60,7 +60,7 @@ const AUTHOR_PRESETS = {
     linkedin: ""
   },
   hamadh: {
-    name: "Hamadh",
+    name: "Hamad AM Alhatti",
     role: "",
     bio: "",
     image: "img/airmedicallogo.webp",
