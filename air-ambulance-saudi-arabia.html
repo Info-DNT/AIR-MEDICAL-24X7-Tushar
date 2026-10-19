@@ -95,6 +95,11 @@
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
         })(window, document, "clarity", "script", "y8ut5a17d8");
 
+        // OpenAI Ads pixel: loads with the other analytics, after the first interaction or 3.5 s,
+        // so it adds nothing to page load.
+        !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
+        oaiq("init",{pixelId:"49rLrUkSxD88P1nYEShTpv",debug:true});
+
         // container first, so tags inside GTM fire before the Ads configs
         if (window.loadGTM) window.loadGTM();
 
