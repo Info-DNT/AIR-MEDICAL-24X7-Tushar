@@ -17,16 +17,16 @@ const AUTHOR_PRESETS = {
     expertise: ["Medical Transfer Coordination", "Air Ambulance Operations", "Patient Repatriation"],
     linkedin: "https://linkedin.com"
   },
-  // Role, bio, photo and expertise still to come for these — the company logo stands in
-  // for the photo until each person's headshot is added under img/authors/.
   diego: {
-    name: "Diego Munoz",
-    role: "",
-    bio: "",
+    name: "Diego Javier Muñoz Quintero",
+    role: "Compliance, Operations and Sales Executive",
+    bio: "With over a decade of legal experience gained within the judiciary, I expanded my career into Dubai’s corporate sector, where I currently work in operations and compliance management.",
     image: "img/airmedicallogo.webp",
-    expertise: [],
+    expertise: ["Regulatory Compliance Management", "Operational-Legal Advisory", "Corporate Risk Management"],
     linkedin: "https://www.linkedin.com/in/diego-munoz-56166b429/"
   },
+  // Role, bio, photo and expertise still to come for these — the company logo stands in
+  // for the photo until each person's headshot is added under img/authors/.
   mariyan: {
     name: "Marianne Sacluti",
     role: "",
