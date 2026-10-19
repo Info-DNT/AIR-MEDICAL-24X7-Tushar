@@ -420,6 +420,11 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     })();
   </script>
 
+  <!-- Homepage service cards: "Read More" buttons in the site navy (Bootstrap's pale primary made white text unreadable) -->
+  <style>
+    .service-read-more { background: #1A346B !important; border-color: #1A346B !important; color: #fff !important; font-weight: 700; padding: 6px 20px; }
+    .service-read-more:hover, .service-read-more:focus { background: #fb0f0c !important; border-color: #fb0f0c !important; color: #fff !important; }
+  </style>
 </head>
 
 <body>
@@ -764,13 +769,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <h5 class="mb-2" style="font-size:0.95rem;">Air Ambulance</h5>
             <p class="m-0" style="font-size:0.8rem;">ICU-equipped aircraft for high-speed critical care. Safe,
               bed-to-bed international evacuations with certified doctors onboard.</p>
-            <a class="btn btn-sm btn-primary rounded-pill mt-3" href="air-ambulance" aria-label="Read more about Air Ambulance">
-              <svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
-                focusable="false">
-                <path fill-rule="evenodd"
-                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
-              </svg>
-            </a>
+            <a class="btn btn-sm btn-primary rounded-pill mt-3 service-read-more" href="air-ambulance" aria-label="Read more about Air Ambulance">Read More</a>
           </div>
         </div>
 
@@ -784,13 +783,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <h5 class="mb-2" style="font-size:0.95rem;">Airline Stretcher Services</h5>
             <p class="m-0" style="font-size:0.8rem;">Stretcher installation on commercial flights for patients requiring
               continuous recumbent travel with full medical supervision.</p>
-            <a class="btn btn-sm btn-primary rounded-pill mt-3" href="airline-stretcher-services" aria-label="Read more about Airline Stretcher Services">
-              <svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
-                focusable="false">
-                <path fill-rule="evenodd"
-                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
-              </svg>
-            </a>
+            <a class="btn btn-sm btn-primary rounded-pill mt-3 service-read-more" href="airline-stretcher-services" aria-label="Read more about Airline Stretcher Services">Read More</a>
           </div>
         </div>
 
@@ -804,13 +797,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <h5 class="mb-2" style="font-size:0.95rem;">Flight Medical Escort</h5>
             <p class="m-0" style="font-size:0.8rem;">Experienced medical doctors or flight nurses accompanying patients
               on commercial airlines with clinical support throughout.</p>
-            <a class="btn btn-sm btn-primary rounded-pill mt-3" href="flight-medical-escort-services" aria-label="Read more about Flight Medical Escort Services">
-              <svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
-                focusable="false">
-                <path fill-rule="evenodd"
-                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
-              </svg>
-            </a>
+            <a class="btn btn-sm btn-primary rounded-pill mt-3 service-read-more" href="flight-medical-escort-services" aria-label="Read more about Flight Medical Escort Services">Read More</a>
           </div>
         </div>
 
@@ -824,13 +811,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
             <h5 class="mb-2" style="font-size:0.95rem;">Medical Tourism</h5>
             <p class="m-0" style="font-size:0.8rem;">Seamless medical travel assistance, hospital acceptance support,
               and coordinated transport for patients traveling abroad.</p>
-            <a class="btn btn-sm btn-primary rounded-pill mt-3" href="medical-tourism" aria-label="Read more about Medical Tourism">
-              <svg class="bi" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"
-                focusable="false">
-                <path fill-rule="evenodd"
-                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
-              </svg>
-            </a>
+            <a class="btn btn-sm btn-primary rounded-pill mt-3 service-read-more" href="medical-tourism" aria-label="Read more about Medical Tourism">Read More</a>
           </div>
         </div>
       </div>
@@ -1328,7 +1309,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
     <div class="container text-center mb-4">
       <div class="d-inline-flex align-items-center justify-content-center bg-light px-4 py-2 rounded-pill mb-3">
         <i class="fab fa-google text-primary me-2"></i>
-        <span class="fw-bold text-dark">5/5 Rating (Based on 90+ Google Reviews)</span>
+        <span class="fw-bold text-dark">5/5 Rating (Based on 100+ Google Reviews)</span>
         <div class="ms-2 text-red" style="font-size: 11px; letter-spacing: 2px;">
           <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
             class="fas fa-star"></i>
