@@ -136,6 +136,10 @@ FEATURED_IMAGE_TAGS = {
         "title": "Air ambulance in Manila",
         "alt": "International Medical Evacuation and Repatriation Guide",
     },
+    "does-travel-insurance-cover-air-ambulance-services-in-uk": {
+        "title": "Does travel insurance cover air ambulance services in UK",
+        "alt": "Air Ambulance in UK",
+    },
     "philippines-to-india-air-ambulance-medical-transfer-process-explained": {
         "title": "Philippines to India Air Ambulance: Medical Transfer Process",
         "alt": "Philippines to India Air Ambulance",
