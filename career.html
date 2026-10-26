@@ -9,9 +9,7 @@
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-KG4BQ6SM');
-  // GTM is now loaded here, so the deferred window.loadGTM() further down must not load it again.
-  window.__gtmLoaded = true;</script>
+  })(window,document,'script','dataLayer','GTM-KG4BQ6SM');</script>
   <!-- End Google Tag Manager -->
 
 
@@ -63,24 +61,7 @@
         !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
         oaiq("init",{pixelId:"49rLrUkSxD88P1nYEShTpv",debug:true});
 
-        // container first, so tags inside GTM fire before the Ads configs
-        if (window.loadGTM) window.loadGTM();
-
         // Google Tag Manager
-        // GTM container — deferred. dataLayer is created synchronously so any early
-    // push (conversions, ecommerce) still queues; only the container download waits.
-    window.dataLayer = window.dataLayer || [];
-    window.loadGTM = function () {
-      if (window.__gtmLoaded) return;
-      window.__gtmLoaded = true;
-      window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-      var f = document.getElementsByTagName('script')[0];
-      var j = document.createElement('script');
-      j.async = true;
-      j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-KG4BQ6SM';
-      f.parentNode.insertBefore(j, f);
-    };
-
         // Both Ads destinations share ONE gtag.js download. gtag.js supports
         // several destinations per library load, so the second script element was
         // pure duplicate transfer: 472 KB and ~300 ms of parse on desktop, ~800 ms

@@ -9,9 +9,7 @@
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-KG4BQ6SM');
-  // GTM is now loaded here, so the deferred window.loadGTM() further down must not load it again.
-  window.__gtmLoaded = true;</script>
+  })(window,document,'script','dataLayer','GTM-KG4BQ6SM');</script>
   <!-- End Google Tag Manager -->
   <!-- Event snippet for Click to call (1) conversion page
 In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
@@ -266,24 +264,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
         oaiq("init",{pixelId:"49rLrUkSxD88P1nYEShTpv",debug:true});
 
-        // container first, so tags inside GTM fire before the Ads configs
-        if (window.loadGTM) window.loadGTM();
-
         // Google Tag Manager
-        // GTM container — deferred. dataLayer is created synchronously so any early
-        // push (conversions, ecommerce) still queues; only the container download waits.
-        window.dataLayer = window.dataLayer || [];
-        window.loadGTM = function () {
-          if (window.__gtmLoaded) return;
-          window.__gtmLoaded = true;
-          window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-          var f = document.getElementsByTagName('script')[0];
-          var j = document.createElement('script');
-          j.async = true;
-          j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-KG4BQ6SM';
-          f.parentNode.insertBefore(j, f);
-        };
-
         // Both Ads destinations share ONE gtag.js download. gtag.js supports
         // several destinations per library load, so the second script element was
         // pure duplicate transfer: 472 KB and ~300 ms of parse on desktop, ~800 ms
@@ -403,7 +384,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         <div class="col-lg-7">
           <div class="mb-4">
             <h3 class="d-inline-block text-primary text-uppercase border-bottom border-5">About Our Service</h3>
-            <h2 class="about-heading">Emergency Air Ambulance Services in Dubai</h2>
+            <h1 class="about-heading">Emergency Air Ambulance Services in Dubai</h1>
           </div>
           <p class="fs-5">Air Medical 24X7 provides prompt, bed-to-bed private air ambulance and medical repatriation
             services from Dubai (U.A.E.) to any country globally. Strategically based near Dubai International Airport
@@ -448,7 +429,7 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
       <div class="row g-5 align-items-start">
         <div class="col-lg-7">
           <h2 class="mb-4 text-primary">Global Medical Evacuation from Dubai</h2>
-          <p>When critical illness or trauma strikes, time is the most valuable factor. Air Medical 24X7 delivers
+          <p>When critical illness or trauma strikes, time is the most valuable factor. <a href="./">Air Medical 24X7</a> delivers
             <strong>ICU-equipped private air ambulance charters</strong> operating out of Dubai. Our medical crews
             include intensive care specialists, flight doctors, and paramedics certified in aviation medicine.
           </p>
