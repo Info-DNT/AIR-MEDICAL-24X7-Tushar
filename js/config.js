@@ -109,62 +109,6 @@ function showFormMessage(form, message, type) {
   if (type === "success") setTimeout(() => div.remove(), 8000);
 }
 
-// Thank-you popup shown after successful quotation form submission
-function showQuoteSuccessModal() {
-  // Remove any existing instance
-  const existing = document.getElementById("quoteSuccessModal");
-  if (existing) existing.remove();
-
-  // Every page sits at the site root since /services/ and /countries/ were flattened,
-  // so the old depth check always resolved to the root branch.
-  const logoPath = "img/air-medical-logo.webp";
-
-  const overlay = document.createElement("div");
-  overlay.id = "quoteSuccessModal";
-  overlay.style.cssText = [
-    "position:fixed","inset:0","z-index:99999",
-    "display:flex","align-items:center","justify-content:center",
-    "background:rgba(0,0,0,0.55)","padding:16px"
-  ].join(";");
-
-  overlay.innerHTML = `
-    <div style="background:#fff;border-radius:20px;max-width:360px;width:100%;
-                padding:40px 32px 36px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.25);
-                animation:quoteModalIn 0.35s cubic-bezier(0.34,1.56,0.64,1) both;">
-      <img src="${logoPath}" alt="Air Medical 24X7" style="height:52px;object-fit:contain;margin-bottom:24px;">
-      <h3 style="color:#1a2e5a;font-size:1.45rem;font-weight:700;margin-bottom:16px;line-height:1.3;">
-        Quotation Request<br>Received
-      </h3>
-      <p style="color:#555;font-size:0.92rem;line-height:1.6;margin-bottom:10px;">
-        Thank you for contacting Air Medical 24X7. We have received your quotation request
-        and our team is currently reviewing the details.
-      </p>
-      <p style="color:#1a2e5a;font-size:0.92rem;font-weight:700;font-style:italic;margin-bottom:28px;">
-        Our expert will get back to you shortly with your customized quote.
-      </p>
-      <a href="./"
-         style="display:inline-block;background:#1a2e5a;color:#fff;font-weight:700;
-                font-size:0.82rem;letter-spacing:0.08em;padding:13px 32px;border-radius:50px;
-                text-decoration:none;transition:background 0.2s;">
-        BACK TO HOMEPAGE
-      </a>
-    </div>
-    <style>
-      @keyframes quoteModalIn {
-        from { opacity:0; transform:scale(0.8); }
-        to   { opacity:1; transform:scale(1); }
-      }
-    </style>
-  `;
-
-  // Close on backdrop click
-  overlay.addEventListener("click", function (e) {
-    if (e.target === overlay) overlay.remove();
-  });
-
-  document.body.appendChild(overlay);
-}
-
 // Turns the current URL into a short, readable page name for lead-source tracking
 // (e.g. "/air-ambulance-india" -> "Air Ambulance India", "/" -> "Homepage").
 // One rule for every page — no per-page lookup list to keep updated as pages are added.
@@ -318,7 +262,14 @@ document.addEventListener("DOMContentLoaded", () => {
             if (isPopup && typeof window.closeQuoteModal === "function") {
               window.closeQuoteModal();
             }
-            showQuoteSuccessModal();
+            // On the live site, go to the thank-you page: it fires the Google Ads "Submit lead
+            // form" conversion and the OpenAI Ads lead event. Anywhere else (local testing)
+            // stay on the page with a message, so test submissions never count as real leads.
+            if (/(^|\.)airmedical24x7\.com$/.test(window.location.hostname)) {
+              window.location.assign("https://airmedical24x7.com/thank-you");
+            } else {
+              showFormMessage(form, "Quotation request received (test mode: on the live site this goes to /thank-you).", "success");
+            }
           } else {
             showFormMessage(form, "Submission failed. Please try again or contact us directly.", "danger");
             if (btn) {
