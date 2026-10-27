@@ -42,58 +42,84 @@ const turnstileSiteKey = "0x4AAAAAADTA3gG7SVL4awln";
 // Map to store widget IDs for each form
 const turnstileWidgets = new Map();
 
+// Speed: the Turnstile script (~400 KB per widget) is NOT loaded with the page.
+// It loads the first time a visitor touches a form, and only that form gets a widget.
+const turnstilePending = new Set();
+let turnstileScriptAdded = false;
+
+function loadTurnstile() {
+  if (turnstileScriptAdded) return;
+  turnstileScriptAdded = true;
+  const script = document.createElement("script");
+  script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback&render=explicit";
+  script.async = true;
+  script.defer = true;
+  document.head.appendChild(script);
+}
+
+// Adds the Turnstile widget to one form (loads the script first if needed)
+function renderTurnstile(form) {
+  if (turnstileWidgets.has(form)) return;
+  if (typeof turnstile === "undefined") {
+    turnstilePending.add(form);
+    loadTurnstile();
+    return;
+  }
+  turnstileRenderForm(form);
+}
+
 // Global callback for Turnstile explicit rendering
 window.onloadTurnstileCallback = function () {
-  const forms = [
-    document.getElementById("quoteForm"),
-    document.getElementById("quoteFormPopup"),
-    document.getElementById("quoteFormHeader"),
-    document.getElementById("careerForm")
-  ].filter(Boolean);
+  turnstilePending.forEach(turnstileRenderForm);
+  turnstilePending.clear();
+};
+
+function turnstileRenderForm(form) {
+  if (turnstileWidgets.has(form)) return;
 
   // Dynamic sitekey selection for local environment bypass
-  const activeSiteKey = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") 
-    ? "1x00000000000000000000AA" 
+  const activeSiteKey = (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+    ? "1x00000000000000000000AA"
     : turnstileSiteKey;
 
-  forms.forEach(form => {
-    const submitBtn = form.querySelector('button[type="submit"]');
-    if (!submitBtn) return;
+  const submitBtn = form.querySelector('button[type="submit"]');
+  if (!submitBtn) return;
 
-    // Create a container placeholder
-    const container = document.createElement("div");
-    container.className = "cf-turnstile-container my-3";
-    container.style.display = "flex";
-    container.style.justifyContent = "center";
-    container.style.marginBottom = "15px";
+  // Create a container placeholder
+  const container = document.createElement("div");
+  container.className = "cf-turnstile-container my-3";
+  container.style.display = "flex";
+  container.style.justifyContent = "center";
+  container.style.marginBottom = "15px";
 
-    // Insert directly before the submit button
-    submitBtn.parentNode.insertBefore(container, submitBtn);
+  // Insert directly before the submit button
+  submitBtn.parentNode.insertBefore(container, submitBtn);
 
-    try {
-      // Explicitly render Turnstile widget using activeSiteKey
-      const widgetId = turnstile.render(container, {
-        sitekey: activeSiteKey,
-        theme: "light",
-        callback: function (_token) {
-          console.log(`[Turnstile] Challenge solved for ${form.id}`);
-        },
-        "error-callback": function (code) {
-          console.error(`[Turnstile] Error in form ${form.id}:`, code);
-        },
-        "expired-callback": function () {
-          console.warn(`[Turnstile] Token expired for ${form.id}, resetting...`);
-          turnstile.reset(widgetId);
-        }
-      });
+  turnstileWidgets.set(form, null);
 
-      // Keep track of the widget ID for this form
-      turnstileWidgets.set(form, widgetId);
-    } catch (err) {
-      console.error("[Turnstile] Render failed:", err);
-    }
-  });
-};
+  try {
+    // Explicitly render Turnstile widget using activeSiteKey
+    const widgetId = turnstile.render(container, {
+      sitekey: activeSiteKey,
+      theme: "light",
+      callback: function (_token) {
+        console.log(`[Turnstile] Challenge solved for ${form.id}`);
+      },
+      "error-callback": function (code) {
+        console.error(`[Turnstile] Error in form ${form.id}:`, code);
+      },
+      "expired-callback": function () {
+        console.warn(`[Turnstile] Token expired for ${form.id}, resetting...`);
+        turnstile.reset(widgetId);
+      }
+    });
+
+    // Keep track of the widget ID for this form
+    turnstileWidgets.set(form, widgetId);
+  } catch (err) {
+    console.error("[Turnstile] Render failed:", err);
+  }
+}
 
 // HIGH-11 / BUG-02: Inline form notification — replaces alert() calls
 function showFormMessage(form, message, type) {
@@ -134,12 +160,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (forms.length === 0) return;
 
-  // Load the Turnstile API script dynamically specifying explicit rendering callback
-  const script = document.createElement("script");
-  script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback&render=explicit";
-  script.async = true;
-  script.defer = true;
-  document.head.appendChild(script);
+  // Load Turnstile only when the visitor starts using a form (see renderTurnstile)
+  forms.forEach(form => {
+    ["focusin", "pointerdown"].forEach(evt =>
+      form.addEventListener(evt, () => renderTurnstile(form), { passive: true })
+    );
+  });
 
   // Intercept form submissions
   forms.forEach(form => {
@@ -171,6 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // If no token, check if we are on localhost (bypass it) or prod (show inline message)
         const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
         if (!response && !isLocal) {
+          renderTurnstile(form);
           showFormMessage(form, "Please complete the security verification above.", "warning");
           if (btn) {
             btn.disabled = false;
