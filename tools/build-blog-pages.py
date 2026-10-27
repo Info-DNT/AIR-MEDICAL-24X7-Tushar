@@ -129,6 +129,23 @@ def brand(text):
     return re.sub(r"(?<!airmedical)(24/7|24[xX]7)", "24X7", text, flags=re.I)
 
 
+# <meta name="keywords"> for a post, by slug. Posts not listed keep the template's.
+POST_KEYWORDS = {
+    "does-travel-insurance-cover-air-ambulance-services-in-uk": [
+        "Air Ambulance UK", "Air Ambulance Services UK", "Air Ambulance Services in UK",
+        "Medical Repatriation Insurance UK", "Air Ambulance Travel Insurance Cover",
+        "Medical Emergency Travel Insurance", "Medical Evacuation Travel Insurance",
+        "Medical Flight Escort Services", "Emergency Air Ambulance in UK",
+    ],
+    "can-an-air-ambulance-transfer-patients-across-europe": [
+        "air ambulance Europe", "air ambulance in Europe", "air ambulance Europe transfer",
+        "medical transfer Europe", "medical transfer in Europe", "private air ambulance Europe",
+        "private air ambulance in Europe", "medical repatriation Europe",
+        "medical repatriation in Europe", "medical repatriation Schengen",
+        "Schengen medical repatriation", "medical repatriation in Schengen",
+    ],
+}
+
 # alt and title for a post's featured image, by slug. There is no column for these in
 # the blogs table, so they live here; posts not listed get the post title as alt text.
 FEATURED_IMAGE_TAGS = {
@@ -352,6 +369,9 @@ def build_page(template, post):
     s = re.sub(r'\b(href|src)="([^"]*)"', deepen, s)
 
     s = re.sub(r"<title>.*?</title>", f"<title>{esc(title)}</title>", s, flags=re.S)
+    if slug in POST_KEYWORDS:
+        s = re.sub(r'(<meta name="keywords" content=")[^"]*(")',
+                   lambda m: m.group(1) + esc(", ".join(POST_KEYWORDS[slug])) + m.group(2), s, count=1)
     # blogs-detail.html writes this tag content-first (<meta content="..." name="description">),
     # which a name-first pattern never matched — every post shipped the template's generic
     # description. Replace the whole tag, whatever its attribute order.
