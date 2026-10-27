@@ -136,6 +136,12 @@ FEATURED_IMAGE_TAGS = {
         "title": "Air ambulance in Manila",
         "alt": "International Medical Evacuation and Repatriation Guide",
     },
+    "can-an-air-ambulance-transfer-patients-across-europe": {
+        # "src" overrides the image saved in admin (an uploaded copy) for this post's page.
+        "src": "https://airmedical24x7.com/img/blogs/air-ambulance-europe.webp",
+        "title": "Air Ambulance Europe",
+        "alt": "Air Ambulance Transfer patient in Europe",
+    },
     "does-travel-insurance-cover-air-ambulance-services-in-uk": {
         "title": "Does travel insurance cover air ambulance services in UK",
         "alt": "Air Ambulance in UK",
@@ -320,7 +326,8 @@ def build_page(template, post):
     title = brand(post.get("meta_title") or post.get("title") or "")
     desc = brand(post.get("meta_description") or post.get("excerpt") or "")
     body = fix_headings(brand(post.get("content") or ""), brand(post.get("title") or ""))
-    image = post.get("featured_image") or f"{SITE}/img/flight-medical.webp"
+    image = (FEATURED_IMAGE_TAGS.get(slug, {}).get("src")
+             or post.get("featured_image") or f"{SITE}/img/flight-medical.webp")
     if image.startswith("data:"):
         image = save_uploaded_image(image, slug)
     if image.startswith("/"):
