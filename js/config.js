@@ -135,6 +135,34 @@ function showFormMessage(form, message, type) {
   if (type === "success") setTimeout(() => div.remove(), 8000);
 }
 
+// OpenAI Ads "user data": the thank-you page sends these with the lead event so OpenAI
+// can match the lead to its ad click. Only SHA-256 hashes are stored, never the plain
+// email or phone. Normalisation follows OpenAI's Conversions API rules.
+async function sha256Hex(text) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf), b => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function saveLeadMatchData(email, phone) {
+  try {
+    const user = {};
+    const em = (email || "").trim().toLowerCase();
+    if (em) user.emails_sha256 = [await sha256Hex(em)];
+    const ph = (phone || "").replace(/\D/g, "").replace(/^0+/, "");
+    if (ph.length >= 8 && ph.length <= 15) user.phone_numbers_sha256 = [await sha256Hex(ph)];
+
+    // External ID: a random ID kept in this browser, so repeat leads share one ID
+    let visitorId = localStorage.getItem("am_visitor_id");
+    if (!visitorId) {
+      visitorId = crypto.randomUUID();
+      localStorage.setItem("am_visitor_id", visitorId);
+    }
+    user.external_ids_sha256 = [await sha256Hex(visitorId)];
+
+    sessionStorage.setItem("am_lead_user", JSON.stringify(user));
+  } catch (e) { /* storage or crypto blocked: the lead event is still sent without user data */ }
+}
+
 // Turns the current URL into a short, readable page name for lead-source tracking
 // (e.g. "/air-ambulance-india" -> "Air Ambulance India", "/" -> "Homepage").
 // One rule for every page — no per-page lookup list to keep updated as pages are added.
@@ -293,6 +321,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // form" conversion and the OpenAI Ads lead event. Anywhere else (local testing)
             // stay on the page with a message, so test submissions never count as real leads.
             if (/(^|\.)airmedical24x7\.com$/.test(window.location.hostname)) {
+              await saveLeadMatchData(emailVal, fullPhone);
               window.location.assign("https://airmedical24x7.com/thank-you");
             } else {
               showFormMessage(form, "Quotation request received (test mode: on the live site this goes to /thank-you).", "success");
