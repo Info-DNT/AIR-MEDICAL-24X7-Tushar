@@ -21,7 +21,7 @@ const AUTHOR_PRESETS = {
     name: "Diego Javier Muñoz Quintero",
     role: "Compliance, Operations and Sales Executive",
     bio: "With over a decade of legal experience gained within the judiciary, I expanded my career into Dubai’s corporate sector, where I currently work in operations and compliance management.",
-    image: "img/airmedicallogo.webp",
+    image: "img/authors/diego-munoz-quintero.webp",
     expertise: ["Regulatory Compliance Management", "Operational-Legal Advisory", "Corporate Risk Management"],
     linkedin: "https://www.linkedin.com/in/diego-munoz-56166b429/"
   },

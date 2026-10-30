@@ -63,6 +63,13 @@ def fetch_posts():
     return json.load(urllib.request.urlopen(req, timeout=60))
 
 
+# Author photos for the schema (same files js/blogs-detail.js shows on the page).
+AUTHOR_PHOTOS = {
+    "camille hernandez": "img/authors/camille-hernandez.webp",
+    "diego javier muñoz quintero": "img/authors/diego-munoz-quintero.webp",
+}
+
+
 def author_schema(raw):
     """schema.org author for the post.
 
@@ -84,6 +91,9 @@ def author_schema(raw):
             person["jobTitle"] = brand(data["role"].strip())
         if str(data.get("linkedin") or "").startswith("https://"):
             person["sameAs"] = data["linkedin"]
+        photo = AUTHOR_PHOTOS.get(data["name"].strip().lower())
+        if photo:
+            person["image"] = SITE + "/" + photo
         return person
     name = raw.strip() if isinstance(raw, str) and raw.strip() and not raw.strip().startswith("{") else "Air Medical 24X7"
     if brand(name).lower() == "air medical 24x7":

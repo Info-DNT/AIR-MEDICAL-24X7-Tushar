@@ -230,23 +230,37 @@ async function loadBlog() {
 }
 
 /***************** AUTHOR CARD RENDER *****************/
+// Real author photos. Posts saved before a photo existed have the company logo (or
+// nothing) stored as the author image — show the real photo instead.
+const AUTHOR_PHOTOS = {
+  "camille hernandez": "img/authors/camille-hernandez.webp",
+  "diego javier muñoz quintero": "img/authors/diego-munoz-quintero.webp"
+};
+
 function renderAuthorInfo(rawAuthor) {
+  let authorObj = null;
+  if (rawAuthor) {
+    if (typeof rawAuthor === "object") {
+      authorObj = Object.assign({}, rawAuthor);
+    } else if (typeof rawAuthor === "string" && rawAuthor.trim().startsWith("{")) {
+      try { authorObj = JSON.parse(rawAuthor); } catch(e) {}
+    }
+  }
+  if (authorObj && authorObj.name) {
+    const photo = AUTHOR_PHOTOS[authorObj.name.trim().toLowerCase()];
+    if (photo && (!authorObj.image || /airmedicallogo/i.test(authorObj.image))) {
+      authorObj.image = photo;
+    }
+  }
+
   const container = document.getElementById("blog-author-card-container");
   if (container && window.generateAuthorCardHTML) {
-    const cardHtml = window.generateAuthorCardHTML(rawAuthor, sitePrefix, false);
+    const cardHtml = window.generateAuthorCardHTML(authorObj || rawAuthor, sitePrefix, false);
     container.innerHTML = cardHtml;
     container.style.display = cardHtml ? "block" : "none";
   }
 
   // Update inline byline stamp under post
-  let authorObj = null;
-  if (rawAuthor) {
-    if (typeof rawAuthor === "object") {
-      authorObj = rawAuthor;
-    } else if (typeof rawAuthor === "string" && rawAuthor.trim().startsWith("{")) {
-      try { authorObj = JSON.parse(rawAuthor); } catch(e) {}
-    }
-  }
   const authorName = authorObj ? authorObj.name : (rawAuthor || "Air Medical 24X7");
   const authorImg = (authorObj && authorObj.image) ? authorObj.image : "img/airmedicallogo.webp";
   const resolvedImg = (!authorImg.startsWith("http") && !authorImg.startsWith("data:") && !authorImg.startsWith("/") && sitePrefix)
