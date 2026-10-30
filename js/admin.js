@@ -35,13 +35,14 @@ const AUTHOR_PRESETS = {
     expertise: [],
     linkedin: ""
   },
+  // Same photo and details as her Medical Team profile
   meera: {
     name: "Meera Rathod",
-    role: "",
-    bio: "",
-    image: "img/airmedicallogo.webp",
-    expertise: [],
-    linkedin: ""
+    role: "Health Care Administrator | Senior Pediatric Nurse",
+    bio: "Meera Rathod is a Healthcare Operations Administrator and Pediatric Flight Medic with 9 years of experience across healthcare, medevacs and health-tech, supporting the safe air transfer of pediatric patients.",
+    image: "img/team/meera-rathod.webp",
+    expertise: ["Pediatric Air Transfers", "Care Coordination", "Healthcare Operations"],
+    linkedin: "https://www.linkedin.com/in/rathod-meera/"
   },
   abeer: {
     name: "Abeer Najib Ali",
