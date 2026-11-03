@@ -181,6 +181,11 @@ FEATURED_IMAGE_TAGS = {
         "title": "Medical repatriation in Philippines",
         "alt": "how to bring a sick or injured worker home safely",
     },
+    "medical-repatriation-to-philippines-a-complete-guide-for-filipino-families": {
+        "src": "https://airmedical24x7.com/img/blogs/medical-repatriation-to-philippines.webp",
+        "title": "Medical Repatriation to Philippines: A Complete Guide for Filipino Families",
+        "alt": "Medical Repatriation to Philippines",
+    },
 }
 
 MONTHS = ["January", "February", "March", "April", "May", "June", "July",
@@ -202,6 +207,11 @@ def blog_date(created_at):
 def esc(t):
     return html.escape(t or "", quote=True)
 
+
+# A table row whose cells are all blank. The admin editor (Quill) can't delete table
+# rows, so a stray empty row would otherwise stay on the page for good.
+EMPTY_TABLE_ROW = re.compile(
+    r"<tr[^>]*>(?:\s*<t[dh][^>]*>(?:\s|&nbsp;|<br\s*/?>|<p>(?:\s|&nbsp;|<br\s*/?>)*</p>)*</t[dh]>)+\s*</tr>", re.I)
 
 FAQ_HEADING = re.compile(r"^(\d+[.)]\s*)?(faqs?|frequently asked questions)\b", re.I)
 
@@ -353,6 +363,7 @@ def build_page(template, post):
     title = brand(post.get("meta_title") or post.get("title") or "")
     desc = brand(post.get("meta_description") or post.get("excerpt") or "")
     body = fix_headings(brand(post.get("content") or ""), brand(post.get("title") or ""))
+    body = EMPTY_TABLE_ROW.sub("", body)
     image = (FEATURED_IMAGE_TAGS.get(slug, {}).get("src")
              or post.get("featured_image") or f"{SITE}/img/flight-medical.webp")
     if image.startswith("data:"):
