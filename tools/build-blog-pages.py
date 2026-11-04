@@ -154,6 +154,14 @@ POST_KEYWORDS = {
         "medical repatriation in Europe", "medical repatriation Schengen",
         "Schengen medical repatriation", "medical repatriation in Schengen",
     ],
+    "medical-repatriation-to-philippines-a-complete-guide-for-filipino-families": [
+        "air ambulance to Philippines", "Medical Repatriation Philippines",
+        "Medical Repatriation in Philippines", "medical repatriation to Philippines",
+        "patient repatriation to Philippines", "medical evacuation for Filipino OFWs",
+        "patient repatriation from Philippines", "international patient transfer Philippines",
+        "emergency medical repatriation Philippines", "medical flight escort to Philippines",
+        "PhilHealth medical repatriation coverage",
+    ],
 }
 
 # alt and title for a post's featured image, by slug. There is no column for these in
