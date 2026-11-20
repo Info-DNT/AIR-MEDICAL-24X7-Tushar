@@ -162,6 +162,12 @@ POST_KEYWORDS = {
         "emergency medical repatriation Philippines", "medical flight escort to Philippines",
         "PhilHealth medical repatriation coverage",
     ],
+    "air-ambulance-from-davao-complete-guide-to-emergency-patient-transfers": [
+        "Air ambulance from Davao", "emergency medical transportation",
+        "patient transfer services", "international medical evacuation",
+        "Air ambulance in Davao", "Emergency patient transfers",
+        "Medical flight services", "International medical repatriation",
+    ],
 }
 
 # alt and title for a post's featured image, by slug. There is no column for these in
@@ -193,6 +199,10 @@ FEATURED_IMAGE_TAGS = {
         "src": "https://airmedical24x7.com/img/blogs/medical-repatriation-to-philippines.webp",
         "title": "Medical Repatriation to Philippines: A Complete Guide for Filipino Families",
         "alt": "Medical Repatriation to Philippines",
+    },
+    "air-ambulance-from-davao-complete-guide-to-emergency-patient-transfers": {
+        "title": "Air Ambulance from Davao: Complete Guide to Emergency Patient Transfers",
+        "alt": "Air ambulance from Davao",
     },
 }
 
