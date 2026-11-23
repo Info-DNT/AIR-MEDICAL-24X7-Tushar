@@ -824,6 +824,9 @@ function clearEditorForm() {
   document.getElementById("blog-image-file").value = "";
   document.getElementById("blog-meta-title").value = "";
   document.getElementById("blog-meta-desc").value = "";
+  document.getElementById("blog-meta-keywords").value = "";
+  document.getElementById("blog-image-alt").value = "";
+  document.getElementById("blog-image-title").value = "";
   
   // Reset author fields to empty/custom
   const presetSelect = document.getElementById("author-preset-select");
@@ -869,6 +872,13 @@ async function submitBlogPost(status) {
   const category = document.getElementById("blog-category-input").value;
   const metaTitle = document.getElementById("blog-meta-title").value.trim();
   const metaDesc = document.getElementById("blog-meta-desc").value.trim();
+  // Keywords: one per line or comma separated; stored as "a, b, c" without duplicates.
+  const metaKeywords = [...new Set(
+    document.getElementById("blog-meta-keywords").value
+      .split(/[\n,]+/).map(k => k.trim()).filter(Boolean)
+  )].join(", ");
+  const imageAlt = document.getElementById("blog-image-alt").value.trim();
+  const imageTitle = document.getElementById("blog-image-title").value.trim();
   
   const content = quillEditor ? quillEditor.root.innerHTML : "";
   const textContent = quillEditor ? quillEditor.getText().trim() : "";
@@ -910,7 +920,10 @@ async function submitBlogPost(status) {
     status: status,
     category: category,
     meta_title: window.sanitize24X7(metaTitle || title),
-    meta_description: window.sanitize24X7(metaDesc || excerpt)
+    meta_description: window.sanitize24X7(metaDesc || excerpt),
+    meta_keywords: window.sanitize24X7(metaKeywords),
+    image_alt: window.sanitize24X7(imageAlt),
+    image_title: window.sanitize24X7(imageTitle)
   };
 
   const editId = document.getElementById("edit-blog-id").value;
@@ -984,7 +997,7 @@ async function loadBlogsTable() {
   try {
     const { data, error } = await client
       .from("blogs")
-      .select("id, title, slug, excerpt, content, featured_image, author, status, category, created_at, meta_title, meta_description")
+      .select("id, title, slug, excerpt, content, featured_image, author, status, category, created_at, meta_title, meta_description, meta_keywords, image_alt, image_title")
       .order("created_at", { ascending: false });
 
     if (error) throw error;
@@ -1093,6 +1106,9 @@ function loadPostToEditor(blogId) {
   setPublishDate(window.blogDateISO(blog.created_at));
   document.getElementById("blog-meta-title").value = blog.meta_title || "";
   document.getElementById("blog-meta-desc").value = blog.meta_description || "";
+  document.getElementById("blog-meta-keywords").value = blog.meta_keywords || "";
+  document.getElementById("blog-image-alt").value = blog.image_alt || "";
+  document.getElementById("blog-image-title").value = blog.image_title || "";
 
   // Author details population
   let authorObj = null;

@@ -29,6 +29,7 @@ import json
 import os
 import re
 import sys
+import urllib.error
 import urllib.request
 from html.parser import HTMLParser
 
@@ -54,13 +55,20 @@ def anon_key():
 
 def fetch_posts():
     key = anon_key()
-    url = (f"https://dtiirdimtbmkvryvqten.supabase.co/rest/v1/blogs"
-           f"?status=eq.published"
-           f"&select=slug,title,excerpt,content,featured_image,author,category,"
-           f"created_at,meta_title,meta_description"
-           f"&order=created_at.desc")
-    req = urllib.request.Request(url, headers={"apikey": key, "Authorization": "Bearer " + key})
-    return json.load(urllib.request.urlopen(req, timeout=60))
+    base = ("slug,title,excerpt,content,featured_image,author,category,"
+            "created_at,meta_title,meta_description")
+    # meta_keywords / image_alt / image_title are newer columns; if the table does not
+    # have them yet, Supabase answers 400 and the build carries on without them.
+    for cols in (base + ",meta_keywords,image_alt,image_title", base):
+        url = (f"https://dtiirdimtbmkvryvqten.supabase.co/rest/v1/blogs"
+               f"?status=eq.published&select={cols}&order=created_at.desc")
+        req = urllib.request.Request(url, headers={"apikey": key, "Authorization": "Bearer " + key})
+        try:
+            return json.load(urllib.request.urlopen(req, timeout=60))
+        except urllib.error.HTTPError as e:
+            if e.code != 400 or cols == base:
+                raise
+            print("  note: keyword / image alt columns not in Supabase yet - using the script's lists")
 
 
 # Author photos for the schema (same files js/blogs-detail.js shows on the page).
@@ -408,9 +416,12 @@ def build_page(template, post):
     s = re.sub(r'\b(href|src)="([^"]*)"', deepen, s)
 
     s = re.sub(r"<title>.*?</title>", f"<title>{esc(title)}</title>", s, flags=re.S)
-    if slug in POST_KEYWORDS:
+    # Keywords typed in admin win; POST_KEYWORDS covers posts written before that box existed.
+    keywords = [k.strip() for k in re.split(r"[\n,]+", post.get("meta_keywords") or "") if k.strip()]
+    keywords = keywords or POST_KEYWORDS.get(slug, [])
+    if keywords:
         s = re.sub(r'(<meta name="keywords" content=")[^"]*(")',
-                   lambda m: m.group(1) + esc(", ".join(POST_KEYWORDS[slug])) + m.group(2), s, count=1)
+                   lambda m: m.group(1) + esc(", ".join(keywords)) + m.group(2), s, count=1)
     # blogs-detail.html writes this tag content-first (<meta content="..." name="description">),
     # which a name-first pattern never matched — every post shipped the template's generic
     # description. Replace the whole tag, whatever its attribute order.
@@ -419,7 +430,11 @@ def build_page(template, post):
     # blogs-detail.html carries no Open Graph tags, so shares of a post render as a bare
     # URL. Inject a full set — this is the main reason to pre-render social metadata:
     # crawlers for Facebook, LinkedIn and WhatsApp do not execute JavaScript.
-    image_tags = FEATURED_IMAGE_TAGS.get(slug, {})
+    # Alt and title typed in admin win; FEATURED_IMAGE_TAGS covers older posts.
+    image_tags = dict(FEATURED_IMAGE_TAGS.get(slug, {}))
+    for col, key in (("image_alt", "alt"), ("image_title", "title")):
+        if (post.get(col) or "").strip():
+            image_tags[key] = brand(post[col].strip())
     image_alt = image_tags.get("alt") or brand(post.get("title") or "")
     og_tags = [
         ('property', 'og:type', 'article'),
